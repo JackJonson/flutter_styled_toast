@@ -11,16 +11,17 @@ class MyApp extends StatelessWidget {
         title: appTitle,
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            return StyledToast(
-                //wrap your app with StyledToast
-                textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-                backgroundColor: Color(0x99000000),
-                borderRadius: BorderRadius.circular(10.0),
-                textPadding:
-                    EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-                dismissOtherOnShow: true,
-                movingOnWindowChange: true,
-                child: MyHomePage(title: appTitle));
+//            return StyledToast(
+//                //wrap your app with StyledToast
+//                textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
+//                backgroundColor: Color(0x99000000),
+//                borderRadius: BorderRadius.circular(10.0),
+//                textPadding:
+//                    EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+//                dismissOtherOnShow: true,
+//                movingOnWindowChange: true,
+//                child: MyHomePage(title: appTitle));
+            return MyHomePage(title: appTitle);
           },
         ));
   }
@@ -65,7 +66,24 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.only(bottom: 20.0),
               child: RaisedButton(
                 onPressed: () {
-                  showToast('This is normal toast');
+                  showToast('This is normal toast',
+                      context: context,
+                      position: null,
+                      duration: null,
+                      animDuration: null,
+                      textStyle: null,
+                      textPadding: null,
+                      backgroundColor: null,
+                      borderRadius: null,
+                      shapeBorder: null,
+                      onDismiss: null,
+                      textDirection: null,
+                      dismissOtherToast: null,
+                      movingOnWindowChange: null,
+                      animation: null,
+                      textAlign: null,
+                      curve: null,
+                      reverseCurve: null);
                 },
                 color: Colors.blue,
                 child: Text(
@@ -79,7 +97,31 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.only(bottom: 20.0),
               child: RaisedButton(
                 onPressed: () {
-                  showToast('This is normal toast with position',position: StyledToastPosition.center);
+                  showToast('This is normal toast',
+                      textStyle: TextStyle(fontSize: 36.0, color: Colors.red),
+                      backgroundColor: Colors.yellow,
+                      textPadding: EdgeInsets.symmetric(
+                          vertical: 20.0, horizontal: 30.0),
+                      borderRadius: BorderRadius.vertical(
+                          top: Radius.elliptical(10.0, 20.0),
+                          bottom: Radius.elliptical(10.0, 20.0)),
+                      textAlign: TextAlign.justify,
+                      textDirection: TextDirection.rtl);
+                },
+                color: Colors.blue,
+                child: Text(
+                  "normal toast(custom borderRadius textStyle etc)",
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+              ),
+            ),
+            Container(
+              height: 50.0,
+              margin: EdgeInsets.only(bottom: 20.0),
+              child: RaisedButton(
+                onPressed: () {
+                  showToast('This is normal toast with position',
+                      position: StyledToastPosition.center);
                 },
                 color: Colors.blue,
                 child: Text(
@@ -212,7 +254,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animation: StyledToastAnimation.fadeScale,
                       position: StyledToastPosition.center,
                       animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds:4),
+                      duration: Duration(seconds: 4),
                       curve: Curves.linear,
                       reverseCurve: Curves.linear);
                 },
@@ -232,7 +274,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animation: StyledToastAnimation.rotate,
                       position: StyledToastPosition.center,
                       animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds:4),
+                      duration: Duration(seconds: 4),
                       curve: Curves.elasticOut,
                       reverseCurve: Curves.elasticIn);
                 },
@@ -252,7 +294,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animation: StyledToastAnimation.fadeRotate,
                       position: StyledToastPosition.center,
                       animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds:4),
+                      duration: Duration(seconds: 4),
                       curve: Curves.linear,
                       reverseCurve: Curves.linear);
                 },
@@ -272,7 +314,7 @@ class _MyHomePageState extends State<MyHomePage> {
                       animation: StyledToastAnimation.scaleRotate,
                       position: StyledToastPosition.center,
                       animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds:4),
+                      duration: Duration(seconds: 4),
                       curve: Curves.elasticOut,
                       reverseCurve: Curves.linear);
                 },
@@ -293,12 +335,9 @@ class _MyHomePageState extends State<MyHomePage> {
                       //Toast duration   animDuration * 2 <= duration
                       duration: Duration(seconds: 4),
                       //Animation duration   animDuration * 2 <= duration
-                      animDuration: Duration(seconds: 1),
-                      onDismiss: (){
-                        print('onDismissed');
-                      },
-                      curve: Curves.decelerate,
-                      reverseCurve: Curves.linear);
+                      animDuration: Duration(seconds: 1), onDismiss: () {
+                    print('onDismissed');
+                  }, curve: Curves.decelerate, reverseCurve: Curves.linear);
                 },
                 color: Colors.blue,
                 child: Text(
@@ -308,12 +347,9 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
 
-
-
-
             ///Custom toast content widget
             Container(
-              margin: EdgeInsets.only(bottom: 10.0,top: 50.0),
+              margin: EdgeInsets.only(bottom: 10.0, top: 50.0),
               padding: EdgeInsets.only(left: 15.0),
               height: 35.0,
               alignment: Alignment.centerLeft,

@@ -8,7 +8,7 @@ import 'package:flutter_styled_toast/src/styled_toast.dart';
 ///version 1.0
 ///since
 ///file name: styled_toast.dart
-///description: Banner type toast widget
+///description: Banner type toast widget, example of custom toast content widget when you use [showToastWidget]
 ///
 class BannerToastWidget extends StatelessWidget {
   final Key key;

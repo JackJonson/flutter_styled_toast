@@ -4,21 +4,29 @@ import 'dart:ui' as ui;
 import 'package:flutter/material.dart';
 import 'package:flutter_responsive_screen/flutter_responsive_screen.dart';
 
-///Calculate width and height by percentage
+///Calculate width by percentage
 Function wp;
+
+///Calculate height by percentage
 Function hp;
 
 ///Current context of the page which uses the toast
 BuildContext currentContext;
 
+///Default toast duration
 const _defaultDuration = Duration(
   milliseconds: 2300,
 );
 
+///Default animation duration
+///When you use Curves.elasticOut, you can specify a longer duration to achieve beautiful effect
+///But [animDuration] * 2  <= toast [duration], conditions must be met for toast to display properly
+///so when you specify a longer animation duration, you must also specify toast duration to satisfy conditions above
 const _animationDuration = Duration(milliseconds: 400);
 
-/// Show toast with [msg],
-///
+/// Show normal toast with style and animation
+/// Can be used without wrapping you app with StyledToast, but must specify context;
+/// When you wrap your app with StyledToast, [context] is optional;
 ToastFuture showToast(
   String msg, {
   BuildContext context,
@@ -29,44 +37,53 @@ ToastFuture showToast(
   EdgeInsetsGeometry textPadding,
   Color backgroundColor,
   BorderRadius borderRadius,
+  ShapeBorder shapeBorder,
   VoidCallback onDismiss,
   TextDirection textDirection,
   bool dismissOtherToast = true,
+  bool movingOnWindowChange = true,
   StyledToastAnimation animation = StyledToastAnimation.fade,
   TextAlign textAlign,
   Curve curve = Curves.linear,
   Curve reverseCurve = Curves.linear,
 }) {
   context = context != null ? context : currentContext;
+  assert(context != null);
 
-  textStyle ??=
-      _StyledToastTheme.of(context).textStyle ?? TextStyle(fontSize: 15.0);
+  position ??= _StyledToastTheme.of(context)?.toastPositions;
 
-  textAlign = _StyledToastTheme.of(context).textAlign;
+  textStyle ??= _StyledToastTheme.of(context)?.textStyle ??
+      TextStyle(fontSize: 16.0, color: Colors.white);
 
-  textPadding ??= _StyledToastTheme.of(context).textPadding;
+  textPadding ??= _StyledToastTheme.of(context)?.textPadding ??
+      EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
 
-  position ??= _StyledToastTheme.of(context).toastPositions;
-  backgroundColor ??= _StyledToastTheme.of(context).backgroundColor;
-  borderRadius ??= _StyledToastTheme.of(context).borderRadius;
+  backgroundColor ??=
+      _StyledToastTheme.of(context)?.backgroundColor ?? const Color(0x99000000);
+  borderRadius ??=
+      _StyledToastTheme.of(context)?.borderRadius ?? BorderRadius.circular(5.0);
 
-  var direction = textDirection ??
-      _StyledToastTheme.of(context).textDirection ??
-      TextDirection.ltr;
+  shapeBorder ??= _StyledToastTheme.of(context)?.shapeBorder ??
+      RoundedRectangleBorder(
+        borderRadius: borderRadius,
+      );
+
+  textDirection ??=
+      _StyledToastTheme.of(context)?.textDirection ?? TextDirection.ltr;
+
+  textAlign ??= _StyledToastTheme.of(context)?.textAlign ?? TextAlign.center;
 
   Widget widget = Container(
     margin: const EdgeInsets.symmetric(horizontal: 50.0),
-    decoration: BoxDecoration(
+    decoration: ShapeDecoration(
       color: backgroundColor,
-      borderRadius: borderRadius,
+      shape: shapeBorder,
     ),
     padding: textPadding,
-    child: ClipRect(
-      child: Text(
-        msg,
-        style: textStyle,
-        textAlign: textAlign,
-      ),
+    child: Text(
+      msg??'',
+      style: textStyle,
+      textAlign: textAlign,
     ),
   );
 
@@ -78,21 +95,23 @@ ToastFuture showToast(
     onDismiss: onDismiss,
     position: position,
     dismissOtherToast: dismissOtherToast,
-    textDirection: direction,
+    movingOnWindowChange: movingOnWindowChange,
+    textDirection: textDirection,
     curve: curve,
     reverseCurve: reverseCurve,
     animation: animation,
   );
 }
 
-/// show [widget] with oktoast
+/// Show custom content widget toast
 ToastFuture showToastWidget(
   Widget widget, {
   BuildContext context,
   Duration duration = _defaultDuration,
   Duration animDuration = _animationDuration,
   VoidCallback onDismiss,
-  bool dismissOtherToast,
+  bool dismissOtherToast = true,
+  bool movingOnWindowChange = true,
   TextDirection textDirection,
   StyledToastPosition position = StyledToastPosition.bottom,
   StyledToastAnimation animation = StyledToastAnimation.fade,
@@ -103,15 +122,29 @@ ToastFuture showToastWidget(
   ToastFuture future;
 
   context = context != null ? context : currentContext;
+  assert(context != null);
 
-  position ??= _StyledToastTheme.of(context).toastPositions;
+  duration ??= _defaultDuration;
+  animDuration ??= _animationDuration;
 
-  var movingOnWindowChange =
+  dismissOtherToast ??=
+      _StyledToastTheme.of(context)?.dismissOtherOnShow ?? true;
+
+  movingOnWindowChange ??=
       _StyledToastTheme.of(context)?.movingOnWindowChange ?? true;
 
-  var direction = textDirection ??
-      _StyledToastTheme.of(context).textDirection ??
+  textDirection ??= textDirection ??
+      _StyledToastTheme.of(context)?.textDirection ??
       TextDirection.ltr;
+
+  position ??= _StyledToastTheme.of(context)?.toastPositions ??
+      StyledToastPosition.bottom;
+
+  curve ??= curve ?? _StyledToastTheme.of(context)?.curve ?? Curves.linear;
+
+  reverseCurve ??= reverseCurve ??
+      _StyledToastTheme.of(context)?.reverseCurve ??
+      Curves.linear;
 
   GlobalKey<_StyledToastWidgetState> key = GlobalKey();
 
@@ -130,7 +163,7 @@ ToastFuture showToastWidget(
         reverseCurve: reverseCurve,
         key: key,
         child: Directionality(
-          textDirection: direction,
+          textDirection: textDirection,
           child: Material(
             child: widget,
             color: Colors.transparent,
@@ -141,7 +174,7 @@ ToastFuture showToastWidget(
   });
 
   dismissOtherToast ??=
-      _StyledToastTheme.of(context).dismissOtherOnShow ?? false;
+      _StyledToastTheme.of(context)?.dismissOtherOnShow ?? false;
 
   if (dismissOtherToast == true) {
     ToastManager().dismissAll();
@@ -159,7 +192,13 @@ ToastFuture showToastWidget(
   return future;
 }
 
+/// use the method to dismiss all toast.
+void dismissAllToast({bool showAnim = false}) {
+  ToastManager().dismissAll(showAnim: showAnim);
+}
+
 /// Use the [dismiss] to dismiss toast.
+/// When the Toast is dismissed, call [onDismiss] if specified;
 class ToastFuture {
   final OverlayEntry _entry;
   final VoidCallback _onDismiss;
@@ -181,14 +220,16 @@ class ToastFuture {
     _onDismiss?.call();
     ToastManager().removeFuture(this);
 
-    if (showAnim) {
-      _containerKey.currentState.showDismissAnim();
-      Future.delayed(animDuration, () {
-        _entry.remove();
-      });
-    } else {
-      _entry.remove();
-    }
+    _containerKey.currentState.dismissToast();
+    _entry.remove();
+//    if (showAnim) {
+//      _containerKey.currentState.dismissToast();
+//      Future.delayed(animDuration, () {
+//        _entry.remove();
+//      });
+//    } else {
+//      _entry.remove();
+//    }
   }
 }
 
@@ -218,11 +259,6 @@ class ToastManager {
   void addFuture(ToastFuture future) {
     toastSet.add(future);
   }
-}
-
-/// use the method to dismiss all toast.
-void dismissAllToast({bool showAnim = false}) {
-  ToastManager().dismissAll(showAnim: showAnim);
 }
 
 ///Toast position
@@ -356,9 +392,9 @@ class StyledToast extends StatefulWidget {
       this.textAlign,
       this.textDirection,
       this.borderRadius,
-      this.backgroundColor = const Color(0x99000000),
+      this.backgroundColor,
       this.textPadding,
-      this.textStyle,
+      this.textStyle = const TextStyle(fontSize: 16.0, color: Colors.white),
       this.shapeBorder,
       this.duration,
       this.toastPositions,
@@ -410,10 +446,15 @@ class _StyledToastState extends State<StyledToast> {
 
     TextStyle textStyle = widget.textStyle ??
         TextStyle(
-          fontSize: 15.0,
+          fontSize: 16.0,
           fontWeight: FontWeight.normal,
           color: Colors.white,
         );
+
+    Color backgroundColor = widget.backgroundColor ?? const Color(0x99000000);
+
+    BorderRadius borderRadius =
+        widget.borderRadius ?? BorderRadius.circular(5.0);
 
     TextAlign textAlign = widget.textAlign ?? TextAlign.center;
     EdgeInsets textPadding = widget.textPadding ??
@@ -427,8 +468,8 @@ class _StyledToastState extends State<StyledToast> {
       child: wrapper,
       textAlign: textAlign,
       textDirection: direction,
-      borderRadius: widget.borderRadius,
-      backgroundColor: widget.backgroundColor,
+      borderRadius: borderRadius,
+      backgroundColor: backgroundColor,
       textPadding: textPadding,
       textStyle: textStyle,
       shapeBorder: widget.shapeBorder,
@@ -690,15 +731,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
     });
 
     Future.delayed(widget.duration - widget.animDuration, () async {
-      if (!mounted) {
-        return;
-      }
-      try {
-        await _animationController.reverse().orCancel;
-      } on TickerCanceled {}
-//      setState(() {
-//        opacity = 0.0;
-//      });
+      dismissToastAnim();
     });
 
     WidgetsBinding.instance.addObserver(this);
@@ -706,12 +739,6 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-//    Widget w = AnimatedOpacity(
-//      duration: widget.animDuration,
-//      child: widget.child,
-//      opacity: opacity,
-//    );
     Widget w;
     switch (widget.animation) {
       case StyledToastAnimation.fade:
@@ -849,10 +876,21 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
     return container;
   }
 
-  void showDismissAnim() {
+  ///Dismiss toast
+  void dismissToast() {
     setState(() {
       opacity = 0.0;
     });
+  }
+
+  ///Dismiss toast with animation
+  void dismissToastAnim() async {
+    try {
+      await _animationController.reverse().orCancel;
+    } on TickerCanceled {}
+    if (!mounted) {
+      return;
+    }
   }
 
   @override
@@ -950,11 +988,20 @@ class _StyledToastTheme extends InheritedWidget {
   ///Toast show duration
   final Duration duration;
 
+  ///Toast animation duration
+  final Duration animDuration;
+
   ///Position of the toast widget in current window
   final StyledToastPosition toastPositions;
 
   ///Toast animation
   final StyledToastAnimation toastAnimation;
+
+  ///Animation curve
+  final Curve curve;
+
+  ///Animation reverse curve
+  final Curve reverseCurve;
 
   ///Dismiss old toast when new one showing
   final bool dismissOtherOnShow;
@@ -975,8 +1022,11 @@ class _StyledToastTheme extends InheritedWidget {
     this.textStyle,
     this.shapeBorder,
     this.duration,
+    this.animDuration,
     this.toastPositions,
     this.toastAnimation,
+    this.curve,
+    this.reverseCurve,
     this.dismissOtherOnShow,
     this.movingOnWindowChange,
     this.onDismiss,
@@ -990,27 +1040,4 @@ class _StyledToastTheme extends InheritedWidget {
 
   static _StyledToastTheme of(BuildContext context) =>
       context.inheritFromWidgetOfExactType(_StyledToastTheme);
-}
-
-class MyElasticOutCurve extends Curve {
-  /// Creates an elastic-out curve.
-  ///
-  /// Rather than creating a new instance, consider using [Curves.elasticOut].
-  const MyElasticOutCurve([this.period = 0.4]);
-
-  /// The duration of the oscillation.
-  final double period;
-
-  @override
-  double transformInternal(double t) {
-    final double s = period / 4.0;
-    return math.pow(2.0, -10 * t) *
-            math.sin((t - s) * (math.pi * 2.0) / period) +
-        1.0;
-  }
-
-  @override
-  String toString() {
-    return '$runtimeType($period)';
-  }
 }
