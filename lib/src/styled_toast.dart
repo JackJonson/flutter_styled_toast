@@ -81,7 +81,7 @@ ToastFuture showToast(
     ),
     padding: textPadding,
     child: Text(
-      msg??'',
+      msg ?? '',
       style: textStyle,
       textAlign: textAlign,
     ),
@@ -149,9 +149,8 @@ ToastFuture showToastWidget(
   GlobalKey<_StyledToastWidgetState> key = GlobalKey();
 
   entry = OverlayEntry(builder: (ctx) {
-    wp = Screen(MediaQuery.of(context).size).wp;
-    hp = Screen(MediaQuery.of(context).size).hp;
-
+    wp = Screen(MediaQueryData.fromWindow(ui.window).size).wp;
+    hp = Screen(MediaQueryData.fromWindow(ui.window).size).hp;
     return IgnorePointer(
       child: _StyledToastWidget(
         duration: duration,
@@ -420,15 +419,15 @@ class _StyledToastState extends State<StyledToast> {
   @override
   void dispose() {
     super.dispose();
-    currentContext = null;
+//    currentContext = null;
   }
 
   @override
   Widget build(BuildContext context) {
     Widget overlay = Overlay(
       initialEntries: <OverlayEntry>[
-        OverlayEntry(builder: (context) {
-          currentContext = context;
+        OverlayEntry(builder: (ctx) {
+          currentContext = ctx;
           return widget.child;
         })
       ],
@@ -454,7 +453,7 @@ class _StyledToastState extends State<StyledToast> {
     Color backgroundColor = widget.backgroundColor ?? const Color(0x99000000);
 
     BorderRadius borderRadius =
-        widget.borderRadius ?? BorderRadius.circular(5.0);
+        widget.borderRadius ?? BorderRadius.circular(2.0);
 
     TextAlign textAlign = widget.textAlign ?? TextAlign.center;
     EdgeInsets textPadding = widget.textPadding ??
@@ -885,12 +884,12 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   ///Dismiss toast with animation
   void dismissToastAnim() async {
-    try {
-      await _animationController.reverse().orCancel;
-    } on TickerCanceled {}
     if (!mounted) {
       return;
     }
+    try {
+      await _animationController.reverse().orCancel;
+    } on TickerCanceled {}
   }
 
   @override

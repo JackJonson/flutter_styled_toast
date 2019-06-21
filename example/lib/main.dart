@@ -7,23 +7,23 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final appTitle = 'Styled Toast Example';
-    return MaterialApp(
+    return StyledToast(
+      //wrap your page with StyledToast
+      textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
+      backgroundColor: Color(0x99000000),
+      borderRadius: BorderRadius.circular(5.0),
+      textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+      dismissOtherOnShow: true,
+      movingOnWindowChange: true,
+      child: MaterialApp(
         title: appTitle,
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-//            return StyledToast(
-//                //wrap your app with StyledToast
-//                textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-//                backgroundColor: Color(0x99000000),
-//                borderRadius: BorderRadius.circular(10.0),
-//                textPadding:
-//                    EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-//                dismissOtherOnShow: true,
-//                movingOnWindowChange: true,
-//                child: MyHomePage(title: appTitle));
             return MyHomePage(title: appTitle);
           },
-        ));
+        ),
+      ),
+    );
   }
 }
 
@@ -48,6 +48,18 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.skip_next),
+            onPressed: () {
+              Navigator.of(context).push(MaterialPageRoute(
+                builder: (context) {
+                  return SecondPage(title: 'Second Page Title');
+                },
+              ));
+            },
+          )
+        ],
       ),
       body: Center(
         child: ListView(
@@ -66,24 +78,9 @@ class _MyHomePageState extends State<MyHomePage> {
               margin: EdgeInsets.only(bottom: 20.0),
               child: RaisedButton(
                 onPressed: () {
-                  showToast('This is normal toast',
-                      context: context,
-                      position: null,
-                      duration: null,
-                      animDuration: null,
-                      textStyle: null,
-                      textPadding: null,
-                      backgroundColor: null,
-                      borderRadius: null,
-                      shapeBorder: null,
-                      onDismiss: null,
-                      textDirection: null,
-                      dismissOtherToast: null,
-                      movingOnWindowChange: null,
-                      animation: null,
-                      textAlign: null,
-                      curve: null,
-                      reverseCurve: null);
+                  showToast(
+                    'This is normal toast',
+                  );
                 },
                 color: Colors.blue,
                 child: Text(
@@ -370,6 +367,63 @@ class _MyHomePageState extends State<MyHomePage> {
                 color: Colors.blue,
                 child: Text(
                   "custom toast content widget",
+                  style: TextStyle(fontSize: 15.0, color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// The StatefulWidget's job is to take in some data and create a State class.
+// In this case, the Widget takes a title, and creates a _MyHomePageState.
+class SecondPage extends StatefulWidget {
+  final String title;
+
+  SecondPage({Key key, this.title}) : super(key: key);
+
+  @override
+  _SecondPageState createState() => _SecondPageState();
+}
+
+// The State class is responsible for two things: holding some data you can
+// update and building the UI using that data.
+class _SecondPageState extends State<SecondPage> {
+  // Whether the green box should be visible or invisible
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      body: Center(
+        child: ListView(
+          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+          children: <Widget>[
+            Container(
+              margin: EdgeInsets.only(bottom: 10.0),
+              padding: EdgeInsets.only(left: 15.0),
+              height: 35.0,
+              alignment: Alignment.centerLeft,
+              child: Text('second page Toast'),
+              color: const Color(0xFFDDDDDD),
+            ),
+            Container(
+              height: 50.0,
+              margin: EdgeInsets.only(bottom: 20.0),
+              child: RaisedButton(
+                onPressed: () {
+                  showToast(
+                    'This is normal toast',
+                  );
+                },
+                color: Colors.blue,
+                child: Text(
+                  "normal toast",
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
                 ),
               ),
