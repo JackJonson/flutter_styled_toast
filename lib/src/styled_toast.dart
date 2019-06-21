@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_responsive_screen/flutter_responsive_screen.dart';
 
 ///Calculate width by percentage
-Function wp=Screen(MediaQueryData.fromWindow(ui.window).size).wp;
+Function wp = Screen(MediaQueryData.fromWindow(ui.window).size).wp;
 
 ///Calculate height by percentage
-Function hp=Screen(MediaQueryData.fromWindow(ui.window).size).hp;
+Function hp = Screen(MediaQueryData.fromWindow(ui.window).size).hp;
 
 ///Current context of the page which uses the toast
 BuildContext currentContext;
@@ -149,7 +149,6 @@ ToastFuture showToastWidget(
   GlobalKey<_StyledToastWidgetState> key = GlobalKey();
 
   entry = OverlayEntry(builder: (ctx) {
-
     return IgnorePointer(
       child: _StyledToastWidget(
         duration: duration,
@@ -380,8 +379,10 @@ class StyledToast extends StatefulWidget {
   ///callback when toast dismissed
   final VoidCallback onDismiss;
 
+  ///Dismiss old toast when new one shows
   final bool dismissOtherOnShow;
 
+  ///When window change, moving toast.
   final bool movingOnWindowChange;
 
   StyledToast(
@@ -1001,7 +1002,7 @@ class _StyledToastTheme extends InheritedWidget {
   ///Animation reverse curve
   final Curve reverseCurve;
 
-  ///Dismiss old toast when new one showing
+  ///Dismiss old toast when new one shows
   final bool dismissOtherOnShow;
 
   ///When window change, moving toast.
