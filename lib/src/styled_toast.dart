@@ -219,7 +219,7 @@ class ToastFuture {
     _onDismiss?.call();
     ToastManager().removeFuture(this);
 
-    _containerKey.currentState.dismissToast();
+    _containerKey.currentState?.dismissToast();
     _entry.remove();
 //    if (showAnim) {
 //      _containerKey.currentState.dismissToast();
