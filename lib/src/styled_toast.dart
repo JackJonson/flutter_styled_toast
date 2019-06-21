@@ -5,10 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_responsive_screen/flutter_responsive_screen.dart';
 
 ///Calculate width by percentage
-Function wp;
+Function wp=Screen(MediaQueryData.fromWindow(ui.window).size).wp;
 
 ///Calculate height by percentage
-Function hp;
+Function hp=Screen(MediaQueryData.fromWindow(ui.window).size).hp;
 
 ///Current context of the page which uses the toast
 BuildContext currentContext;
@@ -149,8 +149,7 @@ ToastFuture showToastWidget(
   GlobalKey<_StyledToastWidgetState> key = GlobalKey();
 
   entry = OverlayEntry(builder: (ctx) {
-    wp = Screen(MediaQueryData.fromWindow(ui.window).size).wp;
-    hp = Screen(MediaQueryData.fromWindow(ui.window).size).hp;
+
     return IgnorePointer(
       child: _StyledToastWidget(
         duration: duration,
