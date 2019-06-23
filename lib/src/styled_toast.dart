@@ -315,6 +315,18 @@ enum StyledToastAnimation {
   ///Slide from right animation
   slideFromRight,
 
+  ///Slide to top animation
+  slideToTop,
+
+  ///Slide to bottom animation
+  slideToBottom,
+
+  ///Slide to left animation
+  slideToLeft,
+
+  ///Slide to right animation
+  slideToRight,
+
   ///Scale animation
   scale,
 
@@ -512,6 +524,9 @@ class _StyledToastWidget extends StatefulWidget {
   ///Toast animation
   final StyledToastAnimation animation;
 
+  ///Toast reverse animation
+  final StyledToastAnimation reverseAnimation;
+
   ///When window change, moving toast.
   final bool movingOnWindowChange;
 
@@ -524,6 +539,7 @@ class _StyledToastWidget extends StatefulWidget {
     this.reverseCurve = Curves.linear,
     this.position = StyledToastPosition.bottom,
     this.animation = StyledToastAnimation.fade,
+    this.reverseAnimation = StyledToastAnimation.fade,
     this.movingOnWindowChange = true,
   })  : assert(animDuration * 2 <= duration),
         super(key: key);
@@ -537,8 +553,11 @@ class _StyledToastWidget extends StatefulWidget {
 
 class _StyledToastWidgetState extends State<_StyledToastWidget>
     with TickerProviderStateMixin<_StyledToastWidget>, WidgetsBindingObserver {
-  ///Animation related fields
+  ///Animation controller
   AnimationController _animationController;
+
+  ///Reverse animation controller
+  AnimationController _reverseAnimController;
 
   ///Fade animation
   Animation<double> fadeAnim;
@@ -563,6 +582,30 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   ///Rotate animation
   Animation<double> rotateAnim;
+
+  ///Fade animation reverse
+  Animation<double> fadeAnimReverse;
+
+  ///Scale animation reverse
+  Animation<double> scaleAnimReverse;
+
+  ///Slide from top animation reverse
+  Animation<double> slideToTopAnimReverse;
+
+  ///Slide from bottom animation reverse
+  Animation<double> slideToBottomAnimReverse;
+
+  ///Slide from left animation reverse
+  Animation<double> slideToLeftAnimReverse;
+
+  ///Slide from right animation reverse
+  Animation<double> slideToRightAnimReverse;
+
+  ///Fade scale animation reverse
+  Animation<double> fadeScaleAnimReverse;
+
+  ///Rotate animation reverse
+  Animation<double> rotateAnimReverse;
 
   double opacity = 0.0;
 
@@ -715,6 +758,161 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             curve: widget.curve,
             reverseCurve: widget.reverseCurve));
         break;
+    }
+
+    if (widget.reverseAnimation != null) {
+      _reverseAnimController =
+          AnimationController(vsync: this, duration: widget.animDuration)
+            ..addStatusListener((status) {});
+
+      switch (widget.reverseAnimation) {
+        case StyledToastAnimation.fade:
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _reverseAnimController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+          break;
+        case StyledToastAnimation.slideToTop:
+          _reverseAnimController
+            ..addListener(() {
+              if (mounted) {
+                setState(() {});
+              }
+            });
+          slideToTopAnimReverse = Tween<double>(begin: 0.0, end: -hp(100.0)).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+
+          break;
+        case StyledToastAnimation.slideToBottom:
+          _animationController
+            ..addListener(() {
+              if (mounted) {
+                setState(() {});
+              }
+            });
+          slideToBottomAnimReverse = Tween<double>(begin: 0.0, end: hp(100)).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+
+          break;
+        case StyledToastAnimation.slideToLeft:
+          _animationController
+            ..addListener(() {
+              if (mounted) {
+                setState(() {});
+              }
+            });
+          slideToLeftAnimReverse = Tween<double>(begin: 0.0, end: -wp(100)).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+
+          break;
+        case StyledToastAnimation.slideToRight:
+          _animationController
+            ..addListener(() {
+              if (mounted) {
+                setState(() {});
+              }
+            });
+          slideToRightAnimReverse = Tween<double>(begin: 0, end: wp(100)).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+
+          break;
+        case StyledToastAnimation.scale:
+          scaleAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+          break;
+        case StyledToastAnimation.fadeScale:
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+                  reverseCurve:
+                      Interval(0.0, 1.0, curve: widget.curve)));
+          scaleAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+                  reverseCurve:
+                      Interval(0.0, 1.0, curve: widget.curve)));
+          break;
+        case StyledToastAnimation.rotate:
+          _animationController
+            ..addListener(() {
+              if (mounted) {
+                setState(() {});
+              }
+            });
+          rotateAnimReverse = Tween<double>(begin: 2 * math.pi, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+          break;
+        case StyledToastAnimation.scaleRotate:
+          _animationController
+            ..addListener(() {
+              if (mounted) {
+                setState(() {});
+              }
+            });
+          scaleAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+                  reverseCurve:
+                      Interval(0.0, 1.0, curve: widget.curve)));
+          rotateAnimReverse = Tween<double>(begin: 2 * math.pi, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+                  reverseCurve:
+                      Interval(0.0, 1.0, curve: widget.curve)));
+          break;
+        case StyledToastAnimation.fadeRotate:
+          _animationController
+            ..addListener(() {
+              if (mounted) {
+                setState(() {});
+              }
+            });
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+                  reverseCurve:
+                      Interval(0.0, 1.0, curve: widget.curve)));
+          rotateAnimReverse = Tween<double>(begin: 2 * math.pi, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+                  reverseCurve:
+                      Interval(0.0, 1.0, curve: widget.curve)));
+          break;
+        case StyledToastAnimation.none:
+          break;
+        default:
+          fadeAnimReverse = Tween<double>(begin:1.0 , end:0.0 ).animate(
+              CurvedAnimation(
+                  parent: _animationController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.curve));
+          break;
+      }
     }
 
     Future.delayed(const Duration(milliseconds: 30), () async {
