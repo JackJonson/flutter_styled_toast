@@ -43,6 +43,10 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // Whether the green box should be visible or invisible
 
+  Widget _buildListTile(Widget title,VoidCallback onPressed){
+    return ListTile(title: title,onTap: onPressed,);
+  }
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -73,276 +77,205 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Normal Toast'),
               color: const Color(0xFFDDDDDD),
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast(
-                    'This is normal toast',
-                  );
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
-              ),
+            ListTile(
+              title: Text('Normal toast'),
+              onTap: () {
+                showToast(
+                  'This is normal toast',
+                );
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast',
-                      textStyle: TextStyle(fontSize: 36.0, color: Colors.red),
-                      backgroundColor: Colors.yellow,
-                      textPadding: EdgeInsets.symmetric(
-                          vertical: 20.0, horizontal: 30.0),
-                      borderRadius: BorderRadius.vertical(
-                          top: Radius.elliptical(10.0, 20.0),
-                          bottom: Radius.elliptical(10.0, 20.0)),
-                      textAlign: TextAlign.justify,
-                      textDirection: TextDirection.rtl);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(custom borderRadius textStyle etc)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast(custom borderRadius textStyle etc)",
               ),
+              onTap: () {
+                showToast('This is normal toast',
+                    textStyle: TextStyle(fontSize: 20.0, color: Colors.red),
+                    backgroundColor: Colors.yellow,
+                    textPadding: EdgeInsets.symmetric(
+                        vertical: 20.0, horizontal: 30.0),
+                    borderRadius: BorderRadius.vertical(
+                        top: Radius.elliptical(10.0, 20.0),
+                        bottom: Radius.elliptical(10.0, 20.0)),
+                    textAlign: TextAlign.justify,
+                    textDirection: TextDirection.rtl);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with position',
-                      position: StyledToastPosition.center);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(position)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast(position)",
               ),
+              onTap: () {
+                showToast('This is normal toast with position',
+                    position: StyledToastPosition.center);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with fade animation',
-                      animation: StyledToastAnimation.fade,
-                      curve: Curves.linear,
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(fade anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast(fade anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with fade animation',
+                    animation: StyledToastAnimation.fade,
+                    curve: Curves.linear,
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.slideFromTop,
-                      position: StyledToastPosition.top,
-                      curve: ElasticOutCurve(0.9),
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(slideFromTop anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast(slideFromTop anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.slideFromTop,
+                    position: StyledToastPosition.top,
+                    curve: ElasticOutCurve(0.9),
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.slideFromBottom,
-                      position: StyledToastPosition.bottom,
-                      curve: ElasticOutCurve(0.9),
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(slideFromBottom anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast(slideFromBottom anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.slideFromBottom,
+                    position: StyledToastPosition.bottom,
+                    curve: ElasticOutCurve(0.9),
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.slideFromLeft,
-                      position: StyledToastPosition.top,
-                      //Toast duration   animDuration * 2 <= duration
-                      duration: Duration(seconds: 4),
-                      //Animation duration   animDuration * 2 <= duration
-                      animDuration: Duration(seconds: 1),
-                      curve: Curves.elasticOut,
-                      reverseCurve: Curves.elasticIn);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(slideFromLeft anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "normal toast(slideFromLeft anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.slideFromLeft,
+                    reverseAnimation: StyledToastAnimation.none,
+                    position: StyledToastPosition.top,
+                    //Toast duration   animDuration * 2 <= duration
+                    duration: Duration(seconds: 4),
+                    //Animation duration   animDuration * 2 <= duration
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.slideFromRight,
-                      position: StyledToastPosition.top,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
-                      curve: Curves.elasticOut,
-                      reverseCurve: Curves.elasticIn);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(slideFromRight anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title:  Text(
+                "Normal toast(slideFromRight anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.slideFromRight,
+                    position: StyledToastPosition.top,
+                    animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.elasticIn);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.scale,
-                      position: StyledToastPosition.center,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
-                      curve: Curves.elasticOut,
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(scale anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "normal toast(scale anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.scale,
+                    position: StyledToastPosition.center,
+                    animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.fadeScale,
-                      position: StyledToastPosition.center,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
-                      curve: Curves.linear,
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(fadeScale anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast(fadeScale anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.fadeScale,
+                    position: StyledToastPosition.center,
+                    animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.linear,
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.rotate,
-                      position: StyledToastPosition.center,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
-                      curve: Curves.elasticOut,
-                      reverseCurve: Curves.elasticIn);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(rotate anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title:  Text(
+                "Normal toast(rotate anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.rotate,
+                    position: StyledToastPosition.center,
+                    animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.elasticIn);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.fadeRotate,
-                      position: StyledToastPosition.center,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
-                      curve: Curves.linear,
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(fadeRotate anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast(fadeRotate anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.fadeRotate,
+                    position: StyledToastPosition.center,
+                    animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.linear,
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with animation',
-                      animation: StyledToastAnimation.scaleRotate,
-                      position: StyledToastPosition.center,
-                      animDuration: Duration(seconds: 1),
-                      duration: Duration(seconds: 4),
-                      curve: Curves.elasticOut,
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast(scaleRotate anim)",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title:  Text(
+                "Normal toast(scaleRotate anim)",
               ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    animation: StyledToastAnimation.scaleRotate,
+                    position: StyledToastPosition.center,
+                    animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear);
+              },
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToast('This is normal toast with onDismissed',
-                      animation: StyledToastAnimation.fade,
-                      //Toast duration   animDuration * 2 <= duration
-                      duration: Duration(seconds: 4),
-                      //Animation duration   animDuration * 2 <= duration
-                      animDuration: Duration(seconds: 1), onDismiss: () {
-                    print('onDismissed');
-                  }, curve: Curves.decelerate, reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "normal toast with onDismissed",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Normal toast with onDismissed",
               ),
+              onTap: () {
+                showToast('This is normal toast with onDismissed',
+                    animation: StyledToastAnimation.fade,
+                    //Toast duration   animDuration * 2 <= duration
+                    duration: Duration(seconds: 4),
+                    //Animation duration   animDuration * 2 <= duration
+                    animDuration: Duration(seconds: 1), onDismiss: () {
+                      print('onDismissed');
+                    }, curve: Curves.decelerate, reverseCurve: Curves.linear);
+              },
             ),
+            Divider(height: 0.5,),
 
             ///Custom toast content widget
             Container(
@@ -353,24 +286,19 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Custom toast content widget'),
               color: const Color(0xFFDDDDDD),
             ),
-            Container(
-              height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
-                onPressed: () {
-                  showToastWidget(BannerToastWidget.fail(msg: 'Request failed'),
-                      position: StyledToastPosition.top,
-                      animation: StyledToastAnimation.fadeRotate,
-                      curve: Curves.linear,
-                      reverseCurve: Curves.linear);
-                },
-                color: Colors.blue,
-                child: Text(
-                  "custom toast content widget",
-                  style: TextStyle(fontSize: 15.0, color: Colors.white),
-                ),
+            ListTile(
+              title: Text(
+                "Custom toast content widget",
               ),
+              onTap: () {
+                showToastWidget(BannerToastWidget.fail(msg: 'Request failed'),
+                    position: StyledToastPosition.top,
+                    animation: StyledToastAnimation.fadeRotate,
+                    curve: Curves.linear,
+                    reverseCurve: Curves.linear);
+              },
             ),
+            Divider(height: 0.5,),
           ],
         ),
       ),
