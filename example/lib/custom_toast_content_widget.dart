@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:drawing_animation/drawing_animation.dart';
 import 'package:fluttie/fluttie.dart';
 
-
 ///
 ///created time: 2019-06-25 16:42
 ///author linzhiliang
@@ -47,7 +46,6 @@ class _IconToastWidgetState extends State<IconToastWidget> {
   void initState() {
     super.initState();
     prepareAnimation();
-
   }
 
   prepareAnimation() async {
@@ -61,14 +59,15 @@ class _IconToastWidgetState extends State<IconToastWidget> {
     var instance = Fluttie();
 
     // Load our first composition for the emoji animation
-    var emojiComposition = await instance.loadAnimationFromAsset(
-        "assets/ic_success.json");
+    var emojiComposition =
+        await instance.loadAnimationFromAsset("assets/ic_success.json");
     // And prepare its animation, which should loop infinitely and take 2s per
     // iteration. Instead of RepeatMode.START_OVER, we could have choosen
     // REVERSE, which would play the animation in reverse on every second iteration.
     shockedEmoji = await instance.prepareAnimation(emojiComposition,
         duration: const Duration(seconds: 2),
-        repeatCount: const RepeatCount.nTimes(0), repeatMode: RepeatMode.START_OVER);
+        repeatCount: const RepeatCount.nTimes(0),
+        repeatMode: RepeatMode.START_OVER);
 
     // Load the composition for our star animation. Notice how we only have to
     // load the composition once, even though we're using it for 5 animations!
@@ -87,7 +86,6 @@ class _IconToastWidgetState extends State<IconToastWidget> {
     }
   }
 
-
   @override
   void dispose() {
     super.dispose();
@@ -99,23 +97,23 @@ class _IconToastWidgetState extends State<IconToastWidget> {
     // TODO: implement build
     Widget content = Material(
       color: Colors.transparent,
-      child: Container(
-          width: 200,
-          height: 150,
-          decoration: ShapeDecoration(
-            color: widget.backgroundColor ?? const Color(0x7F000000),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
+      child: UnconstrainedBox(
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 30.0, horizontal: 17.0),
+            decoration: ShapeDecoration(
+              color: widget.backgroundColor ?? const Color(0x9F000000),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
             ),
-          ),
-          alignment: Alignment.center,
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.center,
-                child:
+            alignment: Alignment.center,
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  child:
 //                AnimatedDrawing.svg("assets/ic_success.svg",
 //                    run: this.run,
 //                    duration: new Duration(milliseconds: 700),
@@ -129,20 +127,21 @@ class _IconToastWidgetState extends State<IconToastWidget> {
 //                    this.run = false;
 //                  });
 //                }),
-                FluttieAnimation(shockedEmoji),
-                width: 50,
-                height: 50,
-                margin: EdgeInsets.only(right: 10.0),
-              ),
-              widget.textWidget ??
-                  Text(
-                    widget.message ?? '',
-                    style: TextStyle(
-                        fontSize: Theme.of(context).textTheme.title.fontSize,
-                        color: Colors.white),
-                  ),
-            ],
-          )),
+                      FluttieAnimation(shockedEmoji),
+                  width: 50,
+                  height: 50,
+                  margin: EdgeInsets.only(right: 10.0),
+                ),
+                widget.textWidget ??
+                    Text(
+                      widget.message ?? '',
+                      style: TextStyle(
+                          fontSize: Theme.of(context).textTheme.title.fontSize,
+                          color: Colors.white),
+                    ),
+              ],
+            )),
+      ),
     );
 
     return content;
