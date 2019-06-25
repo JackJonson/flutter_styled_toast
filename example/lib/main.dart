@@ -360,6 +360,64 @@ class _MyHomePageState extends State<MyHomePage> {
             Divider(
               height: 0.5,
             ),
+            ListTile(
+              title: Text(
+                "Custom toast content widget with icon auto size ",
+              ),
+              onTap: () {
+                showToastWidget(TestToastWidget(message: 'success'),
+                    context: context,
+                    position: StyledToastPosition.center,
+                    animation: StyledToastAnimation.scale,
+                    reverseAnimation: StyledToastAnimation.fade,
+                    duration: Duration(seconds: 4),
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+
+            ListTile(
+              title: Text(
+                "Custom toast content widget with icon convinient fail",
+              ),
+              onTap: () {
+                showToastWidget(IconToastWidget.fail(msg: 'failed'),
+                    context: context,
+                    position: StyledToastPosition.center,
+                    animation: StyledToastAnimation.scale,
+                    reverseAnimation: StyledToastAnimation.fade,
+                    duration: Duration(seconds: 4),
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
+                "Custom toast content widget with icon convinient success",
+              ),
+              onTap: () {
+                showToastWidget(IconToastWidget.success(msg: 'success'),
+                    context: context,
+                    position: StyledToastPosition.center,
+                    animation: StyledToastAnimation.scale,
+                    reverseAnimation: StyledToastAnimation.fade,
+                    duration: Duration(seconds: 4),
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
           ],
         ),
       ),
