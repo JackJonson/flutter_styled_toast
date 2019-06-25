@@ -43,9 +43,7 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // Whether the green box should be visible or invisible
 
-  Widget _buildListTile(Widget title,VoidCallback onPressed){
-    return ListTile(title: title,onTap: onPressed,);
-  }
+  String dismissRemind='';
   
   @override
   Widget build(BuildContext context) {
@@ -159,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with animation',
                     animation: StyledToastAnimation.slideFromLeft,
-                    reverseAnimation: StyledToastAnimation.none,
+                    reverseAnimation: StyledToastAnimation.slideToTop,
                     position: StyledToastPosition.top,
                     //Toast duration   animDuration * 2 <= duration
                     duration: Duration(seconds: 4),
@@ -177,6 +175,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with animation',
                     animation: StyledToastAnimation.slideFromRight,
+                    reverseAnimation: StyledToastAnimation.slideToLeft,
                     position: StyledToastPosition.top,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
@@ -192,6 +191,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with animation',
                     animation: StyledToastAnimation.scale,
+                    reverseAnimation: StyledToastAnimation.fade,
                     position: StyledToastPosition.center,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
@@ -207,6 +207,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with animation',
                     animation: StyledToastAnimation.fadeScale,
+                    reverseAnimation: StyledToastAnimation.scaleRotate,
                     position: StyledToastPosition.center,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
@@ -222,6 +223,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with animation',
                     animation: StyledToastAnimation.rotate,
+                    reverseAnimation: StyledToastAnimation.fadeRotate,
                     position: StyledToastPosition.center,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
@@ -237,6 +239,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with animation',
                     animation: StyledToastAnimation.fadeRotate,
+                    reverseAnimation: StyledToastAnimation.fadeScale,
                     position: StyledToastPosition.center,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
@@ -252,6 +255,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with animation',
                     animation: StyledToastAnimation.scaleRotate,
+                    reverseAnimation: StyledToastAnimation.fade,
                     position: StyledToastPosition.center,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
@@ -262,9 +266,12 @@ class _MyHomePageState extends State<MyHomePage> {
             Divider(height: 0.5,),
             ListTile(
               title: Text(
-                "Normal toast with onDismissed",
+                "Normal toast with onDismissed($dismissRemind)",
               ),
               onTap: () {
+                setState(() {
+                  dismissRemind='';
+                });
                 showToast('This is normal toast with onDismissed',
                     animation: StyledToastAnimation.fade,
                     //Toast duration   animDuration * 2 <= duration
@@ -272,6 +279,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1), onDismiss: () {
                       print('onDismissed');
+                      setState(() {
+                        dismissRemind='dismissed';
+                      });
                     }, curve: Curves.decelerate, reverseCurve: Curves.linear);
               },
             ),
