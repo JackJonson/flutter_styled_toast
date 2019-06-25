@@ -27,6 +27,10 @@ dependencies:
   flutter_styled_toast:
     path: ../
 
+  drawing_animation: ^0.1.1
+
+  fluttie: ^0.3.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -73,3 +77,5 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+  assets:
+    - assets/

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
+import 'custom_toast_content_widget.dart';
+
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -43,8 +45,8 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // Whether the green box should be visible or invisible
 
-  String dismissRemind='';
-  
+  String dismissRemind = '';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -83,7 +85,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 );
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast(custom borderRadius textStyle etc)",
@@ -92,8 +96,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast('This is normal toast',
                     textStyle: TextStyle(fontSize: 20.0, color: Colors.red),
                     backgroundColor: Colors.yellow,
-                    textPadding: EdgeInsets.symmetric(
-                        vertical: 20.0, horizontal: 30.0),
+                    textPadding:
+                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
                     borderRadius: BorderRadius.vertical(
                         top: Radius.elliptical(10.0, 20.0),
                         bottom: Radius.elliptical(10.0, 20.0)),
@@ -101,7 +105,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     textDirection: TextDirection.rtl);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast(position)",
@@ -111,7 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     position: StyledToastPosition.center);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast(fade anim)",
@@ -123,7 +131,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast(slideFromTop anim)",
@@ -136,7 +146,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast(slideFromBottom anim)",
@@ -149,7 +161,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "normal toast(slideFromLeft anim)",
@@ -167,9 +181,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
-              title:  Text(
+              title: Text(
                 "Normal toast(slideFromRight anim)",
               ),
               onTap: () {
@@ -183,7 +199,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.elasticIn);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "normal toast(scale anim)",
@@ -199,7 +217,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast(fadeScale anim)",
@@ -215,9 +235,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
-              title:  Text(
+              title: Text(
                 "Normal toast(rotate anim)",
               ),
               onTap: () {
@@ -231,7 +253,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.elasticIn);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast(fadeRotate anim)",
@@ -247,9 +271,11 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
-              title:  Text(
+              title: Text(
                 "Normal toast(scaleRotate anim)",
               ),
               onTap: () {
@@ -263,14 +289,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
             ListTile(
               title: Text(
                 "Normal toast with onDismissed($dismissRemind)",
               ),
               onTap: () {
                 setState(() {
-                  dismissRemind='';
+                  dismissRemind = '';
                 });
                 showToast('This is normal toast with onDismissed',
                     animation: StyledToastAnimation.fade,
@@ -278,14 +306,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1), onDismiss: () {
-                      print('onDismissed');
-                      setState(() {
-                        dismissRemind='dismissed';
-                      });
-                    }, curve: Curves.decelerate, reverseCurve: Curves.linear);
+                  print('onDismissed');
+                  setState(() {
+                    dismissRemind = 'dismissed';
+                  });
+                }, curve: Curves.decelerate, reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            Divider(
+              height: 0.5,
+            ),
 
             ///Custom toast content widget
             Container(
@@ -308,7 +338,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(height: 0.5,),
+            ListTile(
+              title: Text(
+                "Custom toast content widget icon",
+              ),
+              onTap: () {
+                showToastWidget(IconToastWidget(message: 'success'),
+                    context: context,
+                    position: StyledToastPosition.top,
+                    animation: StyledToastAnimation.none,
+                    reverseAnimation: StyledToastAnimation.scale,
+                    duration: Duration(seconds: 6),
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.linear,
+                    reverseCurve: Curves.linear);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
           ],
         ),
       ),
