@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:drawing_animation/drawing_animation.dart';
-import 'package:fluttie/fluttie.dart';
+import 'package:lottie_flutter/lottie_flutter.dart';
+import 'package:flutter/services.dart' show rootBundle;
 
 ///
 ///created time: 2019-06-25 16:42
@@ -37,15 +40,14 @@ class TestToastWidget extends StatefulWidget {
   }
 }
 
-class _TestToastWidgetState extends State<TestToastWidget> {
-  bool run = false;
-
-  FluttieAnimationController shockedEmoji;
+class _TestToastWidgetState extends State<TestToastWidget>
+    with TickerProviderStateMixin<TestToastWidget> {
+  LottieComposition _composition;
+  AnimationController _controller;
 
   @override
   void initState() {
     super.initState();
-    prepareAnimation();
   }
 
   @override
@@ -55,48 +57,39 @@ class _TestToastWidgetState extends State<TestToastWidget> {
   }
 
   prepareAnimation() async {
-    // Checks if the platform we're running on is supported by the animation plugin
-    bool canBeUsed = await Fluttie.isAvailable();
-    if (!canBeUsed) {
-      print("Animations are not supported on this platform");
-      return;
-    }
+    _loadButtonPressed('assets/ic_success.json');
+    _controller = new AnimationController(
+      duration: const Duration(milliseconds: 1),
+      vsync: this,
+    );
+    _controller.addListener(() => setState(() {}));
 
-    var instance = Fluttie();
+    setState(() {
+      try {
+        _controller.forward().orCancel;
+      } on TickerCanceled {}
+    });
+  }
 
-    // Load our first composition for the emoji animati`on
-    var emojiComposition =
-        await instance.loadAnimationFromAsset("assets/ic_success.json");
-    // And prepare its animation, which should loop infinitely and take 2s per
-    // iteration. Instead of RepeatMode.START_OVER, we could have choosen
-    // REVERSE, which would play the animation in reverse on every second iteration.
-    shockedEmoji = await instance.prepareAnimation(emojiComposition,
-        duration: const Duration(seconds: 1),
-        repeatCount: const RepeatCount.nTimes(0),
-        repeatMode: RepeatMode.START_OVER);
-
-    // Load the composition for our star animation. Notice how we only have to
-    // load the composition once, even though we're using it for 5 animations!
-
-    // Create the star animation with the default setting. 5 times. The
-    // preferredSize needs to be set because the original star animation is quite
-    // small. See the documentation for the method prepareAnimation for details.
-
-    // Loading animations may take quite some time. We should check that the
-    // widget is still used before updating it, it might have been removed while
-    // we were loading our animations!
-    if (mounted) {
+  void _loadButtonPressed(String assetName) {
+    loadAsset(assetName).then((LottieComposition composition) {
       setState(() {
-        shockedEmoji.stopAndReset(rewind: true);
-        shockedEmoji.start(); //start our looped emoji animation
+        _composition = composition;
+        _controller.reset();
       });
-    }
+    });
+  }
+
+  Future<LottieComposition> loadAsset(String assetName) async {
+    return await rootBundle
+        .loadString(assetName)
+        .then<Map<String, dynamic>>((String data) => json.decode(data))
+        .then((Map<String, dynamic> map) => new LottieComposition.fromMap(map));
   }
 
   @override
   void dispose() {
     super.dispose();
-    shockedEmoji?.dispose();
   }
 
   @override
@@ -118,24 +111,11 @@ class _TestToastWidgetState extends State<TestToastWidget> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
               Container(
-                alignment: Alignment.center,
-                child:
-//                AnimatedDrawing.svg("assets/ic_success.svg",
-//                    run: this.run,
-//                    duration: new Duration(milliseconds: 700),
-//                    lineAnimation: LineAnimation.allAtOnce,
-//                    onPaint: (index, path) {
-//                      print('index:$index,path:${path.toString()}');
-//                    },
-//                    animationOrder: PathOrders.leftToRight,
-//                    animationCurve: Curves.linear, onFinish: () {
-//                  setState(() {
-//                    this.run = false;
-//                  });
-//                }),
-                    FluttieAnimation(shockedEmoji),
-                width: 50,
-                height: 50,
+                child: Lottie(
+                  composition: _composition,
+                  controller: _controller,
+                  size: Size(50, 50),
+                ),
                 margin: EdgeInsets.only(right: 10.0),
               ),
               widget.textWidget ??
@@ -187,12 +167,12 @@ class IconToastWidget extends StatefulWidget {
 
   factory IconToastWidget.fail({String msg}) => IconToastWidget(
         message: msg,
-        assetName: 'assets/error.json',
+        assetName: 'assets/ic_fail.png',
       );
 
   factory IconToastWidget.success({String msg}) => IconToastWidget(
         message: msg,
-        assetName: 'assets/ic_success.json',
+        assetName: 'assets/ic_success.png',
       );
 
   @override
@@ -202,66 +182,21 @@ class IconToastWidget extends StatefulWidget {
   }
 }
 
-class _IconToastWidgetState extends State<IconToastWidget> {
-  bool run = false;
-
-  FluttieAnimationController fluttieController;
-
+class _IconToastWidgetState extends State<IconToastWidget>
+    with TickerProviderStateMixin<IconToastWidget> {
   @override
   void initState() {
     super.initState();
-    prepareAnimation();
   }
 
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();
-    prepareAnimation();
-  }
-
-  prepareAnimation() async {
-    // Checks if the platform we're running on is supported by the animation plugin
-    bool canBeUsed = await Fluttie.isAvailable();
-    if (!canBeUsed) {
-      print("Animations are not supported on this platform");
-      return;
-    }
-
-    var instance = Fluttie();
-
-    // Load our first composition for the emoji animati`on
-    var emojiComposition = await instance
-        .loadAnimationFromAsset(widget.assetName ?? 'assets/ic_success.json');
-    // And prepare its animation, which should loop infinitely and take 2s per
-    // iteration. Instead of RepeatMode.START_OVER, we could have choosen
-    // REVERSE, which would play the animation in reverse on every second iteration.
-    fluttieController = await instance.prepareAnimation(emojiComposition,
-        duration: const Duration(seconds: 1),
-        repeatCount: const RepeatCount.nTimes(0),
-        repeatMode: RepeatMode.START_OVER);
-
-    // Load the composition for our star animation. Notice how we only have to
-    // load the composition once, even though we're using it for 5 animations!
-
-    // Create the star animation with the default setting. 5 times. The
-    // preferredSize needs to be set because the original star animation is quite
-    // small. See the documentation for the method prepareAnimation for details.
-
-    // Loading animations may take quite some time. We should check that the
-    // widget is still used before updating it, it might have been removed while
-    // we were loading our animations!
-    if (mounted) {
-      setState(() {
-        fluttieController.stopAndReset(rewind: true);
-        fluttieController.start(); //start our looped emoji animation
-      });
-    }
   }
 
   @override
   void dispose() {
     super.dispose();
-    fluttieController?.dispose();
   }
 
   @override
@@ -286,23 +221,12 @@ class _IconToastWidgetState extends State<IconToastWidget> {
               children: <Widget>[
                 Container(
                   alignment: Alignment.center,
-                  child:
-//                AnimatedDrawing.svg("assets/ic_success.svg",
-//                    run: this.run,
-//                    duration: new Duration(milliseconds: 700),
-//                    lineAnimation: LineAnimation.allAtOnce,
-//                    onPaint: (index, path) {
-//                      print('index:$index,path:${path.toString()}');
-//                    },
-//                    animationOrder: PathOrders.leftToRight,
-//                    animationCurve: Curves.linear, onFinish: () {
-//                  setState(() {
-//                    this.run = false;
-//                  });
-//                }),
-                      FluttieAnimation(fluttieController),
-                  width: 50,
-                  height: 50,
+                  child: Image.asset(
+                    widget.assetName,
+                    fit: BoxFit.fill,
+                    width: 30,
+                    height: 30,
+                  ),
                   margin: EdgeInsets.only(right: 10.0),
                 ),
                 widget.textWidget ??
