@@ -15,6 +15,10 @@ class MyApp extends StatelessWidget {
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+      toastAnimation: StyledToastAnimation.scaleRotate,
+      reverseAnimation: StyledToastAnimation.fadeRotate,
+      curve: Curves.fastOutSlowIn,
+      reverseCurve: Curves.fastLinearToSlowEaseIn,
       dismissOtherOnShow: true,
       movingOnWindowChange: true,
       child: MaterialApp(
@@ -346,7 +350,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 "Custom toast content widget with icon ",
               ),
               onTap: () {
-                showToastWidget(IconToastWidget(message: 'success'),
+                showToastWidget(IconToastWidget(message: 'success',assetName: 'assets/ic_success.png',),
                     context: context,
                     position: StyledToastPosition.center,
                     animation: StyledToastAnimation.scale,
