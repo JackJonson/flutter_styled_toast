@@ -53,40 +53,39 @@ class _TestToastWidgetState extends State<TestToastWidget> {
     // TODO: implement build
     Widget content = Material(
       color: Colors.transparent,
-      child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 80),
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 17.0),
-          decoration: ShapeDecoration(
-            color: widget.backgroundColor ?? const Color(0x9F000000),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10.0),
-            ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                alignment: Alignment.center,
-                child: Image.asset(
-                  'assets/ic_success.png',
-                  fit: BoxFit.fill,
-                  width: 30,
-                  height: 30,
-                ),
-                width: 50,
-                height: 50,
-                margin: EdgeInsets.only(right: 10.0),
+      child: UnconstrainedBox(
+        child: Container(
+            padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 17.0),
+            decoration: ShapeDecoration(
+              color: widget.backgroundColor ?? const Color(0x9F000000),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
               ),
-              widget.textWidget ??
-                  Text(
-                    widget.message ?? '',
-                    style: TextStyle(
-                        fontSize: Theme.of(context).textTheme.title.fontSize,
-                        color: Colors.white),
+            ),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Container(
+                  alignment: Alignment.center,
+                  child: Image.asset(
+                    'assets/ic_success.png',
+                    fit: BoxFit.fill,
+                    width: 30,
+                    height: 30,
                   ),
-            ],
-          )),
+                  margin: EdgeInsets.only(right: 10.0),
+                ),
+                widget.textWidget ??
+                    Text(
+                      widget.message ?? '',
+                      style: TextStyle(
+                          fontSize: Theme.of(context).textTheme.title.fontSize,
+                          color: Colors.white),
+                    ),
+              ],
+            )),
+      ),
     );
 
     return content;
@@ -163,7 +162,6 @@ class _IconToastWidgetState extends State<IconToastWidget>
       color: Colors.transparent,
       child: Container(
           width: 150.0,
-          height: 100.0,
           padding: widget.padding ??
               EdgeInsets.symmetric(vertical: 20.0, horizontal: 17.0),
           decoration: ShapeDecoration(
@@ -172,9 +170,9 @@ class _IconToastWidgetState extends State<IconToastWidget>
               borderRadius: BorderRadius.circular(10.0),
             ),
           ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisAlignment: MainAxisAlignment.center,
+          child: Wrap(
+            alignment: WrapAlignment.center,
+            crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
               Container(
                 child: Image.asset(
@@ -191,6 +189,8 @@ class _IconToastWidgetState extends State<IconToastWidget>
                     style: TextStyle(
                         fontSize: Theme.of(context).textTheme.title.fontSize,
                         color: Colors.white),
+                    softWrap: true,
+                    maxLines: 200,
                   ),
             ],
           )),

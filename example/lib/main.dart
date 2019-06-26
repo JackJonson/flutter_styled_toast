@@ -348,10 +348,14 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text(
-                "Custom toast content widget with icon ",
+                "Custom toast content widget with icon auto size ",
               ),
               onTap: () {
-                showToastWidget(IconToastWidget(message: 'success',assetName: 'assets/ic_success.png',),
+                showToastWidget(
+                    TestToastWidget(
+                      message:
+                          'success',
+                    ),
                     context: context,
                     position: StyledToastPosition.center,
                     animation: StyledToastAnimation.scale,
