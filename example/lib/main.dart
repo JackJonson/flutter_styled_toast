@@ -23,6 +23,7 @@ class MyApp extends StatelessWidget {
       movingOnWindowChange: true,
       child: MaterialApp(
         title: appTitle,
+        showPerformanceOverlay: true,
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return MyHomePage(title: appTitle);
@@ -361,25 +362,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
-              height: 0.5,
-            ),
-            ListTile(
-              title: Text(
-                "Custom toast content widget with icon auto size ",
-              ),
-              onTap: () {
-                showToastWidget(TestToastWidget(message: 'success'),
-                    context: context,
-                    position: StyledToastPosition.center,
-                    animation: StyledToastAnimation.scale,
-                    reverseAnimation: StyledToastAnimation.fade,
-                    duration: Duration(seconds: 4),
-                    animDuration: Duration(seconds: 1),
-                    curve: Curves.elasticOut,
-                    reverseCurve: Curves.linear);
-              },
-            ),
+
             Divider(
               height: 0.5,
             ),
