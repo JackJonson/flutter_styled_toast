@@ -27,10 +27,6 @@ dependencies:
   flutter_styled_toast:
     path: ../
 
-  drawing_animation: ^0.1.1
-
-  lottie_flutter: ^0.2.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter
