@@ -51,7 +51,8 @@ ToastFuture showToast(
   context = context != null ? context : currentContext;
   assert(context != null);
 
-  position ??= _StyledToastTheme.of(context)?.toastPositions??StyledToastPosition.bottom;
+  position ??= _StyledToastTheme.of(context)?.toastPositions ??
+      StyledToastPosition.bottom;
 
   textStyle ??= _StyledToastTheme.of(context)?.textStyle ??
       TextStyle(fontSize: 16.0, color: Colors.white);
@@ -642,6 +643,32 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
   @override
   void initState() {
     super.initState();
+
+    _initAnim();
+
+    //Start animation
+    Future.delayed(const Duration(milliseconds: 30), () async {
+      if (!mounted) {
+        return;
+      }
+      setState(() {
+        opacity = 1.0;
+      });
+      try {
+        await _animationController.forward().orCancel;
+      } on TickerCanceled {}
+    });
+
+    //Dismiss toast
+    Future.delayed(widget.duration - widget.animDuration, () async {
+      dismissToastAnim();
+    });
+
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  ///Init animation
+  void _initAnim() {
     _animationController =
         AnimationController(vsync: this, duration: widget.animDuration)
           ..addStatusListener((status) {});
@@ -660,8 +687,6 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
               setState(() {});
             }
           });
-//        GlobalKey globalKey= widget.childKey;
-//        RenderBox renderBox=globalKey.currentContext.findRenderObject();
         slideFromTopAnim = Tween<double>(begin: -hp(100.0), end: 0.0).animate(
             CurvedAnimation(
                 parent: _animationController,
@@ -932,29 +957,61 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           break;
       }
     }
-
-    Future.delayed(const Duration(milliseconds: 30), () async {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        opacity = 1.0;
-      });
-      try {
-        await _animationController.forward().orCancel;
-      } on TickerCanceled {}
-    });
-
-    Future.delayed(widget.duration - widget.animDuration, () async {
-      dismissToastAnim();
-    });
-
-    WidgetsBinding.instance.addObserver(this);
   }
 
   @override
   Widget build(BuildContext context) {
     Widget w;
+
+    w = createAnimWidget(w);
+
+    w = Opacity(
+      opacity: opacity,
+      child: w,
+    );
+
+    if (movingOnWindowChange != true) {
+      return w;
+    }
+
+    var mediaQueryData = MediaQueryData.fromWindow(ui.window);
+    Widget container = AnimatedContainer(
+      padding: EdgeInsets.only(
+          bottom: mediaQueryData.padding.bottom,
+          top: mediaQueryData.padding.top),
+      alignment: alignment,
+      duration: widget.animDuration,
+      child: w,
+    );
+
+    if (Alignment.center == alignment) {
+    } else if (Alignment.bottomCenter == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(bottom: offset),
+        child: container,
+      );
+    } else if (Alignment.topCenter == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(top: offset),
+        child: container,
+      );
+    } else if (Alignment.centerLeft == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(left: offset),
+        child: container,
+      );
+    } else if (Alignment.centerRight == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(right: offset),
+        child: container,
+      );
+    } else {}
+
+    return container;
+  }
+
+  ///Create animation widget
+  Widget createAnimWidget(Widget w) {
     switch (widget.animation) {
       case StyledToastAnimation.fade:
         w = FadeTransition(
@@ -1139,49 +1196,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       }
     }
 
-    w = Opacity(
-      opacity: opacity,
-      child: w,
-    );
-
-    if (movingOnWindowChange != true) {
-      return w;
-    }
-
-    var mediaQueryData = MediaQueryData.fromWindow(ui.window);
-    Widget container = AnimatedContainer(
-      padding: EdgeInsets.only(
-          bottom: mediaQueryData.padding.bottom,
-          top: mediaQueryData.padding.top),
-      alignment: alignment,
-      duration: widget.animDuration,
-      child: w,
-    );
-
-    if (Alignment.center == alignment) {
-    } else if (Alignment.bottomCenter == alignment) {
-      container = Padding(
-        padding: EdgeInsets.only(bottom: offset),
-        child: container,
-      );
-    } else if (Alignment.topCenter == alignment) {
-      container = Padding(
-        padding: EdgeInsets.only(top: offset),
-        child: container,
-      );
-    } else if (Alignment.centerLeft == alignment) {
-      container = Padding(
-        padding: EdgeInsets.only(left: offset),
-        child: container,
-      );
-    } else if (Alignment.centerRight == alignment) {
-      container = Padding(
-        padding: EdgeInsets.only(right: offset),
-        child: container,
-      );
-    } else {}
-
-    return container;
+    return w;
   }
 
   ///Dismiss toast
