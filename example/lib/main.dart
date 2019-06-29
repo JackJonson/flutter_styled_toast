@@ -5,9 +5,26 @@ import 'custom_toast_content_widget.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _MyAppState();
+  }
+}
+
+class _MyAppState extends State<MyApp> {
+  bool showPerformance = false;
+
+  onSettingCallback() {
+    setState(() {
+      showPerformance = !showPerformance;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    // TODO: implement build
     final appTitle = 'Styled Toast Example';
     return StyledToast(
       //wrap your page with StyledToast
@@ -15,22 +32,26 @@ class MyApp extends StatelessWidget {
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-      toastAnimation: StyledToastAnimation.scaleRotate,
-      reverseAnimation: StyledToastAnimation.fadeRotate,
+      toastAnimation: StyledToastAnimation.fade,
+      reverseAnimation: StyledToastAnimation.fade,
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastLinearToSlowEaseIn,
       dismissOtherOnShow: true,
       movingOnWindowChange: true,
       child: MaterialApp(
         title: appTitle,
-        showPerformanceOverlay: false,
+        showPerformanceOverlay: showPerformance,
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            return MyHomePage(title: appTitle);
+            return MyHomePage(
+              title: appTitle,
+              onSetting: onSettingCallback,
+            );
           },
         ),
       ),
     );
+    ;
   }
 }
 
@@ -39,7 +60,9 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   final String title;
 
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final VoidCallback onSetting;
+
+  MyHomePage({Key key, this.title, this.onSetting}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -59,13 +82,14 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.skip_next),
+            icon: Icon(Icons.settings),
             onPressed: () {
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) {
-                  return SecondPage(title: 'Second Page Title');
-                },
-              ));
+              widget.onSetting?.call();
+//              Navigator.of(context).push(MaterialPageRoute(
+//                builder: (context) {
+//                  return SecondPage(title: 'Second Page Title');
+//                },
+//              ));
             },
           )
         ],
@@ -353,8 +377,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToastWidget(
                     TestToastWidget(
-                      message:
-                          'success',
+                      message: 'success',
                     ),
                     context: context,
                     position: StyledToastPosition.center,
