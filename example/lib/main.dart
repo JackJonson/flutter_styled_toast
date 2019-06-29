@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
       movingOnWindowChange: true,
       child: MaterialApp(
         title: appTitle,
-        showPerformanceOverlay: true,
+        showPerformanceOverlay: false,
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
             return MyHomePage(title: appTitle);
