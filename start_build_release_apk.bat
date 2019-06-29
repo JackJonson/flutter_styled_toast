@@ -1,0 +1,1 @@
+flutter clean && flutter build apk --release --target-platform android-arm
