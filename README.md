@@ -4,8 +4,12 @@ A Styled Toast Flutter package.
 You can highly customize toast ever.
 Beautify toast with a series of animations and make toast more beautiful.
 
+## demo
+
+<img src="https://raw.githubusercontent.com/CaiJingLong/some_asset/master/ktoast2.gif" width="100px">
+
+
 ## Getting Started
-### 1. add library to your pubspec.yaml
 
 ```yaml
 dependencies:
@@ -45,10 +49,10 @@ StyledToast(
 
 ```dart
 //general use
-showToast("hello toast");
+showToast("hello styled toast");
 
 // Customize toast content widget
-showToastWidget(Text('hello toast'));
+showToastWidget(Text('hello styled toast'));
 ```
 
 ### StyledToast param
@@ -58,46 +62,50 @@ property             | description
 child                | Widget (Not Null)(required)
 textAlign            | TextAlign (default TextAlign.center)    
 textDirection        | TextDirection (default TextDirection.ltr)  
-borderRadius         | BorderRadius (BorderRadius.circular(2.0))
+borderRadius         | BorderRadius (BorderRadius.circular(5.0))
 backgroundColor      | Color (default Color(0x99000000))
 textPadding          | EdgeInsetsGeometry (default EdgeInsets.symmetric(horizontal: 17.0,vertical: 8.0))   
 textStyle            | TextStyle (default TextStyle(fontSize: 16.0,fontWeight: FontWeight.normal,color: Colors.white))   
-shapeBorder          | ShapeBorder (default no border)   
+shapeBorder          | ShapeBorder (default RoundedRectangleBorder(borderRadius: borderRadius))
 duration             | Duration (default 2.3s)
 animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= duration, conditions must be met for toast to display properly)
-toastPositions       | StyledToastPosition
-toastAnimation       | StyledToastAnimation
+toastPositions       | StyledToastPosition (default StyledToastPosition.bottom)
+toastAnimation       | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 
-curve                | StyledToastAnimation
-reverseCurve         | StyledToastAnimation
-dismissOtherOnShow   | bool      
-movingOnWindowChange | bool 
+curve                | Curve (default Curves.linear)
+reverseCurve         | Curve (default Curves.linear)
+dismissOtherOnShow   | bool (default true)     
+movingOnWindowChange | bool (default true)
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
 
+
 ### showToast param
+
 property             | description
 ---------------------|----------------------------
 msg                  | String (Not Null)(required)
 context              | BuildContext (If you don't wrap app with StyledToast, context is required, otherwise, is not)
 duration             | Duration (default 2.3s)
 animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= duration, conditions must be met for toast to display properly)
-position             | StyledToastPosition (default )
+position             | StyledToastPosition (default StyledToastPosition.bottom)
 textStyle            | TextStyle (default TextStyle(fontSize: 16.0,fontWeight: FontWeight.normal,color: Colors.white))   
 textPadding          | EdgeInsetsGeometry (default EdgeInsets.symmetric(horizontal: 17.0,vertical: 8.0))   
 backgroundColor      | Color (default Color(0x99000000))
-borderRadius         | BorderRadius (BorderRadius.circular(2.0))
-shapeBorder          | ShapeBorder (default no border)   
+borderRadius         | BorderRadius (BorderRadius.circular(5.0))
+shapeBorder          | ShapeBorder (default RoundedRectangleBorder(borderRadius: borderRadius))   
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
 textDirection        | TextDirection (default TextDirection.ltr)  
-dismissOtherOnShow   | bool      
-movingOnWindowChange | bool 
-toastAnimation       | StyledToastAnimation
+dismissOtherOnShow   | bool (default true)     
+movingOnWindowChange | bool (default true)
+toastAnimation       | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 
 textAlign            | TextAlign (default TextAlign.center)    
-curve                | StyledToastAnimation
-reverseCurve         | StyledToastAnimation
+curve                | StyledToastAnimation (default Curves.linear)    
+reverseCurve         | StyledToastAnimation (default Curves.linear)    
+
 
 ### showToastWidget param
+
 property             | description
 ---------------------|----------------------------
 widget               | Widget (Not Null)(required)
@@ -105,14 +113,14 @@ context              | BuildContext (If you don't wrap app with StyledToast, con
 duration             | Duration (default 2.3s)
 animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= duration, conditions must be met for toast to display properly)
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
-dismissOtherOnShow   | bool      
-movingOnWindowChange | bool 
+dismissOtherOnShow   | bool (default true)        
+movingOnWindowChange | bool (default true)   
 textDirection        | TextDirection (default TextDirection.ltr)  
 position             | StyledToastPosition (default )
-animation            | StyledToastAnimation
+animation            | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 
-curve                | StyledToastAnimation
-reverseCurve         | StyledToastAnimation
+curve                | StyledToastAnimation (default Curves.linear)    
+reverseCurve         | StyledToastAnimation (default Curves.linear)    
 
 
 ## Example

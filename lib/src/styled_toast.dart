@@ -436,7 +436,7 @@ class StyledToast extends StatefulWidget {
       this.reverseAnimation,
       this.curve,
       this.reverseCurve,
-      this.dismissOtherOnShow = false,
+      this.dismissOtherOnShow = true,
       this.movingOnWindowChange = true,
       this.onDismiss})
       : super(key: key);
@@ -491,7 +491,7 @@ class _StyledToastState extends State<StyledToast> {
     Color backgroundColor = widget.backgroundColor ?? const Color(0x99000000);
 
     BorderRadius borderRadius =
-        widget.borderRadius ?? BorderRadius.circular(2.0);
+        widget.borderRadius ?? BorderRadius.circular(5.0);
 
     TextAlign textAlign = widget.textAlign ?? TextAlign.center;
     EdgeInsets textPadding = widget.textPadding ??
