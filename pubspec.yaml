@@ -1,8 +1,9 @@
 name: flutter_styled_toast
 description: A Styled Toast Flutter package.
-version: 0.0.1
-author:
-homepage:
+version: 1.0.0
+author: linzhiliang<yswing1@gmail.com>
+homepage: https://github.com/JackJonson/flutter_styled_toast
+email: yswing1@gmail.com
 
 environment:
   sdk: ">=2.1.0 <3.0.0"

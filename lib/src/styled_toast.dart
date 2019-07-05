@@ -392,6 +392,9 @@ class StyledToast extends StatefulWidget {
   ///Toast show duration
   final Duration duration;
 
+  ///Toast animation duration
+  final Duration animDuration;
+
   ///Position of the toast widget in current window
   final StyledToastPosition toastPositions;
 
@@ -427,6 +430,7 @@ class StyledToast extends StatefulWidget {
       this.textStyle = const TextStyle(fontSize: 16.0, color: Colors.white),
       this.shapeBorder,
       this.duration,
+      this.animDuration,
       this.toastPositions,
       this.toastAnimation = StyledToastAnimation.fade,
       this.reverseAnimation,
@@ -507,6 +511,7 @@ class _StyledToastState extends State<StyledToast> {
       textStyle: textStyle,
       shapeBorder: widget.shapeBorder,
       duration: widget.duration,
+      animDuration: widget.animDuration,
       toastPositions: widget.toastPositions,
       toastAnimation: widget.toastAnimation,
       reverseAnimation: widget.reverseAnimation,
