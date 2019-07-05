@@ -6,7 +6,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ## demo
 
-<img src="https://raw.githubusercontent.com/CaiJingLong/some_asset/master/ktoast2.gif" width="100px">
+<img src="https://raw.githubusercontent.com/CaiJingLong/some_asset/master/ktoast2.gif" width="30%">
 
 
 ## Getting Started
@@ -129,4 +129,5 @@ reverseCurve         | StyledToastAnimation (default Curves.linear)
 
 ## Thanks for
 [OkToast](https://github.com/OpenFlutter/flutter_oktoast)
+
 [flutter_responsive_screen](https://github.com/misaelriojasm/FlutterResponsiveScreen)

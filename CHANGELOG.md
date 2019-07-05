@@ -1,9 +1,10 @@
-## [1.0.0] - TODO: Add release date.
+## [1.0.0]
 
-First version
-Adding showToast and showToastWidget
+First release version
+features: showToast showToastWidget toast animation and reverse animation.
 
 
-## 0.0.1 - TODO: Add release date.
+## 0.0.1
 
-Create project
+initial project
+
