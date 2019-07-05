@@ -6,7 +6,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ## demo
 
-<img src="https://raw.githubusercontent.com/CaiJingLong/some_asset/master/ktoast2.gif" width="30%">
+<img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/demo.gif" width="30%">
 
 
 ## Getting Started
