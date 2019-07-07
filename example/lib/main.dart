@@ -87,11 +87,6 @@ class _MyHomePageState extends State<MyHomePage> {
             icon: Icon(Icons.settings),
             onPressed: () {
               widget.onSetting?.call();
-//              Navigator.of(context).push(MaterialPageRoute(
-//                builder: (context) {
-//                  return SecondPage(title: 'Second Page Title');
-//                },
-//              ));
             },
           )
         ],
@@ -156,6 +151,20 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text(
+                "Normal toast(custom position)",
+              ),
+              onTap: () {
+                showToast('This is toast',
+                    context: context,
+                    toastHorizontalMargin: 10.0,
+                    position: StyledToastPosition(align: Alignment.topLeft,offset:20.0));
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
                 "Normal toast(fade anim)",
               ),
               onTap: () {
@@ -177,9 +186,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast('This is normal toast with animation',
                     context: context,
                     animation: StyledToastAnimation.slideFromTop,
-                    position: StyledToastPosition.top,
-                    curve: ElasticOutCurve(0.9),
-                    reverseCurve: Curves.linear);
+                    reverseAnimation: StyledToastAnimation.slideToTop,
+                    position: StyledToastPosition.center,
+                    duration: Duration(seconds: 4),
+                    //Animation duration   animDuration * 2 <= duration
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.fastOutSlowIn);
               },
             ),
             Divider(
@@ -193,9 +206,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast('This is normal toast with animation',
                     context: context,
                     animation: StyledToastAnimation.slideFromBottom,
+                    reverseAnimation: StyledToastAnimation.slideToBottom,
                     position: StyledToastPosition.bottom,
-                    curve: ElasticOutCurve(0.9),
-                    reverseCurve: Curves.linear);
+                    duration: Duration(seconds: 4),
+                    //Animation duration   animDuration * 2 <= duration
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.fastLinearToSlowEaseIn,
+                    reverseCurve: Curves.fastOutSlowIn);
               },
             ),
             Divider(
@@ -209,14 +226,14 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast('This is normal toast with animation',
                     context: context,
                     animation: StyledToastAnimation.slideFromLeft,
-                    reverseAnimation: StyledToastAnimation.slideToTop,
+                    reverseAnimation: StyledToastAnimation.slideToLeft,
                     position: StyledToastPosition.top,
                     //Toast duration   animDuration * 2 <= duration
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1),
                     curve: Curves.elasticOut,
-                    reverseCurve: Curves.linear);
+                    reverseCurve: Curves.fastOutSlowIn);
               },
             ),
             Divider(
@@ -230,12 +247,12 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast('This is normal toast with animation',
                     context: context,
                     animation: StyledToastAnimation.slideFromRight,
-                    reverseAnimation: StyledToastAnimation.slideToLeft,
+                    reverseAnimation: StyledToastAnimation.slideToRight,
                     position: StyledToastPosition.top,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
-                    curve: Curves.elasticOut,
-                    reverseCurve: Curves.elasticIn);
+                    curve: Curves.linear,
+                    reverseCurve: Curves.fastOutSlowIn);
               },
             ),
             Divider(
@@ -378,39 +395,18 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToastWidget(BannerToastWidget.fail(msg: 'Request failed'),
                     context: context,
+                    animation: StyledToastAnimation.slideFromTop,
+                    reverseAnimation: StyledToastAnimation.slideToTop,
                     position: StyledToastPosition.top,
-                    animation: StyledToastAnimation.fadeRotate,
-                    curve: Curves.linear,
-                    reverseCurve: Curves.linear);
-              },
-            ),
-            Divider(
-              height: 0.5,
-            ),
-            ListTile(
-              title: Text(
-                "Custom toast content widget with icon auto size ",
-              ),
-              onTap: () {
-                showToastWidget(
-                    TestToastWidget(
-                      message: 'success',
-                    ),
-                    context: context,
-                    position: StyledToastPosition.center,
-                    animation: StyledToastAnimation.scale,
-                    reverseAnimation: StyledToastAnimation.fade,
-                    duration: Duration(seconds: 4),
                     animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
                     curve: Curves.elasticOut,
-                    reverseCurve: Curves.linear);
+                    reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-
             Divider(
               height: 0.5,
             ),
-
             ListTile(
               title: Text(
                 "Custom toast content widget with icon convinient fail",

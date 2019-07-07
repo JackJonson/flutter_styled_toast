@@ -10,4 +10,3 @@ export 'src/styled_toast.dart'
         ToastFuture,
         ToastManager;
 
-export 'src/toast_content_widget.dart' show BannerToastWidget;
