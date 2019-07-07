@@ -187,7 +187,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromTop,
                     reverseAnimation: StyledToastAnimation.slideToTop,
-                    position: StyledToastPosition.center,
+                    position: StyledToastPosition.top,
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1),
@@ -211,7 +211,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1),
-                    curve: Curves.fastLinearToSlowEaseIn,
+                    curve: Curves.elasticOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
@@ -226,7 +226,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast('This is normal toast with animation',
                     context: context,
                     animation: StyledToastAnimation.slideFromLeft,
-                    reverseAnimation: StyledToastAnimation.slideToLeft,
+                    reverseAnimation: StyledToastAnimation.slideToTop,
                     position: StyledToastPosition.top,
                     //Toast duration   animDuration * 2 <= duration
                     duration: Duration(seconds: 4),

@@ -12,8 +12,6 @@ dependencies:
   flutter:
     sdk: flutter
 
-  flutter_responsive_screen: ^1.0.0
-
 dev_dependencies:
   flutter_test:
     sdk: flutter

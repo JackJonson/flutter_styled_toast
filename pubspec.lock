@@ -34,13 +34,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
-  flutter_responsive_screen:
-    dependency: "direct main"
-    description:
-      name: flutter_responsive_screen
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "1.0.0"
   flutter_test:
     dependency: "direct dev"
     description: flutter

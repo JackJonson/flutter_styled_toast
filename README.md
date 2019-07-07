@@ -65,6 +65,7 @@ textDirection        | TextDirection (default TextDirection.ltr)
 borderRadius         | BorderRadius (BorderRadius.circular(5.0))
 backgroundColor      | Color (default Color(0x99000000))
 textPadding          | EdgeInsetsGeometry (default EdgeInsets.symmetric(horizontal: 17.0,vertical: 8.0))   
+toastHorizontalMargin| double (default 50.0)   
 textStyle            | TextStyle (default TextStyle(fontSize: 16.0,fontWeight: FontWeight.normal,color: Colors.white))   
 shapeBorder          | ShapeBorder (default RoundedRectangleBorder(borderRadius: borderRadius))
 duration             | Duration (default 2.3s)
@@ -129,5 +130,3 @@ reverseCurve         | StyledToastAnimation (default Curves.linear)
 
 ## Thanks for
 [OkToast](https://github.com/OpenFlutter/flutter_oktoast)
-
-[flutter_responsive_screen](https://github.com/misaelriojasm/FlutterResponsiveScreen)
