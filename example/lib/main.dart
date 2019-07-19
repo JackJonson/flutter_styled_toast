@@ -200,6 +200,26 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text(
+                "Normal toast(slideFromTopFade anim)",
+              ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    context: context,
+                    animation: StyledToastAnimation.slideFromTopFade,
+                    reverseAnimation: StyledToastAnimation.slideToTopFade,
+                    position: StyledToastPosition.top,
+                    duration: Duration(seconds: 4),
+                    //Animation duration   animDuration * 2 <= duration
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.fastOutSlowIn);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
                 "Normal toast(slideFromBottom anim)",
               ),
               onTap: () {
@@ -207,6 +227,26 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromBottom,
                     reverseAnimation: StyledToastAnimation.slideToBottom,
+                    position: StyledToastPosition.bottom,
+                    duration: Duration(seconds: 4),
+                    //Animation duration   animDuration * 2 <= duration
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.fastOutSlowIn);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
+                "Normal toast(slideFromBottomFade anim)",
+              ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    context: context,
+                    animation: StyledToastAnimation.slideFromBottomFade,
+                    reverseAnimation: StyledToastAnimation.slideToBottomFade,
                     position: StyledToastPosition.bottom,
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
@@ -241,6 +281,27 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text(
+                "normal toast(slideFromLeftFade anim)",
+              ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    context: context,
+                    animation: StyledToastAnimation.slideFromLeftFade,
+                    reverseAnimation: StyledToastAnimation.slideToTopFade,
+                    position: StyledToastPosition.top,
+                    //Toast duration   animDuration * 2 <= duration
+                    duration: Duration(seconds: 4),
+                    //Animation duration   animDuration * 2 <= duration
+                    animDuration: Duration(seconds: 1),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.fastOutSlowIn);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
                 "Normal toast(slideFromRight anim)",
               ),
               onTap: () {
@@ -248,6 +309,25 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromRight,
                     reverseAnimation: StyledToastAnimation.slideToRight,
+                    position: StyledToastPosition.top,
+                    animDuration: Duration(seconds: 1),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.linear,
+                    reverseCurve: Curves.fastOutSlowIn);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
+                "Normal toast(slideFromRightFade anim)",
+              ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    context: context,
+                    animation: StyledToastAnimation.slideFromRightFade,
+                    reverseAnimation: StyledToastAnimation.slideToRightFade,
                     position: StyledToastPosition.top,
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
