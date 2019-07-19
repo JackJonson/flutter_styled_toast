@@ -6,7 +6,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ## demo
 
-<img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/demo.gif" width="30%">
+<img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/SlideFromLeftAnim.gif" width="40%">
 
 
 ## Getting Started
@@ -60,19 +60,19 @@ showToastWidget(Text('hello styled toast'));
 <table>
   <tr>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/DefaultToastWidget.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/DefaultToastWidget.gif" width="260px">
       <br />
       DefaultToastWidget
       <br />
     </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeAnim.gif" width="260px">
       <br />
       FadeAnim
       <br />
     </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromTopAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromTopAnim.gif" width="260px">
       <br />
       SlideFromTopAnim
       <br />
@@ -80,19 +80,19 @@ showToastWidget(Text('hello styled toast'));
   </tr>
   <tr>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromBottomAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromBottomAnim.gif" width="260px">
       <br />
       SlideFromBottomAnim
       <br />
     </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromLeftAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromLeftAnim.gif" width="260px">
       <br />
       SlideFromLeftAnim
       <br />
       </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromRightAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromRightAnim.gif" width="260px">
       <br />
       SlideFromRightAnim
       <br />
@@ -100,19 +100,19 @@ showToastWidget(Text('hello styled toast'));
   </tr>
   <tr>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/ScaleAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/ScaleAnim.gif" width="260px">
       <br />
       ScaleAnim
       <br />
       </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeScaleAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeScaleAnim.gif" width="260px">
       <br />
       FadeScaleAnim
       <br />
     </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/RotateAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/RotateAnim.gif" width="260px">
       <br />
       RotateAnim
       <br />
@@ -120,19 +120,19 @@ showToastWidget(Text('hello styled toast'));
   </tr>
   <tr>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeRotateAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeRotateAnim.gif" width="260px">
       <br />
       FadeRotateAnim
       <br />
       </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/ScaleRotateAnim.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/ScaleRotateAnim.gif" width="260px">
       <br />
       ScaleRotateAnim
       <br />
     </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/OnDismiss.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/OnDismiss.gif" width="260px">
       <br />
       OnDismiss
       <br />
@@ -140,19 +140,19 @@ showToastWidget(Text('hello styled toast'));
   </tr>
   <tr>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomToastWidget.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomToastWidget.gif" width="260px">
       <br />
       CustomToastWidget
       <br />
     </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomFailToastWidget.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomFailToastWidget.gif" width="260px">
       <br />
       CustomFailToastWidget
       <br />
     </td>
     <td align="center">
-      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomSuccessToastWidget.gif" width="100px">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomSuccessToastWidget.gif" width="260px">
       <br />
       CustomSuccessToastWidget
       <br />
