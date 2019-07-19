@@ -55,6 +55,112 @@ showToast("hello styled toast");
 showToastWidget(Text('hello styled toast'));
 ```
 
+## 🚀 Roadmap
+
+<table>
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/DefaultToastWidget.gif" width="100px">
+      <br />
+      DefaultToastWidget
+      <br />
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeAnim.gif" width="100px">
+      <br />
+      FadeAnim
+      <br />
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromTopAnim.gif" width="100px">
+      <br />
+      SlideFromTopAnim
+      <br />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromBottomAnim.gif" width="100px">
+      <br />
+      SlideFromBottomAnim
+      <br />
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromLeftAnim.gif" width="100px">
+      <br />
+      SlideFromLeftAnim
+      <br />
+      </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/SlideFromRightAnim.gif" width="100px">
+      <br />
+      SlideFromRightAnim
+      <br />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/ScaleAnim.gif" width="100px">
+      <br />
+      ScaleAnim
+      <br />
+      </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeScaleAnim.gif" width="100px">
+      <br />
+      FadeScaleAnim
+      <br />
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/RotateAnim.gif" width="100px">
+      <br />
+      RotateAnim
+      <br />
+      </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/FadeRotateAnim.gif" width="100px">
+      <br />
+      FadeRotateAnim
+      <br />
+      </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/ScaleRotateAnim.gif" width="100px">
+      <br />
+      ScaleRotateAnim
+      <br />
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/OnDismiss.gif" width="100px">
+      <br />
+      OnDismiss
+      <br />
+    </td>
+  </tr>
+  <tr>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomToastWidget.gif" width="100px">
+      <br />
+      CustomToastWidget
+      <br />
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomFailToastWidget.gif" width="100px">
+      <br />
+      CustomFailToastWidget
+      <br />
+    </td>
+    <td align="center">
+      <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/CustomSuccessToastWidget.gif" width="100px">
+      <br />
+      CustomSuccessToastWidget
+      <br />
+    </td>
+  </tr>
+</table>
+
+
 ### StyledToast param
 
 property             | description
