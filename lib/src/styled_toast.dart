@@ -712,7 +712,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             }
           });
         slideFromTopAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(0.0, -2.0), end: Offset.zero)
+            Tween<Offset>(begin: Offset(0.0, -1.0), end: Offset.zero)
                 .chain(CurveTween(
           curve: widget.curve,
         )));
@@ -726,7 +726,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             }
           });
         slideFromBottomAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(0.0, 2.0), end: Offset.zero)
+            Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero)
                 .chain(CurveTween(
           curve: widget.curve,
         )));
