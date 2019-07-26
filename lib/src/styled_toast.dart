@@ -1,4 +1,3 @@
-import 'dart:math' as math;
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
@@ -176,29 +175,6 @@ ToastFuture showToastWidget(
     );
   });
 
-//  entry = OverlayEntry(builder: (ctx) {
-//    return IgnorePointer(
-//      child: _StyledToastWidget(
-//        duration: duration,
-//        animDuration: animDuration,
-//        position: position,
-//        movingOnWindowChange: movingOnWindowChange,
-//        animation: animation,
-//        reverseAnimation: reverseAnimation,
-//        curve: curve,
-//        reverseCurve: reverseCurve,
-//        key: key,
-//        child: Directionality(
-//          textDirection: textDirection,
-//          child: Material(
-//            child: widget,
-//            color: Colors.transparent,
-//          ),
-//        ),
-//      ),
-//    );
-//  });
-
   dismissOtherToast ??=
       _StyledToastTheme.of(context)?.dismissOtherOnShow ?? false;
 
@@ -248,14 +224,6 @@ class ToastFuture {
 
     _containerKey.currentState?.dismissToast();
     _entry.remove();
-//    if (showAnim) {
-//      _containerKey.currentState.dismissToast();
-//      Future.delayed(animDuration, () {
-//        _entry.remove();
-//      });
-//    } else {
-//      _entry.remove();
-//    }
   }
 }
 
@@ -383,6 +351,12 @@ enum StyledToastAnimation {
   ///Scale animation
   scale,
 
+  ///Size animation
+  size,
+
+  ///Size fade animation
+  sizeFade,
+
   ///Fade scale animation
   fadeScale,
 
@@ -500,7 +474,6 @@ class _StyledToastState extends State<StyledToast> {
   @override
   void dispose() {
     super.dispose();
-//    currentContext = null;
   }
 
   @override
@@ -638,6 +611,9 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
   ///Scale animation
   Animation<double> scaleAnim;
 
+  ///Size animation
+  Animation<double> sizeAnim;
+
   ///Slide from top animation
   Animation<Offset> slideFromTopAnim;
 
@@ -661,6 +637,9 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   ///Scale animation reverse
   Animation<double> scaleAnimReverse;
+
+  ///Size animation reverse
+  Animation<double> sizeAnimReverse;
 
   ///Slide from top animation reverse
   Animation<Offset> slideToTopAnimReverse;
@@ -801,6 +780,23 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             curve: widget.curve,
             reverseCurve: widget.reverseCurve));
         break;
+      case StyledToastAnimation.size:
+        sizeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: _animationController,
+            curve: widget.curve,
+            reverseCurve: widget.reverseCurve));
+        break;
+      case StyledToastAnimation.sizeFade:
+        sizeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: _animationController,
+            curve: widget.curve,
+            reverseCurve: widget.reverseCurve));
+
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            parent: _animationController,
+            curve: widget.curve,
+            reverseCurve: widget.reverseCurve));
+        break;
       case StyledToastAnimation.scale:
         scaleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
             parent: _animationController,
@@ -854,7 +850,8 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         break;
     }
 
-    if (widget.reverseAnimation != null) {
+    if (widget.reverseAnimation != null &&
+        widget.animation != widget.reverseAnimation) {
       _reverseAnimController =
           AnimationController(vsync: this, duration: widget.animDuration);
 
@@ -865,6 +862,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             parent: _reverseAnimController,
             curve: widget.reverseCurve,
           ));
+
           break;
         case StyledToastAnimation.slideToTop:
           slideToTopAnimReverse = _reverseAnimController.drive(
@@ -946,6 +944,26 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             curve: widget.reverseCurve,
           ));
           break;
+        case StyledToastAnimation.size:
+          sizeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _reverseAnimController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.reverseCurve));
+          break;
+        case StyledToastAnimation.sizeFade:
+          sizeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _reverseAnimController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.reverseCurve));
+
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+              CurvedAnimation(
+                  parent: _reverseAnimController,
+                  curve: widget.reverseCurve,
+                  reverseCurve: widget.reverseCurve));
+          break;
         case StyledToastAnimation.scale:
           scaleAnimReverse =
               Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
@@ -1006,7 +1024,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           ));
           break;
       }
-    }
+    } else {}
   }
 
   @override
@@ -1167,6 +1185,27 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           ),
         );
         break;
+      case StyledToastAnimation.size:
+        w = Align(
+          alignment: Alignment.center,
+          child: SizeTransition(
+            sizeFactor: sizeAnim,
+            child: w,
+          ),
+        );
+        break;
+      case StyledToastAnimation.sizeFade:
+        w = Align(
+          alignment: Alignment.center,
+          child: SizeTransition(
+            sizeFactor: sizeAnim,
+            child: FadeTransition(
+              opacity: fadeAnim,
+              child: w,
+            ),
+          ),
+        );
+        break;
       case StyledToastAnimation.scale:
         w = ScaleTransition(
           scale: scaleAnim,
@@ -1222,7 +1261,8 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         break;
     }
 
-    if (widget.reverseAnimation != null) {
+    if (widget.reverseAnimation != null &&
+        widget.animation != widget.reverseAnimation) {
       switch (widget.reverseAnimation) {
         case StyledToastAnimation.fade:
           w = FadeTransition(
@@ -1290,6 +1330,27 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             ),
           );
           break;
+        case StyledToastAnimation.size:
+          w = Align(
+            alignment: Alignment.center,
+            child: SizeTransition(
+              sizeFactor: sizeAnimReverse,
+              child: w,
+            ),
+          );
+          break;
+        case StyledToastAnimation.sizeFade:
+          w = FadeTransition(
+            opacity: fadeAnimReverse,
+            child: Align(
+              alignment: Alignment.center,
+              child: SizeTransition(
+                sizeFactor: sizeAnimReverse,
+                child: w,
+              ),
+            ),
+          );
+          break;
         case StyledToastAnimation.scale:
           w = ScaleTransition(
             scale: scaleAnimReverse,
@@ -1335,10 +1396,6 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         case StyledToastAnimation.none:
           break;
         default:
-          w = FadeTransition(
-            opacity: fadeAnimReverse,
-            child: w,
-          );
           break;
       }
     }
@@ -1359,7 +1416,9 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       return;
     }
     try {
-      if (widget.reverseAnimation != null) {
+      if (widget.reverseAnimation != null &&
+          _reverseAnimController != null &&
+          widget.animation != widget.reverseAnimation) {
         await _reverseAnimController.forward().orCancel;
       } else {
         await _animationController.reverse().orCancel;
