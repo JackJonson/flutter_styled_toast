@@ -1,4 +1,5 @@
 ## [1.1.0]
+
 Adding size animation sizeFade animation, fix bugs.
 
 
