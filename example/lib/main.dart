@@ -34,7 +34,7 @@ class _MyAppState extends State<MyApp> {
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
       toastAnimation: StyledToastAnimation.fade,
       reverseAnimation: StyledToastAnimation.fade,
-      duration: Duration(seconds:4),
+      duration: Duration(seconds: 4),
       animDuration: Duration(seconds: 1),
       toastPositions: StyledToastPosition.bottom,
       curve: Curves.fastOutSlowIn,
@@ -142,8 +142,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onTap: () {
                 showToast('This is normal toast with position',
-                    context: context,
-                    position: StyledToastPosition.center);
+                    context: context, position: StyledToastPosition.center);
               },
             ),
             Divider(
@@ -157,7 +156,8 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast('This is toast',
                     context: context,
                     toastHorizontalMargin: 10.0,
-                    position: StyledToastPosition(align: Alignment.topLeft,offset:20.0));
+                    position: StyledToastPosition(
+                        align: Alignment.topLeft, offset: 20.0));
               },
             ),
             Divider(
@@ -333,6 +333,44 @@ class _MyHomePageState extends State<MyHomePage> {
                     duration: Duration(seconds: 4),
                     curve: Curves.linear,
                     reverseCurve: Curves.fastOutSlowIn);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
+                "normal toast(size anim)",
+              ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    context: context,
+                    animation: StyledToastAnimation.size,
+                    reverseAnimation: StyledToastAnimation.size,
+                    position: StyledToastPosition.center,
+                    animDuration: Duration(milliseconds: 400),
+                    duration: Duration(seconds: 2),
+                    curve: Curves.linear,
+                    reverseCurve: Curves.linear);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
+                "normal toast(sizefade anim)",
+              ),
+              onTap: () {
+                showToast('This is normal toast with animation',
+                    context: context,
+                    animation: StyledToastAnimation.sizeFade,
+                    reverseAnimation: StyledToastAnimation.sizeFade,
+                    position: StyledToastPosition.center,
+                    animDuration: Duration(milliseconds: 400),
+                    duration: Duration(seconds: 2),
+                    curve: Curves.linear,
+                    reverseCurve: Curves.linear);
               },
             ),
             Divider(
