@@ -629,9 +629,6 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
   ///Fade scale animation
   Animation<double> fadeScaleAnim;
 
-  ///Size animation reverse
-  Animation<double> sizeAnimReverse;
-
   ///Rotate animation
   Animation<double> rotateAnim;
 
@@ -640,6 +637,9 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   ///Scale animation reverse
   Animation<double> scaleAnimReverse;
+
+  ///Size animation reverse
+  Animation<double> sizeAnimReverse;
 
   ///Slide from top animation reverse
   Animation<Offset> slideToTopAnimReverse;
@@ -850,7 +850,8 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         break;
     }
 
-    if (widget.reverseAnimation != null) {
+    if (widget.reverseAnimation != null &&
+        widget.animation != widget.reverseAnimation) {
       _reverseAnimController =
           AnimationController(vsync: this, duration: widget.animDuration);
 
@@ -861,6 +862,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             parent: _reverseAnimController,
             curve: widget.reverseCurve,
           ));
+
           break;
         case StyledToastAnimation.slideToTop:
           slideToTopAnimReverse = _reverseAnimController.drive(
@@ -1022,7 +1024,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           ));
           break;
       }
-    }
+    } else {}
   }
 
   @override
@@ -1259,7 +1261,8 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         break;
     }
 
-    if (widget.reverseAnimation != null) {
+    if (widget.reverseAnimation != null &&
+        widget.animation != widget.reverseAnimation) {
       switch (widget.reverseAnimation) {
         case StyledToastAnimation.fade:
           w = FadeTransition(
@@ -1393,10 +1396,6 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         case StyledToastAnimation.none:
           break;
         default:
-          w = FadeTransition(
-            opacity: fadeAnimReverse,
-            child: w,
-          );
           break;
       }
     }
@@ -1417,7 +1416,9 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       return;
     }
     try {
-      if (widget.reverseAnimation != null) {
+      if (widget.reverseAnimation != null &&
+          _reverseAnimController != null &&
+          widget.animation != widget.reverseAnimation) {
         await _reverseAnimController.forward().orCancel;
       } else {
         await _animationController.reverse().orCancel;
