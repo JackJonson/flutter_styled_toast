@@ -1,7 +1,5 @@
 name: flutter_styled_toast
-description: A Styled Toast Flutter package. You can highly customize toast ever.
-  Beautify toast with a series of animations and make toast more beautiful.
-  Support fade slide rotate scale etc animations, you can customize curve, reverse curve, show animation and reverse animation.
+description: A Styled Toast Flutter package. You can highly customize toast ever.Beautify toast with a series of animations and make toast more beautiful.
 version: 1.1.0
 author: linzhiliang<yswing1@gmail.com>
 homepage: https://github.com/JackJonson/flutter_styled_toast
