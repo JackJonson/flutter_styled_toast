@@ -40,8 +40,8 @@ ToastFuture showToast(
   StyledToastAnimation animation,
   final StyledToastAnimation reverseAnimation,
   TextAlign textAlign,
-  Curve curve = Curves.linear,
-  Curve reverseCurve = Curves.linear,
+  Curve curve,
+  Curve reverseCurve,
 }) {
   context = context != null ? context : currentContext;
   assert(context != null);
@@ -114,8 +114,8 @@ ToastFuture showToastWidget(
   StyledToastPosition position,
   StyledToastAnimation animation,
   StyledToastAnimation reverseAnimation,
-  Curve curve = Curves.linear,
-  Curve reverseCurve = Curves.linear,
+  Curve curve,
+  Curve reverseCurve,
 }) {
   OverlayEntry entry;
   ToastFuture future;
