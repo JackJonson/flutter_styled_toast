@@ -24,8 +24,8 @@ const double _defaultHorizontalMargin = 50.0;
 ToastFuture showToast(
   String msg, {
   BuildContext context,
-  Duration duration = _defaultDuration,
-  Duration animDuration = _animationDuration,
+  Duration duration,
+  Duration animDuration,
   StyledToastPosition position,
   TextStyle textStyle,
   EdgeInsetsGeometry textPadding,
@@ -35,8 +35,8 @@ ToastFuture showToast(
   ShapeBorder shapeBorder,
   VoidCallback onDismiss,
   TextDirection textDirection,
-  bool dismissOtherToast = true,
-  bool movingOnWindowChange = false,
+  bool dismissOtherToast,
+  bool movingOnWindowChange,
   StyledToastAnimation animation,
   final StyledToastAnimation reverseAnimation,
   TextAlign textAlign,
@@ -105,11 +105,11 @@ ToastFuture showToast(
 ToastFuture showToastWidget(
   Widget widget, {
   BuildContext context,
-  Duration duration = _defaultDuration,
-  Duration animDuration = _animationDuration,
+  Duration duration,
+  Duration animDuration,
   VoidCallback onDismiss,
-  bool dismissOtherToast = true,
-  bool movingOnWindowChange = true,
+  bool dismissOtherToast,
+  bool movingOnWindowChange,
   TextDirection textDirection,
   StyledToastPosition position,
   StyledToastAnimation animation,
@@ -123,8 +123,9 @@ ToastFuture showToastWidget(
   context = context != null ? context : currentContext;
   assert(context != null);
 
-  duration ??= _defaultDuration;
-  animDuration ??= _animationDuration;
+  duration ??= _StyledToastTheme.of(context)?.duration ?? _defaultDuration;
+  animDuration ??=
+      _StyledToastTheme.of(context)?.animDuration ?? _animationDuration;
 
   dismissOtherToast ??=
       _StyledToastTheme.of(context)?.dismissOtherOnShow ?? true;
@@ -149,6 +150,9 @@ ToastFuture showToastWidget(
       StyledToastAnimation.fade;
   reverseAnimation ??=
       reverseAnimation ?? _StyledToastTheme.of(context)?.reverseAnimation;
+
+  onDismiss ??=
+      onDismiss ?? _StyledToastTheme.of(context)?.onDismiss;
 
   GlobalKey<_StyledToastWidgetState> key = GlobalKey();
 
