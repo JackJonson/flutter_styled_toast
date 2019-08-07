@@ -1,3 +1,8 @@
+## [1.1.0+5]
+
+Fix bugs.
+
+
 ## [1.1.0+4]
 
 Modify README.
@@ -19,7 +24,7 @@ First release version
 features: showToast showToastWidget toast animation and reverse animation.
 
 
-## 0.0.1
+## [0.0.1]
 
 initial project
 
