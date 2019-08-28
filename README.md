@@ -13,7 +13,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ```yaml
 dependencies:
-  flutter_styled_toast: ^1.1.0+5
+  flutter_styled_toast: ^1.2.0
 ```
 
 ```dart
@@ -179,6 +179,12 @@ animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= 
 toastPositions       | StyledToastPosition (default StyledToastPosition.bottom)
 toastAnimation       | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 
+alignment            | AlignmentGeometry (default Alignment.center)
+axis                 | Axis (default Axis.vertical)
+startOffset          | Offset
+endOffset            | Offset
+reverseStartOffset   | Offset
+reverseEndOffset     | Offset
 curve                | Curve (default Curves.linear)
 reverseCurve         | Curve (default Curves.linear)
 dismissOtherOnShow   | bool (default true)     
@@ -206,9 +212,15 @@ dismissOtherOnShow   | bool (default true)
 movingOnWindowChange | bool (default true)
 toastAnimation       | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 
+alignment            | AlignmentGeometry (default Alignment.center)
+axis                 | Axis (default Axis.vertical)
+startOffset          | Offset
+endOffset            | Offset
+reverseStartOffset   | Offset
+reverseEndOffset     | Offset
 textAlign            | TextAlign (default TextAlign.center)    
-curve                | StyledToastAnimation (default Curves.linear)    
-reverseCurve         | StyledToastAnimation (default Curves.linear)    
+curve                | Curve (default Curves.linear)    
+reverseCurve         | Curve (default Curves.linear)    
 
 
 ### showToastWidget param
@@ -226,8 +238,14 @@ textDirection        | TextDirection (default TextDirection.ltr)
 position             | StyledToastPosition (default )
 animation            | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 
-curve                | StyledToastAnimation (default Curves.linear)    
-reverseCurve         | StyledToastAnimation (default Curves.linear)    
+alignment            | AlignmentGeometry (default Alignment.center)
+axis                 | Axis (default Axis.vertical)
+startOffset          | Offset
+endOffset            | Offset
+reverseStartOffset   | Offset
+reverseEndOffset     | Offset
+curve                | Curve (default Curves.linear)    
+reverseCurve         | Curve (default Curves.linear)    
 
 
 ## Example

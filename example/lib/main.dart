@@ -32,8 +32,8 @@ class _MyAppState extends State<MyApp> {
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-      toastAnimation: StyledToastAnimation.fade,
-      reverseAnimation: StyledToastAnimation.fade,
+      toastAnimation: StyledToastAnimation.slideFromTopFade,
+      reverseAnimation: StyledToastAnimation.slideToTopFade,
       duration: Duration(seconds: 4),
       animDuration: Duration(seconds: 1),
       toastPositions: StyledToastPosition.bottom,
@@ -188,6 +188,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     animation: StyledToastAnimation.slideFromTop,
                     reverseAnimation: StyledToastAnimation.slideToTop,
                     position: StyledToastPosition.top,
+                    startOffset: Offset(0.0, -3.0),
+                    reverseEndOffset: Offset(0.0, -3.0),
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1),
@@ -208,6 +210,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     animation: StyledToastAnimation.slideFromTopFade,
                     reverseAnimation: StyledToastAnimation.slideToTopFade,
                     position: StyledToastPosition.top,
+                    startOffset: Offset(0.0, -3.0),
+                    reverseEndOffset: Offset(0.0, -3.0),
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1),
@@ -227,6 +231,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromBottom,
                     reverseAnimation: StyledToastAnimation.slideToBottom,
+                    startOffset: Offset(0.0, 3.0),
+                    reverseEndOffset: Offset(0.0, 3.0),
                     position: StyledToastPosition.bottom,
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
@@ -247,6 +253,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromBottomFade,
                     reverseAnimation: StyledToastAnimation.slideToBottomFade,
+                    startOffset: Offset(0.0, 3.0),
+                    reverseEndOffset: Offset(0.0, 3.0),
                     position: StyledToastPosition.bottom,
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration

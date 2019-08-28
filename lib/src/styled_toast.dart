@@ -38,7 +38,13 @@ ToastFuture showToast(
   bool dismissOtherToast,
   bool movingOnWindowChange,
   StyledToastAnimation animation,
-  final StyledToastAnimation reverseAnimation,
+  StyledToastAnimation reverseAnimation,
+  AlignmentGeometry alignment,
+  Axis axis,
+  Offset startOffset,
+  Offset endOffset,
+  Offset reverseStartOffset,
+  Offset reverseEndOffset,
   TextAlign textAlign,
   Curve curve,
   Curve reverseCurve,
@@ -94,6 +100,12 @@ ToastFuture showToast(
     dismissOtherToast: dismissOtherToast,
     movingOnWindowChange: movingOnWindowChange,
     textDirection: textDirection,
+    alignment: alignment,
+    axis: axis,
+    startOffset: startOffset,
+    endOffset: endOffset,
+    reverseStartOffset: reverseStartOffset,
+    reverseEndOffset: reverseEndOffset,
     curve: curve,
     reverseCurve: reverseCurve,
     animation: animation,
@@ -111,6 +123,12 @@ ToastFuture showToastWidget(
   bool dismissOtherToast,
   bool movingOnWindowChange,
   TextDirection textDirection,
+  AlignmentGeometry alignment,
+  Axis axis,
+  Offset startOffset,
+  Offset endOffset,
+  Offset reverseStartOffset,
+  Offset reverseEndOffset,
   StyledToastPosition position,
   StyledToastAnimation animation,
   StyledToastAnimation reverseAnimation,
@@ -140,6 +158,13 @@ ToastFuture showToastWidget(
   position ??= _StyledToastTheme.of(context)?.toastPositions ??
       StyledToastPosition.bottom;
 
+  alignment ??= _StyledToastTheme.of(context)?.alignment ?? Alignment.center;
+
+  axis ??= _StyledToastTheme.of(context)?.axis ?? Axis.vertical;
+
+  startOffset ??= _StyledToastTheme.of(context)?.startOffset;
+  endOffset ??= _StyledToastTheme.of(context)?.endOffset;
+
   curve ??= curve ?? _StyledToastTheme.of(context)?.curve ?? Curves.linear;
 
   reverseCurve ??= reverseCurve ??
@@ -151,8 +176,7 @@ ToastFuture showToastWidget(
   reverseAnimation ??=
       reverseAnimation ?? _StyledToastTheme.of(context)?.reverseAnimation;
 
-  onDismiss ??=
-      onDismiss ?? _StyledToastTheme.of(context)?.onDismiss;
+  onDismiss ??= onDismiss ?? _StyledToastTheme.of(context)?.onDismiss;
 
   GlobalKey<_StyledToastWidgetState> key = GlobalKey();
 
@@ -165,6 +189,12 @@ ToastFuture showToastWidget(
         movingOnWindowChange: movingOnWindowChange,
         animation: animation,
         reverseAnimation: reverseAnimation,
+        alignment: alignment,
+        axis: axis,
+        startOffset: startOffset,
+        endOffset: endOffset,
+        reverseStartOffset: reverseStartOffset,
+        reverseEndOffset: reverseEndOffset,
         curve: curve,
         reverseCurve: reverseCurve,
         key: key,
@@ -571,6 +601,24 @@ class _StyledToastWidget extends StatefulWidget {
   ///Toast position
   final StyledToastPosition position;
 
+  ///Alignment of animation, like size, rotate animation.
+  final AlignmentGeometry alignment;
+
+  ///Axis of animation, like size animation
+  final Axis axis;
+
+  ///Start offset of slide animation
+  final Offset startOffset;
+
+  ///End offset of slide animation
+  final Offset endOffset;
+
+  ///Start offset of reverse slide animation
+  final Offset reverseStartOffset;
+
+  ///End offset of reverse slide animation
+  final Offset reverseEndOffset;
+
   ///Toast animation
   final StyledToastAnimation animation;
 
@@ -588,6 +636,12 @@ class _StyledToastWidget extends StatefulWidget {
     this.curve = Curves.linear,
     this.reverseCurve = Curves.linear,
     this.position = StyledToastPosition.bottom,
+    this.alignment = Alignment.center,
+    this.axis = Axis.vertical,
+    this.startOffset,
+    this.endOffset,
+    this.reverseStartOffset,
+    this.reverseEndOffset,
     this.animation = StyledToastAnimation.fade,
     this.reverseAnimation,
     this.movingOnWindowChange = true,
@@ -705,152 +759,231 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
     switch (widget.animation) {
       case StyledToastAnimation.fade:
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.slideFromTop:
         slideFromTopAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(0.0, -1.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(0.0, -1.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
         break;
       case StyledToastAnimation.slideFromTopFade:
         slideFromTopAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(0.0, -1.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(0.0, -1.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.slideFromBottom:
         slideFromBottomAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(0.0, 1.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
         break;
       case StyledToastAnimation.slideFromBottomFade:
         slideFromBottomAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(0.0, 1.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(0.0, 1.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.slideFromLeft:
         slideFromLeftAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(-1.0, 0.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(-1.0, 0.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
 
         break;
       case StyledToastAnimation.slideFromLeftFade:
         slideFromLeftAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(-1.0, 0.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(-1.0, 0.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.slideFromRight:
         slideFromRightAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(1.0, 0.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
 
         break;
       case StyledToastAnimation.slideFromRightFade:
         slideFromRightAnim = _animationController.drive(
-            Tween<Offset>(begin: Offset(1.0, 0.0), end: Offset.zero)
-                .chain(CurveTween(
-          curve: widget.curve,
-        )));
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+          Tween<Offset>(
+                  begin: widget.startOffset ?? Offset(1.0, 0.0),
+                  end: widget.endOffset ?? Offset.zero)
+              .chain(
+            CurveTween(
+              curve: widget.curve,
+            ),
+          ),
+        );
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.size:
-        sizeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+        sizeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.sizeFade:
-        sizeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+        sizeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
 
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.scale:
-        scaleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+        scaleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.fadeScale:
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: _animationController,
             curve: Interval(0.0, 1.0, curve: widget.curve),
-            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve)));
-        scaleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+          ),
+        );
+        scaleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: _animationController,
             curve: Interval(0.0, 1.0, curve: widget.curve),
-            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve)));
+            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+          ),
+        );
         break;
       case StyledToastAnimation.rotate:
         rotateAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
-            CurvedAnimation(
-                parent: _animationController,
-                curve: widget.curve,
-                reverseCurve: widget.reverseCurve));
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
       case StyledToastAnimation.scaleRotate:
-        scaleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        scaleAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: _animationController,
             curve: Interval(0.0, 1.0, curve: widget.curve),
-            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve)));
-        rotateAnim = Tween<double>(begin: 0, end: 1.0).animate(CurvedAnimation(
+            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+          ),
+        );
+        rotateAnim = Tween<double>(begin: 0, end: 1.0).animate(
+          CurvedAnimation(
             parent: _animationController,
             curve: Interval(0.0, 1.0, curve: widget.curve),
-            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve)));
+            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+          ),
+        );
         break;
       case StyledToastAnimation.fadeRotate:
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
             parent: _animationController,
             curve: Interval(0.0, 1.0, curve: widget.curve),
-            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve)));
-        rotateAnim = Tween<double>(begin: 0, end: 1.0).animate(CurvedAnimation(
+            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+          ),
+        );
+        rotateAnim = Tween<double>(begin: 0, end: 1.0).animate(
+          CurvedAnimation(
             parent: _animationController,
             curve: Interval(0.0, 1.0, curve: widget.curve),
-            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve)));
+            reverseCurve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+          ),
+        );
         break;
       case StyledToastAnimation.none:
         break;
       default:
-        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(CurvedAnimation(
-            parent: _animationController,
-            curve: widget.curve,
-            reverseCurve: widget.reverseCurve));
+        fadeAnim = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: _animationController,
+              curve: widget.curve,
+              reverseCurve: widget.reverseCurve),
+        );
         break;
     }
 
@@ -861,171 +994,228 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
       switch (widget.reverseAnimation) {
         case StyledToastAnimation.fade:
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
 
           break;
         case StyledToastAnimation.slideToTop:
           slideToTopAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(0.0, -1.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
 
           break;
         case StyledToastAnimation.slideToTopFade:
           slideToTopAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(0.0, -1.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(0.0, -1.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
           break;
         case StyledToastAnimation.slideToBottom:
           slideToBottomAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(0.0, 1.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
 
           break;
         case StyledToastAnimation.slideToBottomFade:
           slideToBottomAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(0.0, 1.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(0.0, 1.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
           break;
         case StyledToastAnimation.slideToLeft:
           slideToLeftAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(-1.0, 0.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(-1.0, 0.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
 
           break;
         case StyledToastAnimation.slideToLeftFade:
           slideToLeftAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(-1.0, 0.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(-1.0, 0.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
           break;
         case StyledToastAnimation.slideToRight:
           slideToRightAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(1.0, 0.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(1.0, 0.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
 
           break;
         case StyledToastAnimation.slideToRightFade:
           slideToRightAnimReverse = _reverseAnimController.drive(
-              Tween<Offset>(begin: Offset.zero, end: Offset(1.0, 0.0))
-                  .chain(CurveTween(
-            curve: widget.reverseCurve,
-          )));
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+            Tween<Offset>(
+                    begin: widget.reverseStartOffset ?? Offset.zero,
+                    end: widget.reverseEndOffset ?? Offset(1.0, 0.0))
+                .chain(
+              CurveTween(
+                curve: widget.reverseCurve,
+              ),
+            ),
+          );
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
           break;
         case StyledToastAnimation.size:
           sizeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
-              CurvedAnimation(
-                  parent: _reverseAnimController,
-                  curve: widget.reverseCurve,
-                  reverseCurve: widget.reverseCurve));
+            CurvedAnimation(
+                parent: _reverseAnimController,
+                curve: widget.reverseCurve,
+                reverseCurve: widget.reverseCurve),
+          );
           break;
         case StyledToastAnimation.sizeFade:
           sizeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
-              CurvedAnimation(
-                  parent: _reverseAnimController,
-                  curve: widget.reverseCurve,
-                  reverseCurve: widget.reverseCurve));
+            CurvedAnimation(
+                parent: _reverseAnimController,
+                curve: widget.reverseCurve,
+                reverseCurve: widget.reverseCurve),
+          );
 
           fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
-              CurvedAnimation(
-                  parent: _reverseAnimController,
-                  curve: widget.reverseCurve,
-                  reverseCurve: widget.reverseCurve));
+            CurvedAnimation(
+                parent: _reverseAnimController,
+                curve: widget.reverseCurve,
+                reverseCurve: widget.reverseCurve),
+          );
           break;
         case StyledToastAnimation.scale:
-          scaleAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+          scaleAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
           break;
         case StyledToastAnimation.fadeScale:
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
-          ));
-          scaleAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
-          ));
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+            ),
+          );
+          scaleAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+            ),
+          );
           break;
         case StyledToastAnimation.rotate:
-          rotateAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+          rotateAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
           break;
         case StyledToastAnimation.scaleRotate:
-          scaleAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
-          ));
-          rotateAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
-          ));
+          scaleAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+            ),
+          );
+          rotateAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+            ),
+          );
           break;
         case StyledToastAnimation.fadeRotate:
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
-          ));
-          rotateAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
-          ));
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+            ),
+          );
+          rotateAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: Interval(0.0, 1.0, curve: widget.reverseCurve),
+            ),
+          );
           break;
         case StyledToastAnimation.none:
           break;
         default:
-          fadeAnimReverse =
-              Tween<double>(begin: 1.0, end: 0.0).animate(CurvedAnimation(
-            parent: _reverseAnimController,
-            curve: widget.reverseCurve,
-          ));
+          fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
+            CurvedAnimation(
+              parent: _reverseAnimController,
+              curve: widget.reverseCurve,
+            ),
+          );
           break;
       }
     } else {}
@@ -1191,9 +1381,10 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         break;
       case StyledToastAnimation.size:
         w = Align(
-          alignment: Alignment.center,
+          alignment: widget.alignment ?? Alignment.center,
           child: SizeTransition(
             sizeFactor: sizeAnim,
+            axis: widget.axis ?? Axis.vertical,
             child: w,
           ),
         );
@@ -1228,7 +1419,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       case StyledToastAnimation.rotate:
         w = RotationTransition(
           turns: rotateAnim,
-          alignment: FractionalOffset.center,
+          alignment: widget.alignment ?? FractionalOffset.center,
           child: w,
         );
         break;
@@ -1237,7 +1428,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           opacity: fadeAnim,
           child: RotationTransition(
             turns: rotateAnim,
-            alignment: FractionalOffset.center,
+            alignment: widget.alignment ?? FractionalOffset.center,
             child: w,
           ),
         );
@@ -1247,7 +1438,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           scale: scaleAnim,
           child: RotationTransition(
             turns: rotateAnim,
-            alignment: FractionalOffset.center,
+            alignment: widget.alignment ?? FractionalOffset.center,
             child: w,
           ),
         );
@@ -1534,6 +1725,24 @@ class _StyledToastTheme extends InheritedWidget {
   ///Position of the toast widget in current window
   final StyledToastPosition toastPositions;
 
+  ///Alignment of animation, like size, rotate animation.
+  final AlignmentGeometry alignment;
+
+  ///Axis of animation, like size animation
+  final Axis axis;
+
+  ///Start offset of slide animation
+  final Offset startOffset;
+
+  ///End offset of slide animation
+  final Offset endOffset;
+
+  ///Start offset of reverse slide animation
+  final Offset reverseStartOffset;
+
+  ///End offset of reverse slide animation
+  final Offset reverseEndOffset;
+
   ///Toast animation
   final StyledToastAnimation toastAnimation;
 
@@ -1567,6 +1776,12 @@ class _StyledToastTheme extends InheritedWidget {
     this.duration,
     this.animDuration,
     this.toastPositions,
+    this.alignment,
+    this.axis,
+    this.startOffset,
+    this.endOffset,
+    this.reverseStartOffset,
+    this.reverseEndOffset,
     this.toastAnimation,
     this.reverseAnimation,
     this.curve,

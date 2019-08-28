@@ -1,3 +1,9 @@
+## [1.2.0]
+
+Add axis, alignment support to rotate and size animation.
+Add start offset, end offset, reverse start offset, reverse end offset to slide animation.
+
+
 ## [1.1.0+5]
 
 Fix bugs.
