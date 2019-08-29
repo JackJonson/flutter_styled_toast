@@ -355,6 +355,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.size,
                     reverseAnimation: StyledToastAnimation.size,
+                    alignment: Alignment.center,
+                    axis: Axis.horizontal,
                     position: StyledToastPosition.center,
                     animDuration: Duration(milliseconds: 400),
                     duration: Duration(seconds: 2),
