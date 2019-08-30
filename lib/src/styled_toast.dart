@@ -1412,25 +1412,20 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         );
         break;
       case StyledToastAnimation.size:
-        w = Align(
-          alignment: widget.alignment ?? Alignment.center,
-          child: SizeTransition(
-            sizeFactor: sizeAnim,
-            axisAlignment: 1.0,
-            child: w,
-          ),
+        w = SizeTransition(
+          sizeFactor: sizeAnim,
+          axisAlignment: 0.0,
+          axis: Axis.horizontal,
+          child: w,
         );
         break;
       case StyledToastAnimation.sizeFade:
-        w = Align(
-          alignment: widget.alignment ?? Alignment.center,
-          child: SizeTransition(
-            sizeFactor: sizeAnim,
-            axis: Axis.horizontal,
-            child: FadeTransition(
-              opacity: fadeAnim,
-              child: w,
-            ),
+        w =  SizeTransition(
+          sizeFactor: sizeAnim,
+          axis: Axis.horizontal,
+          child: FadeTransition(
+            opacity: fadeAnim,
+            child: w,
           ),
         );
         break;
