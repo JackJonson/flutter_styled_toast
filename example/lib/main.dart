@@ -32,11 +32,13 @@ class _MyAppState extends State<MyApp> {
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-      toastAnimation: StyledToastAnimation.slideFromTopFade,
+      toastAnimation: StyledToastAnimation.size,
       reverseAnimation: StyledToastAnimation.slideToTopFade,
       duration: Duration(seconds: 4),
       animDuration: Duration(seconds: 1),
-      toastPositions: StyledToastPosition.bottom,
+      alignment: Alignment.center,
+      axis: Axis.horizontal,
+      toastPositions: StyledToastPosition.center,
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastLinearToSlowEaseIn,
       dismissOtherOnShow: true,
@@ -109,6 +111,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast(
                   'This is normal toast',
                   context: context,
+                  axis: Axis.vertical,
                 );
               },
             ),
