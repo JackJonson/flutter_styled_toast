@@ -37,7 +37,6 @@ class _MyAppState extends State<MyApp> {
       duration: Duration(seconds: 4),
       animDuration: Duration(seconds: 1),
       alignment: Alignment.center,
-      axis: Axis.horizontal,
       toastPositions: StyledToastPosition.center,
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastLinearToSlowEaseIn,

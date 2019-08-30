@@ -1417,7 +1417,6 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           child: SizeTransition(
             sizeFactor: sizeAnim,
             axisAlignment: 1.0,
-            axis: Axis.horizontal,
             child: w,
           ),
         );
