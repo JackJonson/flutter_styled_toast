@@ -34,6 +34,8 @@ class _MyAppState extends State<MyApp> {
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
       toastAnimation: StyledToastAnimation.size,
       reverseAnimation: StyledToastAnimation.slideToTopFade,
+      startOffset: Offset(0.0, 3.0),
+      reverseEndOffset: Offset(0.0, 3.0),
       duration: Duration(seconds: 4),
       animDuration: Duration(seconds: 1),
       alignment: Alignment.center,
