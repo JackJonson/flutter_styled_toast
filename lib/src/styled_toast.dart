@@ -1420,7 +1420,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         );
         break;
       case StyledToastAnimation.sizeFade:
-        w =  SizeTransition(
+        w = SizeTransition(
           sizeFactor: sizeAnim,
           axis: Axis.horizontal,
           child: FadeTransition(
@@ -1596,7 +1596,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         case StyledToastAnimation.rotate:
           w = RotationTransition(
             turns: rotateAnimReverse,
-            alignment: widget.alignment ??FractionalOffset.center,
+            alignment: widget.alignment ?? FractionalOffset.center,
             child: w,
           );
           break;
@@ -1605,7 +1605,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             opacity: fadeAnimReverse,
             child: RotationTransition(
               turns: rotateAnimReverse,
-              alignment: widget.alignment ??FractionalOffset.center,
+              alignment: widget.alignment ?? FractionalOffset.center,
               child: w,
             ),
           );
@@ -1615,7 +1615,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             scale: scaleAnimReverse,
             child: RotationTransition(
               turns: rotateAnimReverse,
-              alignment: widget.alignment ??FractionalOffset.center,
+              alignment: widget.alignment ?? FractionalOffset.center,
               child: w,
             ),
           );
