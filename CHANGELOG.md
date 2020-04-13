@@ -1,3 +1,8 @@
+## [1.2.1]
+
+Add start offset, reverse end offset in StyledToast.
+
+
 ## [1.2.0]
 
 Add axis, alignment support to rotate and size animation.

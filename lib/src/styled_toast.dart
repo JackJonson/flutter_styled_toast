@@ -164,6 +164,8 @@ ToastFuture showToastWidget(
 
   startOffset ??= _StyledToastTheme.of(context)?.startOffset;
   endOffset ??= _StyledToastTheme.of(context)?.endOffset;
+  reverseStartOffset ??= _StyledToastTheme.of(context)?.reverseStartOffset;
+  reverseEndOffset ??= _StyledToastTheme.of(context)?.reverseEndOffset;
 
   curve ??= curve ?? _StyledToastTheme.of(context)?.curve ?? Curves.linear;
 
@@ -455,6 +457,24 @@ class StyledToast extends StatefulWidget {
   ///Toast reverse animation
   final StyledToastAnimation reverseAnimation;
 
+  ///Alignment of animation, like size, rotate animation.
+  final AlignmentGeometry alignment;
+
+  ///Axis of animation, like size animation
+  final Axis axis;
+
+  ///Start offset of slide animation
+  final Offset startOffset;
+
+  ///End offset of slide animation
+  final Offset endOffset;
+
+  ///Start offset of reverse slide animation
+  final Offset reverseStartOffset;
+
+  ///End offset of reverse slide animation
+  final Offset reverseEndOffset;
+
   ///Animation curve
   final Curve curve;
 
@@ -483,8 +503,14 @@ class StyledToast extends StatefulWidget {
       this.duration,
       this.animDuration,
       this.toastPositions,
-      this.toastAnimation = StyledToastAnimation.fade,
+      this.toastAnimation,
       this.reverseAnimation,
+      this.alignment,
+      this.axis,
+      this.startOffset,
+      this.endOffset,
+      this.reverseStartOffset,
+      this.reverseEndOffset,
       this.curve,
       this.reverseCurve,
       this.dismissOtherOnShow = true,
@@ -565,6 +591,12 @@ class _StyledToastState extends State<StyledToast> {
       toastPositions: widget.toastPositions,
       toastAnimation: widget.toastAnimation,
       reverseAnimation: widget.reverseAnimation,
+      alignment: widget.alignment,
+      axis: widget.axis,
+      startOffset: widget.startOffset,
+      endOffset: widget.endOffset,
+      reverseStartOffset: widget.reverseStartOffset,
+      reverseEndOffset: widget.reverseEndOffset,
       curve: widget.curve,
       reverseCurve: widget.reverseCurve,
       dismissOtherOnShow: widget.dismissOtherOnShow,
@@ -1380,24 +1412,20 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         );
         break;
       case StyledToastAnimation.size:
-        w = Align(
-          alignment: widget.alignment ?? Alignment.center,
-          child: SizeTransition(
-            sizeFactor: sizeAnim,
-            axis: widget.axis ?? Axis.vertical,
-            child: w,
-          ),
+        w = SizeTransition(
+          sizeFactor: sizeAnim,
+          axisAlignment: 0.0,
+          axis: Axis.horizontal,
+          child: w,
         );
         break;
       case StyledToastAnimation.sizeFade:
-        w = Align(
-          alignment: Alignment.center,
-          child: SizeTransition(
-            sizeFactor: sizeAnim,
-            child: FadeTransition(
-              opacity: fadeAnim,
-              child: w,
-            ),
+        w = SizeTransition(
+          sizeFactor: sizeAnim,
+          axis: Axis.horizontal,
+          child: FadeTransition(
+            opacity: fadeAnim,
+            child: w,
           ),
         );
         break;
@@ -1412,6 +1440,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           opacity: fadeAnim,
           child: ScaleTransition(
             scale: scaleAnim,
+            alignment: widget.alignment ?? Alignment.center,
             child: w,
           ),
         );
@@ -1436,6 +1465,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       case StyledToastAnimation.scaleRotate:
         w = ScaleTransition(
           scale: scaleAnim,
+          alignment: widget.alignment ?? Alignment.center,
           child: RotationTransition(
             turns: rotateAnim,
             alignment: widget.alignment ?? FractionalOffset.center,
@@ -1527,7 +1557,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           break;
         case StyledToastAnimation.size:
           w = Align(
-            alignment: Alignment.center,
+            alignment: widget.alignment ?? Alignment.center,
             child: SizeTransition(
               sizeFactor: sizeAnimReverse,
               child: w,
@@ -1538,7 +1568,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           w = FadeTransition(
             opacity: fadeAnimReverse,
             child: Align(
-              alignment: Alignment.center,
+              alignment: widget.alignment ?? Alignment.center,
               child: SizeTransition(
                 sizeFactor: sizeAnimReverse,
                 child: w,
@@ -1549,6 +1579,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         case StyledToastAnimation.scale:
           w = ScaleTransition(
             scale: scaleAnimReverse,
+            alignment: widget.alignment ?? Alignment.center,
             child: w,
           );
           break;
@@ -1557,6 +1588,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             opacity: fadeAnimReverse,
             child: ScaleTransition(
               scale: scaleAnimReverse,
+              alignment: widget.alignment ?? Alignment.center,
               child: w,
             ),
           );
@@ -1564,7 +1596,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         case StyledToastAnimation.rotate:
           w = RotationTransition(
             turns: rotateAnimReverse,
-            alignment: FractionalOffset.center,
+            alignment: widget.alignment ?? FractionalOffset.center,
             child: w,
           );
           break;
@@ -1573,7 +1605,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             opacity: fadeAnimReverse,
             child: RotationTransition(
               turns: rotateAnimReverse,
-              alignment: FractionalOffset.center,
+              alignment: widget.alignment ?? FractionalOffset.center,
               child: w,
             ),
           );
@@ -1583,7 +1615,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             scale: scaleAnimReverse,
             child: RotationTransition(
               turns: rotateAnimReverse,
-              alignment: FractionalOffset.center,
+              alignment: widget.alignment ?? FractionalOffset.center,
               child: w,
             ),
           );
