@@ -26,10 +26,13 @@ StyledToast(
   backgroundColor: Color(0x99000000),
   borderRadius: BorderRadius.circular(5.0),
   textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+  toastPositions: StyledToastPosition.bottom,
   toastAnimation: StyledToastAnimation.fade,
   reverseAnimation: StyledToastAnimation.fade,
   curve: Curves.fastOutSlowIn,
   reverseCurve: Curves.fastLinearToSlowEaseIn,
+  duration: Duration(seconds: 4),
+  animDuration: Duration(seconds: 1),
   dismissOtherOnShow: true,
   movingOnWindowChange: true,
   child: MaterialApp(
