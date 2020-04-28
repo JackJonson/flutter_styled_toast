@@ -633,7 +633,7 @@ class _StyledToastWidget extends StatefulWidget {
   ///Toast position
   final StyledToastPosition position;
 
-  ///Alignment of animation, like size, rotate animation.
+  ///Alignment of animation, like size, scale, rotate animation.
   final AlignmentGeometry alignment;
 
   ///Axis of animation, like size animation
@@ -669,7 +669,7 @@ class _StyledToastWidget extends StatefulWidget {
     this.reverseCurve = Curves.linear,
     this.position = StyledToastPosition.bottom,
     this.alignment = Alignment.center,
-    this.axis = Axis.vertical,
+    this.axis = Axis.horizontal,
     this.startOffset,
     this.endOffset,
     this.reverseStartOffset,
@@ -1286,6 +1286,16 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           padding: EdgeInsets.only(top: offset),
           child: container,
         );
+      } else if (Alignment.topLeft == alignment) {
+        container = Padding(
+          padding: EdgeInsets.only(top: offset),
+          child: container,
+        );
+      } else if (Alignment.topRight == alignment) {
+        container = Padding(
+          padding: EdgeInsets.only(top: offset),
+          child: container,
+        );
       } else if (Alignment.centerLeft == alignment) {
         container = Padding(
           padding: EdgeInsets.only(left: offset),
@@ -1294,6 +1304,16 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       } else if (Alignment.centerRight == alignment) {
         container = Padding(
           padding: EdgeInsets.only(right: offset),
+          child: container,
+        );
+      } else if (Alignment.bottomLeft == alignment) {
+        container = Padding(
+          padding: EdgeInsets.only(bottom: offset),
+          child: container,
+        );
+      } else if (Alignment.bottomRight == alignment) {
+        container = Padding(
+          padding: EdgeInsets.only(bottom: offset),
           child: container,
         );
       } else {
@@ -1307,12 +1327,11 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
     }
 
     var mediaQueryData = MediaQueryData.fromWindow(ui.window);
-    Widget container = AnimatedContainer(
+    Widget container = Container(
       padding: EdgeInsets.only(
           bottom: mediaQueryData.padding.bottom,
           top: mediaQueryData.padding.top),
       alignment: alignment,
-      duration: widget.animDuration,
       child: w,
     );
 
@@ -1327,6 +1346,16 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         padding: EdgeInsets.only(top: offset),
         child: container,
       );
+    } else if (Alignment.topLeft == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(top: offset),
+        child: container,
+      );
+    } else if (Alignment.topRight == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(top: offset),
+        child: container,
+      );
     } else if (Alignment.centerLeft == alignment) {
       container = Padding(
         padding: EdgeInsets.only(left: offset),
@@ -1337,7 +1366,19 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         padding: EdgeInsets.only(right: offset),
         child: container,
       );
-    } else {}
+    } else if (Alignment.bottomLeft == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(bottom: offset),
+        child: container,
+      );
+    } else if (Alignment.bottomRight == alignment) {
+      container = Padding(
+        padding: EdgeInsets.only(bottom: offset),
+        child: container,
+      );
+    } else {
+
+    }
 
     return container;
   }
@@ -1415,14 +1456,14 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         w = SizeTransition(
           sizeFactor: sizeAnim,
           axisAlignment: 0.0,
-          axis: Axis.horizontal,
+          axis: widget.axis ?? Axis.horizontal,
           child: w,
         );
         break;
       case StyledToastAnimation.sizeFade:
         w = SizeTransition(
           sizeFactor: sizeAnim,
-          axis: Axis.horizontal,
+          axis: widget.axis ?? Axis.horizontal,
           child: FadeTransition(
             opacity: fadeAnim,
             child: w,
@@ -1432,6 +1473,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       case StyledToastAnimation.scale:
         w = ScaleTransition(
           scale: scaleAnim,
+          alignment: widget.alignment ?? Alignment.center,
           child: w,
         );
         break;
@@ -1559,6 +1601,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           w = Align(
             alignment: widget.alignment ?? Alignment.center,
             child: SizeTransition(
+              axis: widget.axis ?? Axis.horizontal,
               sizeFactor: sizeAnimReverse,
               child: w,
             ),
@@ -1570,6 +1613,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
             child: Align(
               alignment: widget.alignment ?? Alignment.center,
               child: SizeTransition(
+                axis: widget.axis ?? Axis.horizontal,
                 sizeFactor: sizeAnimReverse,
                 child: w,
               ),

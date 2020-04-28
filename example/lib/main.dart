@@ -34,14 +34,14 @@ class _MyAppState extends State<MyApp> {
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
       toastAnimation: StyledToastAnimation.size,
       reverseAnimation: StyledToastAnimation.slideToTopFade,
-      startOffset: Offset(0.0, 3.0),
-      reverseEndOffset: Offset(0.0, 3.0),
+      startOffset: Offset(0.0, -1.0),
+      reverseEndOffset: Offset(0.0, -1.0),
       duration: Duration(seconds: 4),
       animDuration: Duration(seconds: 1),
       alignment: Alignment.center,
       toastPositions: StyledToastPosition.center,
       curve: Curves.fastOutSlowIn,
-      reverseCurve: Curves.fastLinearToSlowEaseIn,
+      reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
       movingOnWindowChange: true,
       child: MaterialApp(
@@ -112,7 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 showToast(
                   'This is normal toast',
                   context: context,
-                  axis: Axis.vertical,
+                  axis: Axis.horizontal,
                 );
               },
             ),
@@ -146,7 +146,10 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
               onTap: () {
                 showToast('This is normal toast with position',
-                    context: context, position: StyledToastPosition.center);
+                    context: context,
+                    toastHorizontalMargin: 0.0,
+                    position: StyledToastPosition(
+                        align: Alignment.center, offset: 20.0));
               },
             ),
             Divider(
@@ -213,13 +216,14 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromTopFade,
                     reverseAnimation: StyledToastAnimation.slideToTopFade,
-                    position: StyledToastPosition.top,
+                    position: StyledToastPosition(
+                        align: Alignment.topCenter, offset: 0.0),
                     startOffset: Offset(0.0, -3.0),
                     reverseEndOffset: Offset(0.0, -3.0),
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1),
-                    curve: Curves.elasticOut,
+                    curve: Curves.fastLinearToSlowEaseIn,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
@@ -259,11 +263,12 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseAnimation: StyledToastAnimation.slideToBottomFade,
                     startOffset: Offset(0.0, 3.0),
                     reverseEndOffset: Offset(0.0, 3.0),
-                    position: StyledToastPosition.bottom,
+                    position: StyledToastPosition(
+                        align: Alignment.bottomCenter, offset: 0.0),
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(seconds: 1),
-                    curve: Curves.elasticOut,
+                    animDuration: Duration(milliseconds: 400),
+                    curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
@@ -280,6 +285,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     animation: StyledToastAnimation.slideFromLeft,
                     reverseAnimation: StyledToastAnimation.slideToTop,
                     position: StyledToastPosition.top,
+                    startOffset: Offset(-1.0, 0.0),
+                    reverseEndOffset: Offset(-1.0, 0.0),
                     //Toast duration   animDuration * 2 <= duration
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
@@ -300,12 +307,16 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromLeftFade,
                     reverseAnimation: StyledToastAnimation.slideToTopFade,
-                    position: StyledToastPosition.top,
+                    toastHorizontalMargin: 0.0,
+                    position: StyledToastPosition(
+                        align: Alignment.topLeft, offset: 20.0),
+                    startOffset: Offset(-1.0, 0.0),
+                    reverseEndOffset: Offset(-1.0, 0.0),
                     //Toast duration   animDuration * 2 <= duration
                     duration: Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
                     animDuration: Duration(seconds: 1),
-                    curve: Curves.elasticOut,
+                    curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
@@ -321,10 +332,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromRight,
                     reverseAnimation: StyledToastAnimation.slideToRight,
-                    position: StyledToastPosition.top,
+                    position: StyledToastPosition(
+                        align: Alignment.centerRight, offset: 20.0),
+                    startOffset: Offset(1.0, 0.0),
+                    reverseEndOffset: Offset(1.0, 0.0),
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
-                    curve: Curves.linear,
+                    curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
@@ -340,10 +354,13 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromRightFade,
                     reverseAnimation: StyledToastAnimation.slideToRightFade,
-                    position: StyledToastPosition.top,
+                    position: StyledToastPosition(
+                        align: Alignment.topRight, offset: 20.0),
+                    startOffset: Offset(1.0, 0.0),
+                    reverseEndOffset: Offset(1.0, 0.0),
                     animDuration: Duration(seconds: 1),
                     duration: Duration(seconds: 4),
-                    curve: Curves.linear,
+                    curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
@@ -359,7 +376,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.size,
                     reverseAnimation: StyledToastAnimation.size,
-                    alignment: Alignment.center,
+                    alignment: Alignment.bottomCenter,
                     axis: Axis.horizontal,
                     position: StyledToastPosition.center,
                     animDuration: Duration(milliseconds: 400),
@@ -380,7 +397,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.sizeFade,
                     reverseAnimation: StyledToastAnimation.sizeFade,
-                    position: StyledToastPosition.center,
+                    position: StyledToastPosition.top,
                     animDuration: Duration(milliseconds: 400),
                     duration: Duration(seconds: 2),
                     curve: Curves.linear,

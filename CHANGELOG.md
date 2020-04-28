@@ -1,3 +1,8 @@
+## [1.3.0]
+
+@todo
+
+
 ## [1.2.1]
 
 Add start offset, reverse end offset in StyledToast.
