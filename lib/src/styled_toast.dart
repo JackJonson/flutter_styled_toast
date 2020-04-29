@@ -1451,28 +1451,35 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         );
         break;
       case StyledToastAnimation.size:
-        w = Align(
-          child: SizeTransition(
-            sizeFactor: sizeAnim,
-            axisAlignment: 0.0,
-            axis: widget.axis ?? Axis.horizontal,
-            child: w,
+        w = UnconstrainedBox(
+          child: Container(
+            child: Align(
+              child: SizeTransition(
+                sizeFactor: sizeAnim,
+                axisAlignment: 0.0,
+                axis: widget.axis ?? Axis.horizontal,
+                child: w,
+              ),
+              alignment: widget.alignment ?? Alignment.center,
+            ),
+            width: MediaQuery.of(context).size.width,
           ),
-          alignment: widget.alignment ?? Alignment.center,
         );
         break;
       case StyledToastAnimation.sizeFade:
-        w = Align(
-          child: SizeTransition(
-            sizeFactor: sizeAnim,
-            axisAlignment: 0.0,
-            axis: widget.axis ?? Axis.horizontal,
-            child: FadeTransition(
-              opacity: fadeAnim,
-              child: w,
+        w = UnconstrainedBox(
+          child: Align(
+            child: SizeTransition(
+              sizeFactor: sizeAnim,
+              axisAlignment: 0.0,
+              axis: widget.axis ?? Axis.horizontal,
+              child: FadeTransition(
+                opacity: fadeAnim,
+                child: w,
+              ),
             ),
+            alignment: widget.alignment ?? Alignment.center,
           ),
-          alignment: widget.alignment ?? Alignment.center,
         );
         break;
       case StyledToastAnimation.scale:
@@ -1603,24 +1610,32 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           );
           break;
         case StyledToastAnimation.size:
-          w = Align(
-            alignment: widget.alignment ?? Alignment.center,
-            child: SizeTransition(
-              axis: widget.axis ?? Axis.horizontal,
-              sizeFactor: sizeAnimReverse,
-              child: w,
+          w = UnconstrainedBox(
+            child: Align(
+              child: Align(
+                alignment: widget.alignment ?? Alignment.center,
+                child: SizeTransition(
+                  axis: widget.axis ?? Axis.horizontal,
+                  sizeFactor: sizeAnimReverse,
+                  child: w,
+                ),
+              ),
             ),
           );
           break;
         case StyledToastAnimation.sizeFade:
-          w = FadeTransition(
-            opacity: fadeAnimReverse,
+          w = UnconstrainedBox(
             child: Align(
-              alignment: widget.alignment ?? Alignment.center,
-              child: SizeTransition(
-                axis: widget.axis ?? Axis.horizontal,
-                sizeFactor: sizeAnimReverse,
-                child: w,
+              child: FadeTransition(
+                opacity: fadeAnimReverse,
+                child: Align(
+                  alignment: widget.alignment ?? Alignment.center,
+                  child: SizeTransition(
+                    axis: widget.axis ?? Axis.horizontal,
+                    sizeFactor: sizeAnimReverse,
+                    child: w,
+                  ),
+                ),
               ),
             ),
           );

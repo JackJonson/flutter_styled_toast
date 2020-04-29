@@ -109,11 +109,11 @@ class _MyHomePageState extends State<MyHomePage> {
             ListTile(
               title: Text('Normal toast'),
               onTap: () {
-                showToast(
-                  'This is normal toast',
-                  context: context,
-                  axis: Axis.horizontal,
-                );
+                showToast('This is normal toast',
+                    context: context,
+                    axis: Axis.horizontal,
+                    alignment: Alignment.center,
+                    position: StyledToastPosition.bottom);
               },
             ),
             Divider(
@@ -145,10 +145,10 @@ class _MyHomePageState extends State<MyHomePage> {
                 "Normal toast(position)",
               ),
               onTap: () {
-                showToast('This is normal toast with position',
+                showToast('This',
                     context: context,
                     position: StyledToastPosition(
-                        align: Alignment.center, offset: 20.0));
+                        align: Alignment.topRight, offset: 20.0));
               },
             ),
             Divider(
@@ -547,9 +547,10 @@ class _MyHomePageState extends State<MyHomePage> {
                     reverseAnimation: StyledToastAnimation.slideToLeft,
                     alignment: Alignment.centerLeft,
                     axis: Axis.horizontal,
-                    position: StyledToastPosition(align: Alignment.topCenter,offset: 0.0),
-                    startOffset: Offset(-1.0,0.0),
-                    reverseEndOffset: Offset(-1.0,0.0),
+                    position: StyledToastPosition(
+                        align: Alignment.topCenter, offset: 0.0),
+                    startOffset: Offset(-1.0, 0.0),
+                    reverseEndOffset: Offset(-1.0, 0.0),
                     animDuration: Duration(milliseconds: 400),
                     duration: Duration(seconds: 2),
                     curve: Curves.linearToEaseOut,
