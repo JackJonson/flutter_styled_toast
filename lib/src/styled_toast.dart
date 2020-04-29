@@ -755,7 +755,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   double get offset => widget.position.offset;
 
-  AlignmentGeometry get alignment => widget.position.align;
+  AlignmentGeometry get positionAlignment => widget.position.align;
 
   @override
   void initState() {
@@ -1271,47 +1271,47 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         padding: EdgeInsets.only(
             bottom: mediaQueryData.padding.bottom,
             top: mediaQueryData.padding.top),
-        alignment: alignment,
+        alignment: positionAlignment,
         child: w,
       );
 
-      if (Alignment.center == alignment) {
-      } else if (Alignment.bottomCenter == alignment) {
+      if (Alignment.center == positionAlignment) {
+      } else if (Alignment.bottomCenter == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(bottom: offset),
           child: container,
         );
-      } else if (Alignment.topCenter == alignment) {
+      } else if (Alignment.topCenter == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(top: offset),
           child: container,
         );
-      } else if (Alignment.topLeft == alignment) {
+      } else if (Alignment.topLeft == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(top: offset),
           child: container,
         );
-      } else if (Alignment.topRight == alignment) {
+      } else if (Alignment.topRight == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(top: offset),
           child: container,
         );
-      } else if (Alignment.centerLeft == alignment) {
+      } else if (Alignment.centerLeft == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(left: offset),
           child: container,
         );
-      } else if (Alignment.centerRight == alignment) {
+      } else if (Alignment.centerRight == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(right: offset),
           child: container,
         );
-      } else if (Alignment.bottomLeft == alignment) {
+      } else if (Alignment.bottomLeft == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(bottom: offset),
           child: container,
         );
-      } else if (Alignment.bottomRight == alignment) {
+      } else if (Alignment.bottomRight == positionAlignment) {
         container = Padding(
           padding: EdgeInsets.only(bottom: offset),
           child: container,
@@ -1331,54 +1331,52 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
       padding: EdgeInsets.only(
           bottom: mediaQueryData.padding.bottom,
           top: mediaQueryData.padding.top),
-      alignment: alignment,
+      alignment: positionAlignment,
       child: w,
     );
 
-    if (Alignment.center == alignment) {
-    } else if (Alignment.bottomCenter == alignment) {
+    if (Alignment.center == positionAlignment) {
+    } else if (Alignment.bottomCenter == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(bottom: offset),
         child: container,
       );
-    } else if (Alignment.topCenter == alignment) {
+    } else if (Alignment.topCenter == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(top: offset),
         child: container,
       );
-    } else if (Alignment.topLeft == alignment) {
+    } else if (Alignment.topLeft == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(top: offset),
         child: container,
       );
-    } else if (Alignment.topRight == alignment) {
+    } else if (Alignment.topRight == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(top: offset),
         child: container,
       );
-    } else if (Alignment.centerLeft == alignment) {
+    } else if (Alignment.centerLeft == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(left: offset),
         child: container,
       );
-    } else if (Alignment.centerRight == alignment) {
+    } else if (Alignment.centerRight == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(right: offset),
         child: container,
       );
-    } else if (Alignment.bottomLeft == alignment) {
+    } else if (Alignment.bottomLeft == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(bottom: offset),
         child: container,
       );
-    } else if (Alignment.bottomRight == alignment) {
+    } else if (Alignment.bottomRight == positionAlignment) {
       container = Padding(
         padding: EdgeInsets.only(bottom: offset),
         child: container,
       );
-    } else {
-
-    }
+    } else {}
 
     return container;
   }
@@ -1453,21 +1451,28 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         );
         break;
       case StyledToastAnimation.size:
-        w = SizeTransition(
-          sizeFactor: sizeAnim,
-          axisAlignment: 0.0,
-          axis: widget.axis ?? Axis.horizontal,
-          child: w,
+        w = Align(
+          child: SizeTransition(
+            sizeFactor: sizeAnim,
+            axisAlignment: 0.0,
+            axis: widget.axis ?? Axis.horizontal,
+            child: w,
+          ),
+          alignment: widget.alignment ?? Alignment.center,
         );
         break;
       case StyledToastAnimation.sizeFade:
-        w = SizeTransition(
-          sizeFactor: sizeAnim,
-          axis: widget.axis ?? Axis.horizontal,
-          child: FadeTransition(
-            opacity: fadeAnim,
-            child: w,
+        w = Align(
+          child: SizeTransition(
+            sizeFactor: sizeAnim,
+            axisAlignment: 0.0,
+            axis: widget.axis ?? Axis.horizontal,
+            child: FadeTransition(
+              opacity: fadeAnim,
+              child: w,
+            ),
           ),
+          alignment: widget.alignment ?? Alignment.center,
         );
         break;
       case StyledToastAnimation.scale:

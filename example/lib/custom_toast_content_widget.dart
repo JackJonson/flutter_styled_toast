@@ -154,7 +154,7 @@ class BannerToastWidget extends StatelessWidget {
       BannerToastWidget(
         backgroundColor: context != null
             ? Theme.of(context).errorColor
-            : const Color(0xBFCC2E2E),
+            : const Color(0xEFCC2E2E),
         message: msg,
         textWidget: text,
       );
@@ -163,14 +163,11 @@ class BannerToastWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     Widget content = Container(
+      width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(17.0),
-      margin: EdgeInsets.symmetric(horizontal: 50.0),
-      decoration: ShapeDecoration(
-        color: backgroundColor ?? Theme.of(context).backgroundColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-      ),
+      height: 60.0,
+      alignment: Alignment.center,
+      color: backgroundColor ?? Theme.of(context).backgroundColor,
       child: textWidget ??
           Text(
             message ?? '',

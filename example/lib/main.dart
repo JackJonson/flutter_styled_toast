@@ -33,7 +33,7 @@ class _MyAppState extends State<MyApp> {
       borderRadius: BorderRadius.circular(5.0),
       textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
       toastAnimation: StyledToastAnimation.size,
-      reverseAnimation: StyledToastAnimation.slideToTopFade,
+      reverseAnimation: StyledToastAnimation.size,
       startOffset: Offset(0.0, -1.0),
       reverseEndOffset: Offset(0.0, -1.0),
       duration: Duration(seconds: 4),
@@ -147,7 +147,6 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with position',
                     context: context,
-                    toastHorizontalMargin: 0.0,
                     position: StyledToastPosition(
                         align: Alignment.center, offset: 20.0));
               },
@@ -332,8 +331,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromRight,
                     reverseAnimation: StyledToastAnimation.slideToRight,
-                    position: StyledToastPosition(
-                        align: Alignment.centerRight, offset: 20.0),
+                    position: StyledToastPosition.top,
                     startOffset: Offset(1.0, 0.0),
                     reverseEndOffset: Offset(1.0, 0.0),
                     animDuration: Duration(seconds: 1),
@@ -354,6 +352,7 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.slideFromRightFade,
                     reverseAnimation: StyledToastAnimation.slideToRightFade,
+                    toastHorizontalMargin: 0.0,
                     position: StyledToastPosition(
                         align: Alignment.topRight, offset: 20.0),
                     startOffset: Offset(1.0, 0.0),
@@ -544,12 +543,16 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToastWidget(BannerToastWidget.fail(msg: 'Request failed'),
                     context: context,
-                    animation: StyledToastAnimation.slideFromTop,
-                    reverseAnimation: StyledToastAnimation.slideToTop,
-                    position: StyledToastPosition.top,
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
-                    curve: Curves.elasticOut,
+                    animation: StyledToastAnimation.slideFromLeft,
+                    reverseAnimation: StyledToastAnimation.slideToLeft,
+                    alignment: Alignment.centerLeft,
+                    axis: Axis.horizontal,
+                    position: StyledToastPosition(align: Alignment.topCenter,offset: 0.0),
+                    startOffset: Offset(-1.0,0.0),
+                    reverseEndOffset: Offset(-1.0,0.0),
+                    animDuration: Duration(milliseconds: 400),
+                    duration: Duration(seconds: 2),
+                    curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
