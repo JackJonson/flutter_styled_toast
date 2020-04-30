@@ -9,3 +9,4 @@ export 'src/styled_toast.dart'
         StyledToastAnimation,
         ToastFuture,
         ToastManager;
+export 'src/custom_size_transition.dart';

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 import 'custom_toast_content_widget.dart';
 
-void main() => runApp(MyApp());
+void main() {
+  debugPaintSizeEnabled = false;
+  runApp(MyApp());
+}
 
 class MyApp extends StatefulWidget {
   @override
@@ -145,10 +149,11 @@ class _MyHomePageState extends State<MyHomePage> {
                 "Normal toast(position)",
               ),
               onTap: () {
-                showToast('This',
+                showToast('This is normal toast',
                     context: context,
+                    alignment: Alignment.center,
                     position: StyledToastPosition(
-                        align: Alignment.topRight, offset: 20.0));
+                        align: Alignment.bottomCenter, offset: 20.0));
               },
             ),
             Divider(
@@ -375,7 +380,6 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.size,
                     reverseAnimation: StyledToastAnimation.size,
-                    alignment: Alignment.bottomCenter,
                     axis: Axis.horizontal,
                     position: StyledToastPosition.center,
                     animDuration: Duration(milliseconds: 400),
@@ -396,7 +400,8 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.sizeFade,
                     reverseAnimation: StyledToastAnimation.sizeFade,
-                    position: StyledToastPosition.top,
+                    axis: Axis.horizontal,
+                    position: StyledToastPosition.center,
                     animDuration: Duration(milliseconds: 400),
                     duration: Duration(seconds: 2),
                     curve: Curves.linear,
@@ -513,9 +518,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.fade,
                     //Toast duration   animDuration * 2 <= duration
-                    duration: Duration(seconds: 4),
+                    duration: Duration(seconds: 2),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(seconds: 1), onDismiss: () {
+                    animDuration: Duration(milliseconds: 400), onDismiss: () {
                   print('onDismissed');
                   setState(() {
                     dismissRemind = 'dismissed';

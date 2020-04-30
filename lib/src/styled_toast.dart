@@ -1,6 +1,7 @@
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 ///Current context of the page which uses the toast
 BuildContext currentContext;
@@ -297,6 +298,11 @@ class StyledToastPosition {
   final AlignmentGeometry align;
 
   ///Toast position offset
+  ///if align is topLeft/topCenter/topRight, offset is the distance from top.
+  ///if align is centerLeft, offset is the distance from left.
+  ///if align is centerRight, offset is the distance from right.
+  ///if align is bottomLeft/bottomCenter/bottomRight, offset is the distance from bottom.
+  ///
   final double offset;
 
   const StyledToastPosition({this.align = Alignment.center, this.offset = 0.0});
@@ -633,7 +639,7 @@ class _StyledToastWidget extends StatefulWidget {
   ///Toast position
   final StyledToastPosition position;
 
-  ///Alignment of animation, like size, scale, rotate animation.
+  ///Alignment of animation, scale, rotate animation.
   final AlignmentGeometry alignment;
 
   ///Axis of animation, like size animation
@@ -1451,34 +1457,23 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
         );
         break;
       case StyledToastAnimation.size:
-        w = UnconstrainedBox(
-          child: Container(
-            child: Align(
-              child: SizeTransition(
-                sizeFactor: sizeAnim,
-                axisAlignment: 0.0,
-                axis: widget.axis ?? Axis.horizontal,
-                child: w,
-              ),
-              alignment: widget.alignment ?? Alignment.center,
-            ),
-            width: MediaQuery.of(context).size.width,
-          ),
+        w = CustomSizeTransition(
+          sizeFactor: sizeAnim,
+          alignment: positionAlignment ?? Alignment.center,
+          axisAlignment: 0.0,
+          axis: widget.axis ?? Axis.horizontal,
+          child: w,
         );
         break;
       case StyledToastAnimation.sizeFade:
-        w = UnconstrainedBox(
-          child: Align(
-            child: SizeTransition(
-              sizeFactor: sizeAnim,
-              axisAlignment: 0.0,
-              axis: widget.axis ?? Axis.horizontal,
-              child: FadeTransition(
-                opacity: fadeAnim,
-                child: w,
-              ),
-            ),
-            alignment: widget.alignment ?? Alignment.center,
+        w = CustomSizeTransition(
+          sizeFactor: sizeAnim,
+          axisAlignment: 0.0,
+          alignment: positionAlignment ?? Alignment.center,
+          axis: widget.axis ?? Axis.horizontal,
+          child: FadeTransition(
+            opacity: fadeAnim,
+            child: w,
           ),
         );
         break;
@@ -1610,33 +1605,21 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
           );
           break;
         case StyledToastAnimation.size:
-          w = UnconstrainedBox(
-            child: Align(
-              child: Align(
-                alignment: widget.alignment ?? Alignment.center,
-                child: SizeTransition(
-                  axis: widget.axis ?? Axis.horizontal,
-                  sizeFactor: sizeAnimReverse,
-                  child: w,
-                ),
-              ),
-            ),
+          w = CustomSizeTransition(
+            alignment: positionAlignment ?? Alignment.center,
+            axis: widget.axis ?? Axis.horizontal,
+            sizeFactor: sizeAnimReverse,
+            child: w,
           );
           break;
         case StyledToastAnimation.sizeFade:
-          w = UnconstrainedBox(
-            child: Align(
-              child: FadeTransition(
-                opacity: fadeAnimReverse,
-                child: Align(
-                  alignment: widget.alignment ?? Alignment.center,
-                  child: SizeTransition(
-                    axis: widget.axis ?? Axis.horizontal,
-                    sizeFactor: sizeAnimReverse,
-                    child: w,
-                  ),
-                ),
-              ),
+          w = FadeTransition(
+            opacity: fadeAnimReverse,
+            child: CustomSizeTransition(
+              alignment: positionAlignment ?? Alignment.center,
+              axis: widget.axis ?? Axis.horizontal,
+              sizeFactor: sizeAnimReverse,
+              child: w,
             ),
           );
           break;

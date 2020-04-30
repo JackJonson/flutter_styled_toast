@@ -1,6 +1,6 @@
 ## [1.3.0]
-
-@todo
+Add toast position: topLeft, topRight, centerLeft, centerRight, bottomLeft, bottomRight.
+Add custom size transition to support alignment in size transition animation. Fix size transition bug. Modify example.
 
 
 ## [1.2.1]
