@@ -583,31 +583,33 @@ class _StyledToastState extends State<StyledToast> {
         );
 
     // TODO: implement build
-    return _StyledToastTheme(
-      child: wrapper,
-      textAlign: textAlign,
-      textDirection: direction,
-      borderRadius: borderRadius,
-      backgroundColor: backgroundColor,
-      textPadding: textPadding,
-      textStyle: textStyle,
-      shapeBorder: widget.shapeBorder,
-      duration: widget.duration,
-      animDuration: widget.animDuration,
-      toastPositions: widget.toastPositions,
-      toastAnimation: widget.toastAnimation,
-      reverseAnimation: widget.reverseAnimation,
-      alignment: widget.alignment,
-      axis: widget.axis,
-      startOffset: widget.startOffset,
-      endOffset: widget.endOffset,
-      reverseStartOffset: widget.reverseStartOffset,
-      reverseEndOffset: widget.reverseEndOffset,
-      curve: widget.curve,
-      reverseCurve: widget.reverseCurve,
-      dismissOtherOnShow: widget.dismissOtherOnShow,
-      movingOnWindowChange: widget.movingOnWindowChange,
-      onDismiss: widget.onDismiss,
+    return MaterialApp(
+      home: _StyledToastTheme(
+        child: wrapper,
+        textAlign: textAlign,
+        textDirection: direction,
+        borderRadius: borderRadius,
+        backgroundColor: backgroundColor,
+        textPadding: textPadding,
+        textStyle: textStyle,
+        shapeBorder: widget.shapeBorder,
+        duration: widget.duration,
+        animDuration: widget.animDuration,
+        toastPositions: widget.toastPositions,
+        toastAnimation: widget.toastAnimation,
+        reverseAnimation: widget.reverseAnimation,
+        alignment: widget.alignment,
+        axis: widget.axis,
+        startOffset: widget.startOffset,
+        endOffset: widget.endOffset,
+        reverseStartOffset: widget.reverseStartOffset,
+        reverseEndOffset: widget.reverseEndOffset,
+        curve: widget.curve,
+        reverseCurve: widget.reverseCurve,
+        dismissOtherOnShow: widget.dismissOtherOnShow,
+        movingOnWindowChange: widget.movingOnWindowChange,
+        onDismiss: widget.onDismiss,
+      ),
     );
   }
 }
@@ -1877,5 +1879,5 @@ class _StyledToastTheme extends InheritedWidget {
   }
 
   static _StyledToastTheme of(BuildContext context) =>
-      context.inheritFromWidgetOfExactType(_StyledToastTheme);
+      context.dependOnInheritedWidgetOfExactType<_StyledToastTheme>();
 }

@@ -84,6 +84,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   String dismissRemind = '';
 
+  TextEditingController controller=TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -110,6 +112,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Normal Toast'),
               color: const Color(0xFFDDDDDD),
             ),
+            TextField(controller: controller,),
             ListTile(
               title: Text('Normal toast'),
               onTap: () {
