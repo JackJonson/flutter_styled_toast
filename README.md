@@ -22,6 +22,7 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 ```dart
 StyledToast(
+  locale: const Locale('en', 'US'), //You have to set this parameters to your locale
   textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
   backgroundColor: Color(0x99000000),
   borderRadius: BorderRadius.circular(5.0),
@@ -168,6 +169,7 @@ showToastWidget(Text('hello styled toast'));
 
 property             | description
 ---------------------|----------------------------
+locale               | Locale (Not Null)(required You have to set this parameters to your locale)
 child                | Widget (Not Null)(required)
 textAlign            | TextAlign (default TextAlign.center)    
 textDirection        | TextDirection (default TextDirection.ltr)  
@@ -254,6 +256,3 @@ reverseCurve         | Curve (default Curves.linear)
 ## Example
 [example](https://github.com/JackJonson/flutter_styled_toast/blob/master/example/lib/main.dart)
 
-
-## Thanks for
-[OkToast](https://github.com/OpenFlutter/flutter_oktoast)
