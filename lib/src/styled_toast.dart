@@ -2,6 +2,7 @@ import 'dart:collection';
 import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
 ///Current context of the page which uses the toast
@@ -695,10 +696,10 @@ class _StyledToastState extends State<StyledToast> {
     return MediaQuery(
       child: Localizations(
         delegates: [
-          DefaultMaterialLocalizations.delegate,
-          DefaultWidgetsLocalizations.delegate,
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
         ],
-        locale: resultLocale,
+        locale:  resultLocale,
         child: _StyledToastTheme(
           child: wrapper,
           textAlign: textAlign,
