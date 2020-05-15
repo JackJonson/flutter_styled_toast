@@ -596,7 +596,7 @@ class _StyledToastState extends State<StyledToast> {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        locale: widget.locale??const Locale('en', 'US'),
+        locale: widget.locale ?? const Locale('en', 'US'),
         child: _StyledToastTheme(
           child: wrapper,
           textAlign: textAlign,
