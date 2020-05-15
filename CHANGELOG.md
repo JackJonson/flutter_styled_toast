@@ -1,3 +1,7 @@
+## [1.3.1]
+Fix TextFields context menu exception with Flutter 1.17.0.
+
+
 ## [1.3.0]
 Add toast position: topLeft, topRight, centerLeft, centerRight, bottomLeft, bottomRight.
 Add custom size transition to support alignment in size transition animation. Fix size transition bug. Modify example.
