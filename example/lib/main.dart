@@ -31,7 +31,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement build
     final appTitle = 'Styled Toast Example';
     return StyledToast(
-      locale: const Locale('zh', 'CH'),///You have to set this parameters to your locale
+      locale: const Locale('en', 'US'),///You have to set this parameters to your locale
       textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
