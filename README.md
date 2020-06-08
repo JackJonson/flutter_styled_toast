@@ -13,7 +13,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ```yaml
 dependencies:
-  flutter_styled_toast: ^1.3.1
+  flutter_styled_toast: ^1.3.2
 ```
 
 ```dart

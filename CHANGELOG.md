@@ -1,3 +1,7 @@
+## [1.3.2]
+Fix unused import.
+
+
 ## [1.3.1]
 Add locale as required parameter in StyledToast.
 Fix TextFields context menu exception with Flutter 1.17.0.
