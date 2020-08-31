@@ -1,4 +1,5 @@
 import 'dart:ui' as ui;
+import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -220,11 +221,7 @@ ToastFuture showToastWidget(
     ToastManager().dismissAll();
   }
 
-  future = ToastFuture._(entry, onDismiss, key);
-
-  Future.delayed(duration, () {
-    future.dismiss();
-  });
+  future = ToastFuture._(duration, entry, onDismiss, key);
 
   Overlay.of(context).insert(entry);
   ToastManager().addFuture(future);
@@ -245,18 +242,26 @@ class ToastFuture {
   bool _isShow = true;
   final GlobalKey<_StyledToastWidgetState> _containerKey;
 
+  /// A [Timer] used to dismiss this toast future after the given period of time.
+  Timer _timer;
+
   ToastFuture._(
+    Duration duration,
     this._entry,
     this._onDismiss,
     this._containerKey,
-  );
+  ) {
+    _timer = Timer(duration, () => dismiss());
+  }
 
   void dismiss(
       {bool showAnim = false, Duration animDuration = _animationDuration}) {
     if (!_isShow) {
       return;
     }
+
     _isShow = false;
+    _timer.cancel();
     _onDismiss?.call();
     ToastManager().removeFuture(this);
 
@@ -771,7 +776,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
   ///Rotate animation reverse
   Animation<double> rotateAnimReverse;
 
-  double opacity = 0.0;
+  double opacity = 1.0;
 
   bool get movingOnWindowChange => widget.movingOnWindowChange;
 
@@ -779,27 +784,20 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   AlignmentGeometry get positionAlignment => widget.position.align;
 
+  /// A [Timer] needed to dismiss the toast with animation
+  /// after the given [duration] of time.
+  Timer _toastTimer;
+
   @override
   void initState() {
     super.initState();
 
     _initAnim();
 
-    //Start animation
-    Future.delayed(const Duration(milliseconds: 30), () async {
-      if (!mounted) {
-        return;
-      }
-      setState(() {
-        opacity = 1.0;
-      });
-      try {
-        await _animationController.forward().orCancel;
-      } on TickerCanceled {}
-    });
+    _animationController.forward();
 
     //Dismiss toast
-    Future.delayed(widget.duration - widget.animDuration, () async {
+    _toastTimer = Timer(widget.duration - widget.animDuration, () async {
       dismissToastAnim();
     });
 
@@ -1695,6 +1693,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   ///Dismiss toast
   void dismissToast() {
+    _toastTimer?.cancel();
     setState(() {
       opacity = 0.0;
     });
@@ -1718,6 +1717,7 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
 
   @override
   void dispose() {
+    _toastTimer?.cancel();
     WidgetsBinding.instance.removeObserver(this);
     if (_animationController != null) {
       _animationController.dispose();
