@@ -23,34 +23,33 @@ const double _defaultHorizontalMargin = 50.0;
 /// Show normal toast with style and animation
 /// Can be used without wrapping you app with StyledToast, but must specify context;
 /// When you wrap your app with StyledToast, [context] is optional;
-ToastFuture showToast(
-  String msg, {
-  BuildContext context,
-  Duration duration,
-  Duration animDuration,
-  StyledToastPosition position,
-  TextStyle textStyle,
-  EdgeInsetsGeometry textPadding,
-  double toastHorizontalMargin = _defaultHorizontalMargin,
-  Color backgroundColor,
-  BorderRadius borderRadius,
-  ShapeBorder shapeBorder,
-  VoidCallback onDismiss,
-  TextDirection textDirection,
-  bool dismissOtherToast,
-  bool movingOnWindowChange,
-  StyledToastAnimation animation,
-  StyledToastAnimation reverseAnimation,
-  AlignmentGeometry alignment,
-  Axis axis,
-  Offset startOffset,
-  Offset endOffset,
-  Offset reverseStartOffset,
-  Offset reverseEndOffset,
-  TextAlign textAlign,
-  Curve curve,
-  Curve reverseCurve,
-}) {
+ToastFuture showToast(String msg,
+    {BuildContext context,
+    Duration duration,
+    Duration animDuration,
+    StyledToastPosition position,
+    TextStyle textStyle,
+    EdgeInsetsGeometry textPadding,
+    double toastHorizontalMargin = _defaultHorizontalMargin,
+    Color backgroundColor,
+    BorderRadius borderRadius,
+    ShapeBorder shapeBorder,
+    VoidCallback onDismiss,
+    TextDirection textDirection,
+    bool dismissOtherToast,
+    bool movingOnWindowChange,
+    StyledToastAnimation animation,
+    StyledToastAnimation reverseAnimation,
+    AlignmentGeometry alignment,
+    Axis axis,
+    Offset startOffset,
+    Offset endOffset,
+    Offset reverseStartOffset,
+    Offset reverseEndOffset,
+    TextAlign textAlign,
+    Curve curve,
+    Curve reverseCurve,
+    bool fullWidth}) {
   context = context != null ? context : currentContext;
   assert(context != null);
 
@@ -78,19 +77,40 @@ ToastFuture showToast(
 
   textAlign ??= _StyledToastTheme.of(context)?.textAlign ?? TextAlign.center;
 
-  Widget widget = Container(
-    margin: EdgeInsets.symmetric(horizontal: toastHorizontalMargin ?? 50.0),
-    decoration: ShapeDecoration(
-      color: backgroundColor,
-      shape: shapeBorder,
-    ),
-    padding: textPadding,
-    child: Text(
-      msg ?? '',
-      style: textStyle,
-      textAlign: textAlign,
-    ),
-  );
+  fullWidth ??= false;
+
+  Widget widget = fullWidth
+      ? Row(children: <Widget>[
+          Expanded(
+              child: Container(
+            margin:
+                EdgeInsets.symmetric(horizontal: toastHorizontalMargin ?? 50.0),
+            decoration: ShapeDecoration(
+              color: backgroundColor,
+              shape: shapeBorder,
+            ),
+            padding: textPadding,
+            child: Text(
+              msg ?? '',
+              style: textStyle,
+              textAlign: textAlign,
+            ),
+          ))
+        ])
+      : Container(
+          margin:
+              EdgeInsets.symmetric(horizontal: toastHorizontalMargin ?? 50.0),
+          decoration: ShapeDecoration(
+            color: backgroundColor,
+            shape: shapeBorder,
+          ),
+          padding: textPadding,
+          child: Text(
+            msg ?? '',
+            style: textStyle,
+            textAlign: textAlign,
+          ),
+        );
 
   return showToastWidget(
     widget,
