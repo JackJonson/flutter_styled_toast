@@ -4,6 +4,9 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
+import 'package:flutter_styled_toast/src/styled_toast_manage.dart';
+import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
 
 ///Current context of the page which uses the toast
 BuildContext currentContext;
@@ -17,8 +20,9 @@ const _defaultDuration = Duration(
 ///When you use Curves.elasticOut, you can specify a longer duration to achieve beautiful effect
 ///But [animDuration] * 2  <= toast [duration], conditions must be met for toast to display properly
 ///so when you specify a longer animation duration, you must also specify toast duration to satisfy conditions above
-const _animationDuration = Duration(milliseconds: 400);
+const animationDuration = Duration(milliseconds: 400);
 
+///The default horizontal margin of toast
 const double _defaultHorizontalMargin = 50.0;
 
 /// Show normal toast with style and animation
@@ -56,7 +60,7 @@ ToastFuture showToast(
   context = context != null ? context : currentContext;
   assert(context != null);
 
-  _StyledToastTheme _toastTheme = _StyledToastTheme.of(context);
+  StyledToastTheme _toastTheme = StyledToastTheme.of(context);
 
   position ??= _toastTheme?.toastPositions ?? StyledToastPosition.bottom;
 
@@ -147,9 +151,9 @@ ToastFuture showToastWidget(
 
   context = context != null ? context : currentContext;
   assert(context != null);
-  _StyledToastTheme _toastTheme = _StyledToastTheme.of(context);
+  StyledToastTheme _toastTheme = StyledToastTheme.of(context);
   duration ??= _toastTheme?.duration ?? _defaultDuration;
-  animDuration ??= _toastTheme?.animDuration ?? _animationDuration;
+  animDuration ??= _toastTheme?.animDuration ?? animationDuration;
 
   dismissOtherToast ??= _toastTheme?.dismissOtherOnShow ?? true;
 
@@ -178,7 +182,7 @@ ToastFuture showToastWidget(
 
   onDismiss ??= onDismiss ?? _toastTheme?.onDismiss;
 
-  GlobalKey<_StyledToastWidgetState> key = GlobalKey();
+  GlobalKey<StyledToastWidgetState> key = GlobalKey();
 
   entry = OverlayEntry(builder: (ctx) {
     return IgnorePointer(
@@ -215,204 +219,12 @@ ToastFuture showToastWidget(
     ToastManager().dismissAll();
   }
 
-  future = ToastFuture._(duration, entry, onDismiss, key);
+  future = ToastFuture.create(duration, entry, onDismiss, key);
 
   Overlay.of(context).insert(entry);
   ToastManager().addFuture(future);
 
   return future;
-}
-
-/// use the method to dismiss all toast.
-void dismissAllToast({bool showAnim = false}) {
-  ToastManager().dismissAll(showAnim: showAnim);
-}
-
-/// Use the [dismiss] to dismiss toast.
-/// When the Toast is dismissed, call [onDismiss] if specified;
-class ToastFuture {
-  final OverlayEntry _entry;
-  final VoidCallback _onDismiss;
-  bool _isShow = true;
-  final GlobalKey<_StyledToastWidgetState> _containerKey;
-
-  /// A [Timer] used to dismiss this toast future after the given period of time.
-  Timer _timer;
-
-  ToastFuture._(
-    Duration duration,
-    this._entry,
-    this._onDismiss,
-    this._containerKey,
-  ) {
-    _timer = Timer(duration, () => dismiss());
-  }
-
-  void dismiss(
-      {bool showAnim = false, Duration animDuration = _animationDuration}) {
-    if (!_isShow) {
-      return;
-    }
-
-    _isShow = false;
-    _timer.cancel();
-    _onDismiss?.call();
-    ToastManager().removeFuture(this);
-
-    _containerKey.currentState?.dismissToast();
-    _entry.remove();
-  }
-}
-
-///Toast manager, manage toast list
-class ToastManager {
-  ToastManager._();
-
-  static ToastManager _instance;
-
-  factory ToastManager() {
-    _instance ??= ToastManager._();
-    return _instance;
-  }
-
-  Set<ToastFuture> toastSet = Set();
-
-  void dismissAll({bool showAnim = false}) {
-    toastSet.toList().forEach((v) {
-      v.dismiss(showAnim: showAnim);
-    });
-  }
-
-  void removeFuture(ToastFuture future) {
-    toastSet.remove(future);
-  }
-
-  void addFuture(ToastFuture future) {
-    toastSet.add(future);
-  }
-}
-
-///Toast position
-class StyledToastPosition {
-  ///Toast position align
-  final AlignmentGeometry align;
-
-  ///Toast position offset
-  ///if align is topLeft/topCenter/topRight, offset is the distance from top.
-  ///if align is centerLeft, offset is the distance from left.
-  ///if align is centerRight, offset is the distance from right.
-  ///if align is bottomLeft/bottomCenter/bottomRight, offset is the distance from bottom.
-  ///
-  final double offset;
-
-  const StyledToastPosition({this.align = Alignment.center, this.offset = 0.0});
-
-  ///Center position
-  static const center =
-      const StyledToastPosition(align: Alignment.center, offset: 0.0);
-
-  ///Top center position
-  static const top =
-      const StyledToastPosition(align: Alignment.topCenter, offset: 10.0);
-
-  ///Bottom center position
-  static const bottom =
-      const StyledToastPosition(align: Alignment.bottomCenter, offset: 20.0);
-
-  ///Center left position
-  static const left =
-      const StyledToastPosition(align: Alignment.centerLeft, offset: 17.0);
-
-  ///Center right position
-  static const right =
-      const StyledToastPosition(align: Alignment.centerRight, offset: 17.0);
-}
-
-///Toast showing type
-enum StyledToastShowType {
-  ///Dismiss old toast widget that is showing
-  dismissShowing,
-
-  ///Show a new toast
-  normal,
-}
-
-///Toast animation
-enum StyledToastAnimation {
-  ///Fade in and out animation
-  fade,
-
-  ///Slide from top animation
-  slideFromTop,
-
-  ///Slide from top fade animation
-  slideFromTopFade,
-
-  ///Slide from bottom animation
-  slideFromBottom,
-
-  ///Slide from bottom fade animation
-  slideFromBottomFade,
-
-  ///Slide from left animation
-  slideFromLeft,
-
-  ///Slide from left fade animation
-  slideFromLeftFade,
-
-  ///Slide from right animation
-  slideFromRight,
-
-  ///Slide from right fade animation
-  slideFromRightFade,
-
-  ///Slide to top animation
-  slideToTop,
-
-  ///Slide to top fade animation
-  slideToTopFade,
-
-  ///Slide to bottom animation
-  slideToBottom,
-
-  ///Slide to bottom fade animation
-  slideToBottomFade,
-
-  ///Slide to left animation
-  slideToLeft,
-
-  ///Slide to left fade animation
-  slideToLeftFade,
-
-  ///Slide to right animation
-  slideToRight,
-
-  ///Slide to right fade animation
-  slideToRightFade,
-
-  ///Scale animation
-  scale,
-
-  ///Size animation
-  size,
-
-  ///Size fade animation
-  sizeFade,
-
-  ///Fade scale animation
-  fadeScale,
-
-  ///Rotate animation
-  rotate,
-
-  ///Fade rotate animation
-  fadeRotate,
-
-  ///Scale rotate animation
-  scaleRotate,
-
-  ///No animation
-  none,
 }
 
 ///
@@ -421,7 +233,7 @@ enum StyledToastAnimation {
 ///version 1.0
 ///since
 ///file name: styled_toast.dart
-///description: Toast widget wrapper
+///description: Toast wrapper widget
 ///
 class StyledToast extends StatefulWidget {
   ///Child of toast scope
@@ -599,7 +411,7 @@ class _StyledToastState extends State<StyledToast> {
           GlobalWidgetsLocalizations.delegate,
         ],
         locale: widget.locale ?? const Locale('en', 'US'),
-        child: _StyledToastTheme(
+        child: StyledToastTheme(
           child: wrapper,
           textAlign: textAlign,
           textDirection: direction,
@@ -709,11 +521,11 @@ class _StyledToastWidget extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
     // TODO: implement createState
-    return _StyledToastWidgetState();
+    return StyledToastWidgetState();
   }
 }
 
-class _StyledToastWidgetState extends State<_StyledToastWidget>
+class StyledToastWidgetState extends State<_StyledToastWidget>
     with TickerProviderStateMixin<_StyledToastWidget>, WidgetsBindingObserver {
   ///Animation controller
   AnimationController _animationController;
@@ -1774,127 +1586,4 @@ class _StyledToastWidgetState extends State<_StyledToastWidget>
     // TODO: implement didPushRoute
     return null;
   }
-}
-
-///
-///created time: 2019-06-18 10:49
-///author linzhiliang
-///version 1.0
-///since
-///file name: styled_toast.dart
-///description: Toast theme, only for default content widget;
-///If you have specified a custom content widget, ToastTheme will not be working.
-///
-class _StyledToastTheme extends InheritedWidget {
-  ///Child widget
-  final Widget child;
-
-  ///Text align
-  final TextAlign textAlign;
-
-  ///Text direction
-  final TextDirection textDirection;
-
-  ///Border radius
-  final BorderRadius borderRadius;
-
-  ///Background color
-  final Color backgroundColor;
-
-  ///Padding for the text and the container edges
-  final EdgeInsets textPadding;
-
-  ///Text style for content
-  final TextStyle textStyle;
-
-  ///Shape for the container
-  final ShapeBorder shapeBorder;
-
-  ///Toast show duration
-  final Duration duration;
-
-  ///Toast animation duration
-  final Duration animDuration;
-
-  ///Position of the toast widget in current window
-  final StyledToastPosition toastPositions;
-
-  ///Alignment of animation, like size, rotate animation.
-  final AlignmentGeometry alignment;
-
-  ///Axis of animation, like size animation
-  final Axis axis;
-
-  ///Start offset of slide animation
-  final Offset startOffset;
-
-  ///End offset of slide animation
-  final Offset endOffset;
-
-  ///Start offset of reverse slide animation
-  final Offset reverseStartOffset;
-
-  ///End offset of reverse slide animation
-  final Offset reverseEndOffset;
-
-  ///Toast animation
-  final StyledToastAnimation toastAnimation;
-
-  ///Toast reverse animation
-  final StyledToastAnimation reverseAnimation;
-
-  ///Animation curve
-  final Curve curve;
-
-  ///Animation reverse curve
-  final Curve reverseCurve;
-
-  ///Dismiss old toast when new one shows
-  final bool dismissOtherOnShow;
-
-  ///When window change, moving toast.
-  final bool movingOnWindowChange;
-
-  ///Callback when toast dismissed
-  final VoidCallback onDismiss;
-
-  ///Full width that the width of the screen minus the width of the margin.
-  final bool fullWidth;
-
-  _StyledToastTheme({
-    this.child,
-    this.textAlign,
-    this.textDirection,
-    this.borderRadius,
-    this.backgroundColor,
-    this.textPadding,
-    this.textStyle,
-    this.shapeBorder,
-    this.duration,
-    this.animDuration,
-    this.toastPositions,
-    this.alignment,
-    this.axis,
-    this.startOffset,
-    this.endOffset,
-    this.reverseStartOffset,
-    this.reverseEndOffset,
-    this.toastAnimation,
-    this.reverseAnimation,
-    this.curve,
-    this.reverseCurve,
-    this.dismissOtherOnShow,
-    this.movingOnWindowChange,
-    this.onDismiss,
-    this.fullWidth,
-  }) : super(child: child);
-
-  @override
-  bool updateShouldNotify(InheritedWidget oldWidget) {
-    // TODO: implement updateShouldNotify
-    return true;
-  }
-
-  static _StyledToastTheme of(BuildContext context) =>
-      context.dependOnInheritedWidgetOfExactType<_StyledToastTheme>();
 }

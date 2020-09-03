@@ -556,9 +556,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.fade,
                     //Toast duration   animDuration * 2 <= duration
-                    duration: Duration(seconds: 2),
+                    duration: Duration(seconds: 6),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(milliseconds: 400), onDismiss: () {
+                    animDuration: Duration(milliseconds: 3000), onDismiss: () {
                   print('onDismissed');
                   setState(() {
                     dismissRemind = 'dismissed';
