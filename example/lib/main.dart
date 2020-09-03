@@ -31,9 +31,7 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement build
     final appTitle = 'Styled Toast Example';
     return StyledToast(
-      locale: const Locale('en', 'US'),
-
-      ///You have to set this parameters to your locale
+      locale: const Locale('en', 'US'),//You have to set this parameters to your locale
       textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
@@ -50,6 +48,7 @@ class _MyAppState extends State<MyApp> {
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
       movingOnWindowChange: true,
+      fullWidth: false,
       child: MaterialApp(
         title: appTitle,
         showPerformanceOverlay: showPerformance,
@@ -114,17 +113,49 @@ class _MyHomePageState extends State<MyHomePage> {
               child: Text('Normal Toast'),
               color: const Color(0xFFDDDDDD),
             ),
-            TextField(
-              controller: controller,
-            ),
+
             ListTile(
               title: Text('Normal toast'),
               onTap: () {
-                showToast('This is normal toast',
+                showToast('This is toast',
                     context: context,
                     axis: Axis.horizontal,
                     alignment: Alignment.center,
                     position: StyledToastPosition.bottom);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text('Normal toast full width'),
+              onTap: () {
+                showToast(
+                  'This is normal',
+                  context: context,
+                  axis: Axis.horizontal,
+                  alignment: Alignment.center,
+                  position: StyledToastPosition.bottom,
+                  toastHorizontalMargin: 0,
+                  fullWidth: true,
+                );
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text('Normal toast full width with horizontal margin'),
+              onTap: () {
+                showToast(
+                  'This is normal',
+                  context: context,
+                  axis: Axis.horizontal,
+                  alignment: Alignment.center,
+                  position: StyledToastPosition.bottom,
+                  toastHorizontalMargin: 20,
+                  fullWidth: true,
+                );
               },
             ),
             Divider(

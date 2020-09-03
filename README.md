@@ -195,6 +195,7 @@ reverseCurve         | Curve (default Curves.linear)
 dismissOtherOnShow   | bool (default true)     
 movingOnWindowChange | bool (default true)
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
+fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.) 
 
 
 ### showToast param
@@ -225,7 +226,9 @@ reverseStartOffset   | Offset
 reverseEndOffset     | Offset
 textAlign            | TextAlign (default TextAlign.center)    
 curve                | Curve (default Curves.linear)    
-reverseCurve         | Curve (default Curves.linear)    
+reverseCurve         | Curve (default Curves.linear)
+fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.) 
+    
 
 
 ### showToastWidget param

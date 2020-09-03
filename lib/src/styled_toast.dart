@@ -23,94 +23,78 @@ const double _defaultHorizontalMargin = 50.0;
 /// Show normal toast with style and animation
 /// Can be used without wrapping you app with StyledToast, but must specify context;
 /// When you wrap your app with StyledToast, [context] is optional;
-ToastFuture showToast(String msg,
-    {BuildContext context,
-    Duration duration,
-    Duration animDuration,
-    StyledToastPosition position,
-    TextStyle textStyle,
-    EdgeInsetsGeometry textPadding,
-    double toastHorizontalMargin = _defaultHorizontalMargin,
-    Color backgroundColor,
-    BorderRadius borderRadius,
-    ShapeBorder shapeBorder,
-    VoidCallback onDismiss,
-    TextDirection textDirection,
-    bool dismissOtherToast,
-    bool movingOnWindowChange,
-    StyledToastAnimation animation,
-    StyledToastAnimation reverseAnimation,
-    AlignmentGeometry alignment,
-    Axis axis,
-    Offset startOffset,
-    Offset endOffset,
-    Offset reverseStartOffset,
-    Offset reverseEndOffset,
-    TextAlign textAlign,
-    Curve curve,
-    Curve reverseCurve,
-    bool fullWidth}) {
+ToastFuture showToast(
+  String msg, {
+  BuildContext context,
+  Duration duration,
+  Duration animDuration,
+  StyledToastPosition position,
+  TextStyle textStyle,
+  EdgeInsetsGeometry textPadding,
+  double toastHorizontalMargin = _defaultHorizontalMargin,
+  Color backgroundColor,
+  BorderRadius borderRadius,
+  ShapeBorder shapeBorder,
+  VoidCallback onDismiss,
+  TextDirection textDirection,
+  bool dismissOtherToast,
+  bool movingOnWindowChange,
+  StyledToastAnimation animation,
+  StyledToastAnimation reverseAnimation,
+  AlignmentGeometry alignment,
+  Axis axis,
+  Offset startOffset,
+  Offset endOffset,
+  Offset reverseStartOffset,
+  Offset reverseEndOffset,
+  TextAlign textAlign,
+  Curve curve,
+  Curve reverseCurve,
+  bool fullWidth,
+}) {
   context = context != null ? context : currentContext;
   assert(context != null);
 
-  position ??= _StyledToastTheme.of(context)?.toastPositions ??
-      StyledToastPosition.bottom;
+  _StyledToastTheme _toastTheme = _StyledToastTheme.of(context);
 
-  textStyle ??= _StyledToastTheme.of(context)?.textStyle ??
-      TextStyle(fontSize: 16.0, color: Colors.white);
+  position ??= _toastTheme?.toastPositions ?? StyledToastPosition.bottom;
 
-  textPadding ??= _StyledToastTheme.of(context)?.textPadding ??
+  textStyle ??=
+      _toastTheme?.textStyle ?? TextStyle(fontSize: 16.0, color: Colors.white);
+
+  textPadding ??= _toastTheme?.textPadding ??
       EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
 
-  backgroundColor ??=
-      _StyledToastTheme.of(context)?.backgroundColor ?? const Color(0x99000000);
-  borderRadius ??=
-      _StyledToastTheme.of(context)?.borderRadius ?? BorderRadius.circular(5.0);
+  backgroundColor ??= _toastTheme?.backgroundColor ?? const Color(0x99000000);
+  borderRadius ??= _toastTheme?.borderRadius ?? BorderRadius.circular(5.0);
 
-  shapeBorder ??= _StyledToastTheme.of(context)?.shapeBorder ??
+  shapeBorder ??= _toastTheme?.shapeBorder ??
       RoundedRectangleBorder(
         borderRadius: borderRadius,
       );
 
-  textDirection ??=
-      _StyledToastTheme.of(context)?.textDirection ?? TextDirection.ltr;
+  textDirection ??= _toastTheme?.textDirection ?? TextDirection.ltr;
 
-  textAlign ??= _StyledToastTheme.of(context)?.textAlign ?? TextAlign.center;
+  textAlign ??= _toastTheme?.textAlign ?? TextAlign.center;
 
-  fullWidth ??= false;
+  fullWidth ??= _toastTheme?.fullWidth ?? false;
 
-  Widget widget = fullWidth
-      ? Row(children: <Widget>[
-          Expanded(
-              child: Container(
-            margin:
-                EdgeInsets.symmetric(horizontal: toastHorizontalMargin ?? 50.0),
-            decoration: ShapeDecoration(
-              color: backgroundColor,
-              shape: shapeBorder,
-            ),
-            padding: textPadding,
-            child: Text(
-              msg ?? '',
-              style: textStyle,
-              textAlign: textAlign,
-            ),
-          ))
-        ])
-      : Container(
-          margin:
-              EdgeInsets.symmetric(horizontal: toastHorizontalMargin ?? 50.0),
-          decoration: ShapeDecoration(
-            color: backgroundColor,
-            shape: shapeBorder,
-          ),
-          padding: textPadding,
-          child: Text(
-            msg ?? '',
-            style: textStyle,
-            textAlign: textAlign,
-          ),
-        );
+  Widget widget = Container(
+    margin: EdgeInsets.symmetric(horizontal: toastHorizontalMargin ?? 50.0),
+    width: fullWidth
+        ? MediaQuery.of(context).size.width - (toastHorizontalMargin ?? 50.0)
+        : null,
+    decoration: ShapeDecoration(
+      color: backgroundColor,
+      shape: shapeBorder,
+    ),
+    padding: textPadding,
+    child: Text(
+      msg ?? '',
+      style: textStyle,
+      textAlign: textAlign,
+    ),
+  );
 
   return showToastWidget(
     widget,
@@ -162,45 +146,36 @@ ToastFuture showToastWidget(
 
   context = context != null ? context : currentContext;
   assert(context != null);
+  _StyledToastTheme _toastTheme = _StyledToastTheme.of(context);
+  duration ??= _toastTheme?.duration ?? _defaultDuration;
+  animDuration ??= _toastTheme?.animDuration ?? _animationDuration;
 
-  duration ??= _StyledToastTheme.of(context)?.duration ?? _defaultDuration;
-  animDuration ??=
-      _StyledToastTheme.of(context)?.animDuration ?? _animationDuration;
+  dismissOtherToast ??= _toastTheme?.dismissOtherOnShow ?? true;
 
-  dismissOtherToast ??=
-      _StyledToastTheme.of(context)?.dismissOtherOnShow ?? true;
+  movingOnWindowChange ??= _toastTheme?.movingOnWindowChange ?? true;
 
-  movingOnWindowChange ??=
-      _StyledToastTheme.of(context)?.movingOnWindowChange ?? true;
+  textDirection ??=
+      textDirection ?? _toastTheme?.textDirection ?? TextDirection.ltr;
 
-  textDirection ??= textDirection ??
-      _StyledToastTheme.of(context)?.textDirection ??
-      TextDirection.ltr;
+  position ??= _toastTheme?.toastPositions ?? StyledToastPosition.bottom;
 
-  position ??= _StyledToastTheme.of(context)?.toastPositions ??
-      StyledToastPosition.bottom;
+  alignment ??= _toastTheme?.alignment ?? Alignment.center;
 
-  alignment ??= _StyledToastTheme.of(context)?.alignment ?? Alignment.center;
+  axis ??= _toastTheme?.axis ?? Axis.vertical;
 
-  axis ??= _StyledToastTheme.of(context)?.axis ?? Axis.vertical;
+  startOffset ??= _toastTheme?.startOffset;
+  endOffset ??= _toastTheme?.endOffset;
+  reverseStartOffset ??= _toastTheme?.reverseStartOffset;
+  reverseEndOffset ??= _toastTheme?.reverseEndOffset;
 
-  startOffset ??= _StyledToastTheme.of(context)?.startOffset;
-  endOffset ??= _StyledToastTheme.of(context)?.endOffset;
-  reverseStartOffset ??= _StyledToastTheme.of(context)?.reverseStartOffset;
-  reverseEndOffset ??= _StyledToastTheme.of(context)?.reverseEndOffset;
+  curve ??= curve ?? _toastTheme?.curve ?? Curves.linear;
 
-  curve ??= curve ?? _StyledToastTheme.of(context)?.curve ?? Curves.linear;
+  reverseCurve ??= reverseCurve ?? _toastTheme?.reverseCurve ?? Curves.linear;
+  animation ??=
+      animation ?? _toastTheme?.toastAnimation ?? StyledToastAnimation.fade;
+  reverseAnimation ??= reverseAnimation ?? _toastTheme?.reverseAnimation;
 
-  reverseCurve ??= reverseCurve ??
-      _StyledToastTheme.of(context)?.reverseCurve ??
-      Curves.linear;
-  animation ??= animation ??
-      _StyledToastTheme.of(context)?.toastAnimation ??
-      StyledToastAnimation.fade;
-  reverseAnimation ??=
-      reverseAnimation ?? _StyledToastTheme.of(context)?.reverseAnimation;
-
-  onDismiss ??= onDismiss ?? _StyledToastTheme.of(context)?.onDismiss;
+  onDismiss ??= onDismiss ?? _toastTheme?.onDismiss;
 
   GlobalKey<_StyledToastWidgetState> key = GlobalKey();
 
@@ -233,8 +208,7 @@ ToastFuture showToastWidget(
     );
   });
 
-  dismissOtherToast ??=
-      _StyledToastTheme.of(context)?.dismissOtherOnShow ?? false;
+  dismissOtherToast ??= _toastTheme?.dismissOtherOnShow ?? false;
 
   if (dismissOtherToast == true) {
     ToastManager().dismissAll();
@@ -520,34 +494,38 @@ class StyledToast extends StatefulWidget {
   ///The locale of you app
   final Locale locale;
 
-  StyledToast(
-      {Key key,
-      @required this.child,
-      @required this.locale,
-      this.textAlign,
-      this.textDirection,
-      this.borderRadius,
-      this.backgroundColor,
-      this.textPadding,
-      this.textStyle = const TextStyle(fontSize: 16.0, color: Colors.white),
-      this.shapeBorder,
-      this.duration,
-      this.animDuration,
-      this.toastPositions,
-      this.toastAnimation,
-      this.reverseAnimation,
-      this.alignment,
-      this.axis,
-      this.startOffset,
-      this.endOffset,
-      this.reverseStartOffset,
-      this.reverseEndOffset,
-      this.curve,
-      this.reverseCurve,
-      this.dismissOtherOnShow = true,
-      this.movingOnWindowChange = true,
-      this.onDismiss})
-      : super(key: key);
+  ///Full width that the width of the screen minus the width of the margin.
+  final bool fullWidth;
+
+  StyledToast({
+    Key key,
+    @required this.child,
+    @required this.locale,
+    this.textAlign,
+    this.textDirection,
+    this.borderRadius,
+    this.backgroundColor,
+    this.textPadding,
+    this.textStyle = const TextStyle(fontSize: 16.0, color: Colors.white),
+    this.shapeBorder,
+    this.duration,
+    this.animDuration,
+    this.toastPositions,
+    this.toastAnimation,
+    this.reverseAnimation,
+    this.alignment,
+    this.axis,
+    this.startOffset,
+    this.endOffset,
+    this.reverseStartOffset,
+    this.reverseEndOffset,
+    this.curve,
+    this.reverseCurve,
+    this.dismissOtherOnShow = true,
+    this.movingOnWindowChange = true,
+    this.onDismiss,
+    this.fullWidth,
+  }) : super(key: key);
 
   @override
   State<StatefulWidget> createState() {
@@ -641,6 +619,7 @@ class _StyledToastState extends State<StyledToast> {
           dismissOtherOnShow: widget.dismissOtherOnShow,
           movingOnWindowChange: widget.movingOnWindowChange,
           onDismiss: widget.onDismiss,
+          fullWidth: widget.fullWidth,
         ),
       ),
       data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
@@ -1876,8 +1855,11 @@ class _StyledToastTheme extends InheritedWidget {
   ///When window change, moving toast.
   final bool movingOnWindowChange;
 
-  ///callback when toast dismissed
+  ///Callback when toast dismissed
   final VoidCallback onDismiss;
+
+  ///Full width that the width of the screen minus the width of the margin.
+  final bool fullWidth;
 
   _StyledToastTheme({
     this.child,
@@ -1904,6 +1886,7 @@ class _StyledToastTheme extends InheritedWidget {
     this.dismissOtherOnShow,
     this.movingOnWindowChange,
     this.onDismiss,
+    this.fullWidth,
   }) : super(child: child);
 
   @override
