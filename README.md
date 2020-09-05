@@ -13,29 +13,50 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ```yaml
 dependencies:
-  flutter_styled_toast: ^1.3.2
+  flutter_styled_toast: ^1.4.0
 ```
 
 ```dart
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ```
+Simple to use
+
+StyledToast(
+  locale: const Locale('en', 'US'),
+  child: MaterialApp(
+            title: appTitle,
+            showPerformanceOverlay: showPerformance,
+            home: LayoutBuilder(
+              builder: (BuildContext context, BoxConstraints constraints) {
+                return MyHomePage(
+                  title: appTitle,
+                  onSetting: onSettingCallback,
+                );
+              },
+            ),
+          ),
+);
 
 ```dart
+
+Highly Customizable
+
 StyledToast(
-  locale: const Locale('en', 'US'), //You have to set this parameters to your locale
-  textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-  backgroundColor: Color(0x99000000),
-  borderRadius: BorderRadius.circular(5.0),
-  textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-  toastPositions: StyledToastPosition.bottom,
-  toastAnimation: StyledToastAnimation.fade,
-  reverseAnimation: StyledToastAnimation.fade,
-  curve: Curves.fastOutSlowIn,
-  reverseCurve: Curves.fastLinearToSlowEaseIn,
-  duration: Duration(seconds: 4),
-  animDuration: Duration(seconds: 1),
-  dismissOtherOnShow: true,
-  movingOnWindowChange: true,
+  locale: const Locale('en', 'US'),  //You have to set this parameters to your locale
+  textStyle: TextStyle(fontSize: 16.0, color: Colors.white), //Default text style of toast
+  backgroundColor: Color(0x99000000),  //Background color of toast
+  borderRadius: BorderRadius.circular(5.0), //Border radius of toast
+  textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),//The padding of toast text
+  toastPositions: StyledToastPosition.bottom, //The position of toast
+  toastAnimation: StyledToastAnimation.fade,  //The animation type of toast
+  reverseAnimation: StyledToastAnimation.fade, //The reverse animation of toast (display When dismiss toast)
+  curve: Curves.fastOutSlowIn,  //The curve of animation
+  reverseCurve: Curves.fastLinearToSlowEaseIn, //The curve of reverse animation
+  duration: Duration(seconds: 4), //The duration of toast showing
+  animDuration: Duration(seconds: 1), //The duration of animation(including reverse) of toast 
+  dismissOtherOnShow: true,  //When we show a toast and other toast is showing, dismiss any other showing toast before.
+  movingOnWindowChange: true, //When the window configuration changes, move the toast.
+  fullWidth: false, //Whether the toast is full screen (subtract the horizontal margin)
   child: MaterialApp(
           title: appTitle,
           showPerformanceOverlay: showPerformance,

@@ -17,23 +17,23 @@ class StyledToastPosition {
 
   ///Center position
   static const center =
-  const StyledToastPosition(align: Alignment.center, offset: 0.0);
+      const StyledToastPosition(align: Alignment.center, offset: 0.0);
 
   ///Top center position
   static const top =
-  const StyledToastPosition(align: Alignment.topCenter, offset: 10.0);
+      const StyledToastPosition(align: Alignment.topCenter, offset: 10.0);
 
   ///Bottom center position
   static const bottom =
-  const StyledToastPosition(align: Alignment.bottomCenter, offset: 20.0);
+      const StyledToastPosition(align: Alignment.bottomCenter, offset: 20.0);
 
   ///Center left position
   static const left =
-  const StyledToastPosition(align: Alignment.centerLeft, offset: 17.0);
+      const StyledToastPosition(align: Alignment.centerLeft, offset: 17.0);
 
   ///Center right position
   static const right =
-  const StyledToastPosition(align: Alignment.centerRight, offset: 17.0);
+      const StyledToastPosition(align: Alignment.centerRight, offset: 17.0);
 }
 
 ///Toast showing type

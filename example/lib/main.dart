@@ -31,7 +31,8 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement build
     final appTitle = 'Styled Toast Example';
     return StyledToast(
-      locale: const Locale('en', 'US'),//You have to set this parameters to your locale
+      locale: const Locale(
+          'en', 'US'), //You have to set this parameters to your locale
       textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
@@ -556,9 +557,9 @@ class _MyHomePageState extends State<MyHomePage> {
                     context: context,
                     animation: StyledToastAnimation.fade,
                     //Toast duration   animDuration * 2 <= duration
-                    duration: Duration(seconds: 6),
+                    duration: Duration(seconds: 2),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(milliseconds: 3000), onDismiss: () {
+                    animDuration: Duration(milliseconds: 1000), onDismiss: () {
                   print('onDismissed');
                   setState(() {
                     dismissRemind = 'dismissed';

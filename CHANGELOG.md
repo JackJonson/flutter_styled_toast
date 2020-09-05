@@ -1,3 +1,9 @@
+## [1.4.0]
+Add fullWidth parameter, controls whether the width of default toast widget is full screen.
+Code optimization. 
+Fix the bug when dismiss toast.
+
+
 ## [1.3.2]
 Fix unused import.
 
