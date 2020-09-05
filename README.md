@@ -20,7 +20,7 @@ dependencies:
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ```
 Simple global configuration
-
+```dart
 StyledToast(
   locale: const Locale('en', 'US'),
   child: MaterialApp(
@@ -36,11 +36,10 @@ StyledToast(
             ),
           ),
 );
-
-```dart
+```
 
 Highly Customizable global configuration
-
+```dart
 StyledToast(
   locale: const Locale('en', 'US'),  //You have to set this parameters to your locale
   textStyle: TextStyle(fontSize: 16.0, color: Colors.white), //Default text style of toast
