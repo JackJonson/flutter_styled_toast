@@ -19,7 +19,7 @@ dependencies:
 ```dart
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ```
-Simple to use
+Simple global configuration
 
 StyledToast(
   locale: const Locale('en', 'US'),
@@ -39,7 +39,7 @@ StyledToast(
 
 ```dart
 
-Highly Customizable
+Highly Customizable global configuration
 
 StyledToast(
   locale: const Locale('en', 'US'),  //You have to set this parameters to your locale
