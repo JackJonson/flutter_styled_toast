@@ -86,6 +86,9 @@ class StyledToastTheme extends InheritedWidget {
   ///Full width that the width of the screen minus the width of the margin.
   final bool fullWidth;
 
+  ///Is hide keyboard when toast show
+  final bool isHideKeyboard;
+
   StyledToastTheme({
     this.child,
     this.textAlign,
@@ -112,6 +115,7 @@ class StyledToastTheme extends InheritedWidget {
     this.movingOnWindowChange,
     this.onDismiss,
     this.fullWidth,
+    this.isHideKeyboard,
   }) : super(child: child);
 
   @override

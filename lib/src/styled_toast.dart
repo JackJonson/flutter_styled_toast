@@ -56,6 +56,7 @@ ToastFuture showToast(
   Curve curve,
   Curve reverseCurve,
   bool fullWidth,
+  bool isHideKeyboard,
 }) {
   context = context != null ? context : currentContext;
   assert(context != null);
@@ -121,6 +122,7 @@ ToastFuture showToast(
     reverseCurve: reverseCurve,
     animation: animation,
     reverseAnimation: reverseAnimation,
+    isHideKeyboard:isHideKeyboard,
   );
 }
 
@@ -145,14 +147,20 @@ ToastFuture showToastWidget(
   StyledToastAnimation reverseAnimation,
   Curve curve,
   Curve reverseCurve,
+  bool isHideKeyboard,
 }) {
   OverlayEntry entry;
   ToastFuture future;
 
   context = context != null ? context : currentContext;
   assert(context != null);
+
   StyledToastTheme _toastTheme = StyledToastTheme.of(context);
+
+  isHideKeyboard??= _toastTheme?.isHideKeyboard?? false;
+
   duration ??= _toastTheme?.duration ?? _defaultDuration;
+
   animDuration ??= _toastTheme?.animDuration ?? animationDuration;
 
   dismissOtherToast ??= _toastTheme?.dismissOtherOnShow ?? true;
@@ -181,6 +189,11 @@ ToastFuture showToastWidget(
   reverseAnimation ??= reverseAnimation ?? _toastTheme?.reverseAnimation;
 
   onDismiss ??= onDismiss ?? _toastTheme?.onDismiss;
+
+  if(isHideKeyboard) {
+    ///Hide keyboard
+    FocusScope.of(context).requestFocus(FocusNode());
+  }
 
   GlobalKey<StyledToastWidgetState> key = GlobalKey();
 
