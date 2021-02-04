@@ -11,11 +11,13 @@ void dismissAllToast({bool showAnim = false}) {
 /// Use the [dismiss] to dismiss toast.
 /// When the Toast is dismissed, call [onDismiss] if specified;
 class ToastFuture {
+  ///Toast overlay
   final OverlayEntry _entry;
+  ///Callback when toast dismiss
   final VoidCallback _onDismiss;
+  ///Is toast showing
   bool _isShow = true;
   final GlobalKey<StyledToastWidgetState> _containerKey;
-
   /// A [Timer] used to dismiss this toast future after the given period of time.
   Timer _timer;
 
@@ -28,6 +30,7 @@ class ToastFuture {
     _timer = Timer(duration, () => dismiss());
   }
 
+  ///Dismiss toast
   void dismiss(
       {bool showAnim = false, Duration animDuration = animationDuration}) {
     if (!_isShow) {
@@ -48,6 +51,7 @@ class ToastFuture {
 class ToastManager {
   ToastManager._();
 
+  ///Instance of ToastManager
   static ToastManager _instance;
 
   factory ToastManager() {
@@ -55,18 +59,22 @@ class ToastManager {
     return _instance;
   }
 
+  ///Set used to save [ToastFuture]
   Set<ToastFuture> toastSet = Set();
 
+  ///Dismiss all toast
   void dismissAll({bool showAnim = false}) {
     toastSet.toList().forEach((v) {
       v.dismiss(showAnim: showAnim);
     });
   }
 
+  ///Remove toast.
   void removeFuture(ToastFuture future) {
     toastSet.remove(future);
   }
 
+  ///Add toast
   void addFuture(ToastFuture future) {
     toastSet.add(future);
   }

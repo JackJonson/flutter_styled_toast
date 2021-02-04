@@ -4,6 +4,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+import 'package:flutter_styled_toast/src/custom_animation.dart';
 import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
 import 'package:flutter_styled_toast/src/styled_toast_manage.dart';
 import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
@@ -57,6 +58,7 @@ ToastFuture showToast(
   Curve reverseCurve,
   bool fullWidth,
   bool isHideKeyboard,
+  CustomAnimationBuilder customAnimationBuilder,
 }) {
   context = context != null ? context : currentContext;
   assert(context != null);
@@ -122,7 +124,8 @@ ToastFuture showToast(
     reverseCurve: reverseCurve,
     animation: animation,
     reverseAnimation: reverseAnimation,
-    isHideKeyboard:isHideKeyboard,
+    isHideKeyboard: isHideKeyboard,
+    customAnimationBuilder: customAnimationBuilder,
   );
 }
 
@@ -148,6 +151,7 @@ ToastFuture showToastWidget(
   Curve curve,
   Curve reverseCurve,
   bool isHideKeyboard,
+  CustomAnimationBuilder customAnimationBuilder,
 }) {
   OverlayEntry entry;
   ToastFuture future;
@@ -157,7 +161,7 @@ ToastFuture showToastWidget(
 
   StyledToastTheme _toastTheme = StyledToastTheme.of(context);
 
-  isHideKeyboard??= _toastTheme?.isHideKeyboard?? false;
+  isHideKeyboard ??= _toastTheme?.isHideKeyboard ?? false;
 
   duration ??= _toastTheme?.duration ?? _defaultDuration;
 
@@ -188,9 +192,12 @@ ToastFuture showToastWidget(
       animation ?? _toastTheme?.toastAnimation ?? StyledToastAnimation.fade;
   reverseAnimation ??= reverseAnimation ?? _toastTheme?.reverseAnimation;
 
+  customAnimationBuilder ??=
+      customAnimationBuilder ?? _toastTheme?.customAnimationBuilder;
+
   onDismiss ??= onDismiss ?? _toastTheme?.onDismiss;
 
-  if(isHideKeyboard) {
+  if (isHideKeyboard) {
     ///Hide keyboard
     FocusScope.of(context).requestFocus(FocusNode());
   }
@@ -215,6 +222,7 @@ ToastFuture showToastWidget(
         curve: curve,
         reverseCurve: reverseCurve,
         key: key,
+        customAnimationBuilder: customAnimationBuilder,
         child: Directionality(
           textDirection: textDirection,
           child: Material(
@@ -243,12 +251,13 @@ ToastFuture showToastWidget(
 ///
 ///created time: 2019-06-18 10:47
 ///author linzhiliang
-///version 1.0
+///version 1.5.0
 ///since
 ///file name: styled_toast.dart
-///description: Toast wrapper widget
+///description:
+///Toast configuration widget, which we use to save the overall configuration for toast widget in.
 ///
-class StyledToast extends StatefulWidget {
+class StyledToast extends StatelessWidget {
   ///Child of toast scope
   final Widget child;
 
@@ -327,6 +336,12 @@ class StyledToast extends StatefulWidget {
   ///Full width that the width of the screen minus the width of the margin.
   final bool fullWidth;
 
+  ///Is hide keyboard when toast show
+  final bool isHideKeyboard;
+
+  ///Custom animation builder method
+  final CustomAnimationBuilder customAnimationBuilder;
+
   StyledToast({
     Key key,
     @required this.child,
@@ -355,25 +370,9 @@ class StyledToast extends StatefulWidget {
     this.movingOnWindowChange = true,
     this.onDismiss,
     this.fullWidth,
+    this.isHideKeyboard,
+    this.customAnimationBuilder,
   }) : super(key: key);
-
-  @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _StyledToastState();
-  }
-}
-
-class _StyledToastState extends State<StyledToast> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -381,41 +380,39 @@ class _StyledToastState extends State<StyledToast> {
       initialEntries: <OverlayEntry>[
         OverlayEntry(builder: (ctx) {
           currentContext = ctx;
-          return widget.child;
+          return child;
         })
       ],
     );
 
-    TextDirection direction = widget.textDirection ?? TextDirection.ltr;
+    TextDirection mTextDirection = textDirection ?? TextDirection.ltr;
 
     Widget wrapper = Directionality(
-        textDirection: direction,
+        textDirection: mTextDirection,
         child: Stack(
           children: <Widget>[
             overlay,
           ],
         ));
 
-    TextStyle textStyle = widget.textStyle ??
+    TextStyle mTextStyle = textStyle ??
         TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.normal,
           color: Colors.white,
         );
 
-    Color backgroundColor = widget.backgroundColor ?? const Color(0x99000000);
+    Color mBackgroundColor = backgroundColor ?? const Color(0x99000000);
 
-    BorderRadius borderRadius =
-        widget.borderRadius ?? BorderRadius.circular(5.0);
+    BorderRadius mBorderRadius = borderRadius ?? BorderRadius.circular(5.0);
 
-    TextAlign textAlign = widget.textAlign ?? TextAlign.center;
-    EdgeInsets textPadding = widget.textPadding ??
+    TextAlign mTextAlign = textAlign ?? TextAlign.center;
+    EdgeInsets mTextPadding = textPadding ??
         const EdgeInsets.symmetric(
           horizontal: 17.0,
           vertical: 8.0,
         );
 
-    // TODO: implement build
     return MediaQuery(
       child: Localizations(
         delegates: [
@@ -423,33 +420,34 @@ class _StyledToastState extends State<StyledToast> {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        locale: widget.locale ?? const Locale('en', 'US'),
+        locale: locale ?? const Locale('en', 'US'),
         child: StyledToastTheme(
           child: wrapper,
-          textAlign: textAlign,
-          textDirection: direction,
-          borderRadius: borderRadius,
-          backgroundColor: backgroundColor,
-          textPadding: textPadding,
-          textStyle: textStyle,
-          shapeBorder: widget.shapeBorder,
-          duration: widget.duration,
-          animDuration: widget.animDuration,
-          toastPositions: widget.toastPositions,
-          toastAnimation: widget.toastAnimation,
-          reverseAnimation: widget.reverseAnimation,
-          alignment: widget.alignment,
-          axis: widget.axis,
-          startOffset: widget.startOffset,
-          endOffset: widget.endOffset,
-          reverseStartOffset: widget.reverseStartOffset,
-          reverseEndOffset: widget.reverseEndOffset,
-          curve: widget.curve,
-          reverseCurve: widget.reverseCurve,
-          dismissOtherOnShow: widget.dismissOtherOnShow,
-          movingOnWindowChange: widget.movingOnWindowChange,
-          onDismiss: widget.onDismiss,
-          fullWidth: widget.fullWidth,
+          textAlign: mTextAlign,
+          textDirection: mTextDirection,
+          borderRadius: mBorderRadius,
+          backgroundColor: mBackgroundColor,
+          textPadding: mTextPadding,
+          textStyle: mTextStyle,
+          shapeBorder: shapeBorder,
+          duration: duration,
+          animDuration: animDuration,
+          toastPositions: toastPositions,
+          toastAnimation: toastAnimation,
+          reverseAnimation: reverseAnimation,
+          alignment: alignment,
+          axis: axis,
+          startOffset: startOffset,
+          endOffset: endOffset,
+          reverseStartOffset: reverseStartOffset,
+          reverseEndOffset: reverseEndOffset,
+          curve: curve,
+          reverseCurve: reverseCurve,
+          dismissOtherOnShow: dismissOtherOnShow,
+          movingOnWindowChange: movingOnWindowChange,
+          onDismiss: onDismiss,
+          fullWidth: fullWidth,
+          isHideKeyboard: isHideKeyboard,
         ),
       ),
       data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
@@ -460,7 +458,7 @@ class _StyledToastState extends State<StyledToast> {
 ///
 ///created time: 2019-06-18 10:44
 ///author linzhiliang
-///version 1.0
+///version 1.5.0
 ///since
 ///file name: styled_toast.dart
 ///description: Toast widget
@@ -511,6 +509,9 @@ class _StyledToastWidget extends StatefulWidget {
   ///When window change, moving toast.
   final bool movingOnWindowChange;
 
+  ///Custom animation builder method
+  final CustomAnimationBuilder customAnimationBuilder;
+
   _StyledToastWidget({
     Key key,
     this.child,
@@ -528,6 +529,7 @@ class _StyledToastWidget extends StatefulWidget {
     this.animation = StyledToastAnimation.fade,
     this.reverseAnimation,
     this.movingOnWindowChange = true,
+    this.customAnimationBuilder,
   })  : assert(animDuration * 2 <= duration),
         super(key: key);
 
@@ -600,12 +602,16 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   ///Rotate animation reverse
   Animation<double> rotateAnimReverse;
 
+  ///Opacity of this widget
   double opacity = 1.0;
 
+  ///When window change, moving toast.
   bool get movingOnWindowChange => widget.movingOnWindowChange;
 
+  ///Toast position offset
   double get offset => widget.position.offset;
 
+  ///Toast alignment in the screen
   AlignmentGeometry get positionAlignment => widget.position.align;
 
   /// A [Timer] needed to dismiss the toast with animation
@@ -1101,7 +1107,10 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   Widget build(BuildContext context) {
     Widget w;
 
-    w = createAnimWidget(widget.child);
+    w = widget.customAnimationBuilder == null
+        ? createAnimWidget(widget.child)
+        : widget.customAnimationBuilder.call(
+            context, _animationController, widget.duration, widget.child);
 
     w = Opacity(
       opacity: opacity,
@@ -1109,120 +1118,71 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     );
 
     if (movingOnWindowChange != true) {
-      var mediaQueryData = MediaQueryData.fromWindow(ui.window);
+      MediaQueryData mediaQueryData = MediaQueryData.fromWindow(ui.window);
 
-      Widget container = Container(
+      w = Container(
         padding: EdgeInsets.only(
             bottom: mediaQueryData.padding.bottom,
             top: mediaQueryData.padding.top),
         alignment: positionAlignment,
         child: w,
       );
-
-      if (Alignment.center == positionAlignment) {
-      } else if (Alignment.bottomCenter == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(bottom: offset),
-          child: container,
-        );
-      } else if (Alignment.topCenter == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(top: offset),
-          child: container,
-        );
-      } else if (Alignment.topLeft == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(top: offset),
-          child: container,
-        );
-      } else if (Alignment.topRight == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(top: offset),
-          child: container,
-        );
-      } else if (Alignment.centerLeft == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(left: offset),
-          child: container,
-        );
-      } else if (Alignment.centerRight == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(right: offset),
-          child: container,
-        );
-      } else if (Alignment.bottomLeft == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(bottom: offset),
-          child: container,
-        );
-      } else if (Alignment.bottomRight == positionAlignment) {
-        container = Padding(
-          padding: EdgeInsets.only(bottom: offset),
-          child: container,
-        );
-      } else {
-        container = Padding(
-          padding: EdgeInsets.all(offset),
-          child: container,
-        );
-      }
-
-      return container;
+    } else {
+      w = Container(
+        alignment: positionAlignment,
+        child: w,
+      );
     }
-
-    var mediaQueryData = MediaQueryData.fromWindow(ui.window);
-    Widget container = Container(
-      padding: EdgeInsets.only(
-          bottom: mediaQueryData.padding.bottom,
-          top: mediaQueryData.padding.top),
-      alignment: positionAlignment,
-      child: w,
-    );
 
     if (Alignment.center == positionAlignment) {
     } else if (Alignment.bottomCenter == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(bottom: offset),
-        child: container,
+        child: w,
       );
     } else if (Alignment.topCenter == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(top: offset),
-        child: container,
+        child: w,
       );
     } else if (Alignment.topLeft == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(top: offset),
-        child: container,
+        child: w,
       );
     } else if (Alignment.topRight == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(top: offset),
-        child: container,
+        child: w,
       );
     } else if (Alignment.centerLeft == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(left: offset),
-        child: container,
+        child: w,
       );
     } else if (Alignment.centerRight == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(right: offset),
-        child: container,
+        child: w,
       );
     } else if (Alignment.bottomLeft == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(bottom: offset),
-        child: container,
+        child: w,
       );
     } else if (Alignment.bottomRight == positionAlignment) {
-      container = Padding(
+      w = Padding(
         padding: EdgeInsets.only(bottom: offset),
-        child: container,
+        child: w,
       );
-    } else {}
+    } else {
+      w = Padding(
+        padding: EdgeInsets.all(offset),
+        child: w,
+      );
+    }
 
-    return container;
+    return w;
   }
 
   ///Create animation widget
@@ -1556,47 +1516,5 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   void didChangeMetrics() {
     super.didChangeMetrics();
     if (this.mounted) setState(() {});
-  }
-
-  @override
-  void didChangeAccessibilityFeatures() {
-    // TODO: implement didChangeAccessibilityFeatures
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    // TODO: implement didChangeAppLifecycleState
-  }
-
-  @override
-  void didChangeLocales(List<Locale> locale) {
-    // TODO: implement didChangeLocales
-  }
-
-  @override
-  void didChangePlatformBrightness() {
-    // TODO: implement didChangePlatformBrightness
-  }
-
-  @override
-  void didChangeTextScaleFactor() {
-    // TODO: implement didChangeTextScaleFactor
-  }
-
-  @override
-  void didHaveMemoryPressure() {
-    // TODO: implement didHaveMemoryPressure
-  }
-
-  @override
-  Future<bool> didPopRoute() {
-    // TODO: implement didPopRoute
-    return null;
-  }
-
-  @override
-  Future<bool> didPushRoute(String route) {
-    // TODO: implement didPushRoute
-    return null;
   }
 }

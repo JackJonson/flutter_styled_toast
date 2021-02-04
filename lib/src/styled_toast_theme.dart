@@ -1,10 +1,11 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_styled_toast/src/custom_animation.dart';
 import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
 
 ///
 ///created time: 2019-06-18 10:49
 ///author linzhiliang
-///version 1.0
+///version 1.5.0
 ///since
 ///file name: styled_toast.dart
 ///description: Toast theme, only for default content widget;
@@ -89,6 +90,9 @@ class StyledToastTheme extends InheritedWidget {
   ///Is hide keyboard when toast show
   final bool isHideKeyboard;
 
+  ///Custom animation builder method
+  final CustomAnimationBuilder customAnimationBuilder;
+
   StyledToastTheme({
     this.child,
     this.textAlign,
@@ -116,6 +120,7 @@ class StyledToastTheme extends InheritedWidget {
     this.onDismiss,
     this.fullWidth,
     this.isHideKeyboard,
+    this.customAnimationBuilder,
   }) : super(child: child);
 
   @override

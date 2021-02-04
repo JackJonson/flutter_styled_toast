@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 ///
 ///created time: 2019-06-25 16:42
 ///author linzhiliang
-///version 1.0
+///version 1.5.0
 ///since
 ///file name: toast_content_widget.dart
 ///description: Toast with icon
@@ -114,7 +114,7 @@ class _IconToastWidgetState extends State<IconToastWidget>
 ///
 ///created time: 2019-06-17 16:22
 ///author linzhiliang
-///version 1.0
+///version 1.5.0
 ///since
 ///file name: styled_toast.dart
 ///description: Banner type toast widget, example of custom toast content widget when you use [showToastWidget]

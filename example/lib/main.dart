@@ -547,6 +547,32 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text(
+                "Normal toast(custom anim)",
+              ),
+              onTap: () {
+                showToast('This is normal toast with custom animation',
+                    context: context,
+                    customAnimationBuilder: (BuildContext context,
+                        AnimationController controller,
+                        Duration duration,
+                        Widget child,){
+                      return SlideTransition(
+                        position: getAnimation<Offset>(Offset(0.0, 1.0),Offset(0,0), controller),
+                        child: child,
+                      );
+                    },
+                    position: StyledToastPosition.bottom,
+                    animDuration: Duration(milliseconds: 400),
+                    duration: Duration(seconds: 4),
+                    curve: Curves.elasticOut,
+                    reverseCurve: Curves.linear);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
                 "Normal toast with onDismissed($dismissRemind)",
               ),
               onTap: () {
