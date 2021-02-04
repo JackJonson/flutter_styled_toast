@@ -93,6 +93,9 @@ class StyledToastTheme extends InheritedWidget {
   ///Custom animation builder method
   final CustomAnimationBuilder customAnimationBuilder;
 
+  ///Custom animation builder method
+  final CustomAnimationBuilder customReverseAnimationBuilder;
+
   StyledToastTheme({
     this.child,
     this.textAlign,
@@ -121,6 +124,7 @@ class StyledToastTheme extends InheritedWidget {
     this.fullWidth,
     this.isHideKeyboard,
     this.customAnimationBuilder,
+    this.customReverseAnimationBuilder,
   }) : super(child: child);
 
   @override
