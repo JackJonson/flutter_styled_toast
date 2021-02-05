@@ -50,25 +50,7 @@ class _MyAppState extends State<MyApp> {
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
       fullWidth: false,
-      isHideKeyboard: true,
-      // animationBuilder: (BuildContext context,
-      //     AnimationController controller,
-      //     Duration duration,
-      //     Widget child,){
-      //   return SlideTransition(
-      //     position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
-      //     child: child,
-      //   );
-      // },
-      // reverseAnimBuilder: (BuildContext context,
-      //     AnimationController controller,
-      //     Duration duration,
-      //     Widget child,){
-      //   return SlideTransition(
-      //     position: getAnimation<Offset>(Offset(0.0, 0.0),Offset(-3.0,0), controller,curve: Curves.bounceInOut),
-      //     child: child,
-      //   );
-      // },
+      isHideKeyboard: false,
       child: MaterialApp(
         title: appTitle,
         showPerformanceOverlay: showPerformance,
