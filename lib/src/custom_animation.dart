@@ -21,7 +21,7 @@ Animation<T> getAnimation<T>(
   T start,
   T end,
   AnimationController controller, {
-  Curve curve=Curves.linearToEaseOut,
+  Curve curve = Curves.linearToEaseOut,
 }) {
   return controller
       .drive(Tween<T>(begin: start, end: end).chain(CurveTween(curve: curve)));

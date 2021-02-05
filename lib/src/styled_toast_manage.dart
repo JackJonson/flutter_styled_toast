@@ -13,11 +13,14 @@ void dismissAllToast({bool showAnim = false}) {
 class ToastFuture {
   ///Toast overlay
   final OverlayEntry _entry;
+
   ///Callback when toast dismiss
   final VoidCallback _onDismiss;
+
   ///Is toast showing
   bool _isShow = true;
   final GlobalKey<StyledToastWidgetState> _containerKey;
+
   /// A [Timer] used to dismiss this toast future after the given period of time.
   Timer _timer;
 

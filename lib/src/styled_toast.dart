@@ -26,9 +26,14 @@ const animationDuration = Duration(milliseconds: 400);
 ///The default horizontal margin of toast
 const double _defaultHorizontalMargin = 50.0;
 
+///When toast widget [initState], this callback will be called.
+typedef OnInitStateCallback=Function(Duration toastDuration,Duration animDuration);
+
 /// Show normal toast with style and animation
 /// Can be used without wrapping you app with StyledToast, but must specify context;
 /// When you wrap your app with StyledToast, [context] is optional;
+/// [animationBuilder] If not null, [animation] is not working;
+/// [reverseAnimBuilder] If not null, [reverseAnimation] is not working.
 ToastFuture showToast(
   String msg, {
   BuildContext context,
@@ -60,6 +65,7 @@ ToastFuture showToast(
   bool isHideKeyboard,
   CustomAnimationBuilder animationBuilder,
   CustomAnimationBuilder reverseAnimBuilder,
+  OnInitStateCallback onInitState,
 }) {
   context = context != null ? context : currentContext;
   assert(context != null);
@@ -127,6 +133,7 @@ ToastFuture showToast(
     isHideKeyboard: isHideKeyboard,
     animationBuilder: animationBuilder,
     reverseAnimBuilder: reverseAnimBuilder,
+    onInitState: onInitState
   );
 }
 
@@ -154,6 +161,7 @@ ToastFuture showToastWidget(
   bool isHideKeyboard,
   CustomAnimationBuilder animationBuilder,
   CustomAnimationBuilder reverseAnimBuilder,
+  OnInitStateCallback onInitState,
 }) {
   OverlayEntry entry;
   ToastFuture future;
@@ -231,6 +239,7 @@ ToastFuture showToastWidget(
         key: key,
         animationBuilder: animationBuilder,
         reverseAnimBuilder: reverseAnimBuilder,
+        onInitState: onInitState,
         child: Directionality(
           textDirection: textDirection,
           child: Material(
@@ -530,6 +539,9 @@ class _StyledToastWidget extends StatefulWidget {
   ///Custom animation builder method
   final CustomAnimationBuilder reverseAnimBuilder;
 
+  ///Custom animation builder method
+  final OnInitStateCallback onInitState;
+
   _StyledToastWidget({
     Key key,
     this.child,
@@ -549,6 +561,7 @@ class _StyledToastWidget extends StatefulWidget {
     this.movingOnWindowChange = true,
     this.animationBuilder,
     this.reverseAnimBuilder,
+    this.onInitState,
   })  : assert(animDuration * 2 <= duration),
         super(key: key);
 
@@ -645,6 +658,8 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     _initAnim();
 
     _animationController.forward();
+
+    widget.onInitState?.call(widget.duration,widget.animDuration);
 
     ///Dismiss toast
     _toastTimer = Timer(widget.duration - widget.animDuration, () async {
@@ -1126,17 +1141,18 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   Widget build(BuildContext context) {
     Widget w = widget.child;
 
-    if (widget.animationBuilder != null || widget.reverseAnimBuilder != null) {
-      w = widget.animationBuilder != null
-          ? widget.animationBuilder
-              .call(context, _animationController, widget.duration, w)
-          : w;
-      w = widget.reverseAnimBuilder != null
-          ? widget.reverseAnimBuilder
-              .call(context, _reverseAnimController, widget.duration, w)
-          : w;
+    if (widget.animationBuilder != null) {
+      w = widget.animationBuilder
+          .call(context, _animationController, widget.duration, w);
     } else {
       w = createAnimWidget(w);
+    }
+
+    if (widget.reverseAnimBuilder != null) {
+      w = widget.reverseAnimBuilder
+          .call(context, _reverseAnimController, widget.duration, w);
+    } else {
+      w = createReverseAnimWidget(w);
     }
 
     w = Opacity(
@@ -1351,7 +1367,11 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
         );
         break;
     }
+    return w;
+  }
 
+  ///Create reverse animation widget
+  Widget createReverseAnimWidget(Widget w) {
     if (widget.reverseAnimation != null &&
         widget.animation != widget.reverseAnimation) {
       switch (widget.reverseAnimation) {
@@ -1490,7 +1510,6 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
           break;
       }
     }
-
     return w;
   }
 
@@ -1508,7 +1527,9 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       return;
     }
     try {
-      if (_reverseAnimController != null&&(widget.animation!=widget.reverseAnimation||widget.reverseAnimBuilder!=null)) {
+      if (_reverseAnimController != null &&
+          (widget.animation != widget.reverseAnimation ||
+              widget.reverseAnimBuilder != null)) {
         await _reverseAnimController.forward().orCancel;
       } else {
         await _animationController.reverse().orCancel;

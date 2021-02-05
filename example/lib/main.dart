@@ -1,3 +1,4 @@
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -31,8 +32,8 @@ class _MyAppState extends State<MyApp> {
     // TODO: implement build
     final appTitle = 'Styled Toast Example';
     return StyledToast(
-      locale: const Locale(
-          'en', 'US'), //You have to set this parameters to your locale
+      locale: const Locale('en', 'US'),
+      //You have to set this parameters to your locale
       textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
@@ -48,8 +49,26 @@ class _MyAppState extends State<MyApp> {
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
-      movingOnWindowChange: true,
       fullWidth: false,
+      isHideKeyboard: true,
+      // animationBuilder: (BuildContext context,
+      //     AnimationController controller,
+      //     Duration duration,
+      //     Widget child,){
+      //   return SlideTransition(
+      //     position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
+      //     child: child,
+      //   );
+      // },
+      // reverseAnimBuilder: (BuildContext context,
+      //     AnimationController controller,
+      //     Duration duration,
+      //     Widget child,){
+      //   return SlideTransition(
+      //     position: getAnimation<Offset>(Offset(0.0, 0.0),Offset(-3.0,0), controller,curve: Curves.bounceInOut),
+      //     child: child,
+      //   );
+      // },
       child: MaterialApp(
         title: appTitle,
         showPerformanceOverlay: showPerformance,
@@ -81,12 +100,26 @@ class MyHomePage extends StatefulWidget {
 
 // The State class is responsible for two things: holding some data you can
 // update and building the UI using that data.
-class _MyHomePageState extends State<MyHomePage> {
+class _MyHomePageState extends State<MyHomePage>
+    with TickerProviderStateMixin<MyHomePage> {
   // Whether the green box should be visible or invisible
 
   String dismissRemind = '';
 
   TextEditingController controller = TextEditingController();
+
+  AnimationController mController;
+
+  AnimationController mReverseController;
+
+  @override
+  void initState() {
+    super.initState();
+    mController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    mReverseController =
+        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -106,6 +139,9 @@ class _MyHomePageState extends State<MyHomePage> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
           children: <Widget>[
+            TextField(
+              controller: TextEditingController(),
+            ),
             Container(
               margin: EdgeInsets.only(bottom: 10.0),
               padding: EdgeInsets.only(left: 15.0),
@@ -137,6 +173,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   axis: Axis.horizontal,
                   alignment: Alignment.center,
                   position: StyledToastPosition.bottom,
+                  borderRadius: BorderRadius.zero,
                   toastHorizontalMargin: 0,
                   fullWidth: true,
                 );
@@ -575,34 +612,91 @@ class _MyHomePageState extends State<MyHomePage> {
               title: Text(
                 "Normal toast(custom anim)",
               ),
-              onTap: () {
-                showToast('This is normal toast with custom animation',
-                    context: context,
-                    animationBuilder: (BuildContext context,
-                        AnimationController controller,
-                        Duration duration,
-                        Widget child,){
-                      return SlideTransition(
-                        position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
-                        child: child,
-                      );
-                    },
-                    reverseAnimBuilder: (BuildContext context,
-                        AnimationController controller,
-                        Duration duration,
-                        Widget child,){
-                      return SlideTransition(
-                        position: getAnimation<Offset>(Offset(0.0, 0.0),Offset(-3.0,0), controller,curve: Curves.bounceInOut),
-                        child: child,
-                      );
-                    },
-                    position: StyledToastPosition.bottom,
-                    animDuration: Duration(milliseconds: 1000),
-                    duration: Duration(seconds: 4),
-                    curve: Curves.elasticOut,
-                    reverseCurve: Curves.linear);
+              onTap: () async {
+                showToast(
+                  'This is normal toast with custom animation',
+                  context: context,
+                  animationBuilder: (BuildContext context,
+                      AnimationController controller,
+                      Duration duration,
+                      Widget child,){
+                    return SlideTransition(
+                      position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
+                      child: child,
+                    );
+                  },
+                  reverseAnimBuilder: (BuildContext context,
+                      AnimationController controller,
+                      Duration duration,
+                      Widget child,){
+                    return SlideTransition(
+                      position: getAnimation<Offset>(Offset(0.0, 0.0),Offset(-3.0,0), controller,curve: Curves.bounceInOut),
+                      child: child,
+                    );
+                  },
+                  position: StyledToastPosition.bottom,
+                  animDuration: Duration(milliseconds: 1000),
+                  duration: Duration(seconds: 4),
+                  curve: Curves.elasticOut,
+                  reverseCurve: Curves.linear,
+                );
               },
             ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
+                "Normal toast(custom anim with custom animation controller)",
+              ),
+              onTap: () async {
+                showToast(
+                  'This is normal toast with custom animation',
+                  context: context,
+                  onInitState:
+                      (Duration toastDuration, Duration animDuration) async {
+                    await mController.forward().orCancel;
+                    Future.delayed(toastDuration - animDuration, () async {
+                      await mReverseController.forward().orCancel;
+                      mController.reset();
+                      mReverseController.reset();
+                    });
+                  },
+                  animationBuilder: (
+                    BuildContext context,
+                    AnimationController controller,
+                    Duration duration,
+                    Widget child,
+                  ) {
+                    return SlideTransition(
+                      position: getAnimation<Offset>(
+                          Offset(0.0, 3.0), Offset(0, 0), mController,
+                          curve: Curves.bounceInOut),
+                      child: child,
+                    );
+                  },
+                  reverseAnimBuilder: (
+                    BuildContext context,
+                    AnimationController controller,
+                    Duration duration,
+                    Widget child,
+                  ) {
+                    return SlideTransition(
+                      position: getAnimation<Offset>(
+                          Offset(0.0, 0.0), Offset(-3.0, 0), mReverseController,
+                          curve: Curves.bounceInOut),
+                      child: child,
+                    );
+                  },
+                  position: StyledToastPosition.bottom,
+                  animDuration: Duration(milliseconds: 1000),
+                  duration: Duration(seconds: 4),
+                  curve: Curves.elasticOut,
+                  reverseCurve: Curves.linear,
+                );
+              },
+            ),
+
             ///Custom toast content widget
             Container(
               margin: EdgeInsets.only(bottom: 10.0, top: 50.0),
@@ -657,7 +751,7 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             ListTile(
               title: Text(
-                "Custom toast content widget with icon convinient success",
+                "Custom toast content widget with icon convenient success",
               ),
               onTap: () {
                 showToastWidget(IconToastWidget.success(msg: 'success'),

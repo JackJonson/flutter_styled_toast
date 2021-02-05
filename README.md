@@ -21,12 +21,37 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ```
 
 ```dart
-//Simple to use
+//Simple to use, no global configuration
 showToast("hello styled toast",context:context);
 
-//Customize toast content widget
+//Customize toast content widget, no global configuration
 showToastWidget(Text('hello styled toast'),context:context);
 ```
+
+```dart
+//Set a animation
+showToast('This is normal toast with animation',
+   context: context,
+   animation: StyledToastAnimation.scale,
+);
+
+///Set both animation and reverse animation,
+///combination different animation and reverse animation to achieve amazing effect.
+showToast('This is normal toast with animation',
+   context: context,
+   animation: StyledToastAnimation.scale,
+   reverseAnimation: StyledToastAnimation.fade,
+   position: StyledToastPosition.center,
+   animDuration: Duration(seconds: 1),
+   duration: Duration(seconds: 4),
+   curve: Curves.elasticOut,
+   reverseCurve: Curves.linear,
+);
+
+```dart
+
+
+
 
 Simple global configuration, wrap you app with StyledToast.
 ```dart
@@ -65,6 +90,19 @@ StyledToast(
   dismissOtherOnShow: true,  //When we show a toast and other toast is showing, dismiss any other showing toast before.
   movingOnWindowChange: true, //When the window configuration changes, move the toast.
   fullWidth: false, //Whether the toast is full screen (subtract the horizontal margin)
+  isHideKeyboard: false, //Is hide keyboard when toast show
+  animationBuilder: (BuildContext context,AnimationController controller,Duration duration,Widget child,){  // Builder method for custom animation
+     return SlideTransition(
+        position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
+        child: child,
+     );
+  },
+  reverseAnimBuilder: (BuildContext context,AnimationController controller,Duration duration,Widget child,){ // Builder method for custom reverse animation
+     return SlideTransition(
+        position: getAnimation<Offset>(Offset(0.0, 0.0),Offset(-3.0,0), controller,curve: Curves.bounceInOut),
+        child: child,
+     );
+  },
   child: MaterialApp(
           title: appTitle,
           showPerformanceOverlay: showPerformance,
@@ -81,7 +119,7 @@ StyledToast(
 ```
 
 ```dart
-//After global configuration, general use
+//After global configuration, use in a single line.
 showToast("hello styled toast");
 
 //After global configuration, Customize toast content widget
@@ -260,11 +298,12 @@ reverseEndOffset     | Offset
 textAlign            | TextAlign (default TextAlign.center)    
 curve                | Curve (default Curves.linear)    
 reverseCurve         | Curve (default Curves.linear)
-fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.)
+fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin)
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
-    
+onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
+
 
 
 ### showToastWidget param
@@ -293,6 +332,7 @@ reverseCurve         | Curve (default Curves.linear)
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
+onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 
 
 ## Example
