@@ -578,7 +578,7 @@ class _MyHomePageState extends State<MyHomePage> {
               onTap: () {
                 showToast('This is normal toast with custom animation',
                     context: context,
-                    customAnimationBuilder: (BuildContext context,
+                    animationBuilder: (BuildContext context,
                         AnimationController controller,
                         Duration duration,
                         Widget child,){
@@ -587,7 +587,7 @@ class _MyHomePageState extends State<MyHomePage> {
                         child: child,
                       );
                     },
-                    customReverseAnimationBuilder: (BuildContext context,
+                    reverseAnimBuilder: (BuildContext context,
                         AnimationController controller,
                         Duration duration,
                         Widget child,){

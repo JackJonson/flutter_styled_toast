@@ -79,6 +79,7 @@ class StyledToastTheme extends InheritedWidget {
   final bool dismissOtherOnShow;
 
   ///When window change, moving toast.
+  @deprecated
   final bool movingOnWindowChange;
 
   ///Callback when toast dismissed
@@ -91,10 +92,10 @@ class StyledToastTheme extends InheritedWidget {
   final bool isHideKeyboard;
 
   ///Custom animation builder method
-  final CustomAnimationBuilder customAnimationBuilder;
+  final CustomAnimationBuilder animationBuilder;
 
   ///Custom animation builder method
-  final CustomAnimationBuilder customReverseAnimationBuilder;
+  final CustomAnimationBuilder reverseAnimBuilder;
 
   StyledToastTheme({
     this.child,
@@ -123,8 +124,8 @@ class StyledToastTheme extends InheritedWidget {
     this.onDismiss,
     this.fullWidth,
     this.isHideKeyboard,
-    this.customAnimationBuilder,
-    this.customReverseAnimationBuilder,
+    this.animationBuilder,
+    this.reverseAnimBuilder,
   }) : super(child: child);
 
   @override

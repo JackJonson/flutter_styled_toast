@@ -1,3 +1,9 @@
+## [1.5.0+1]
+Add parameter isHideKeyboard (default is true), if true, when toast show, keyboard will be hidden.
+Add parameter animationBuilder, builder method for custom animation
+Add parameter reverseAnimBuilder, builder method for custom reverse animation
+
+
 ## [1.4.0+1]
 Improve documentation.
 

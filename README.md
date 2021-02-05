@@ -13,13 +13,22 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ```yaml
 dependencies:
-  flutter_styled_toast: ^1.4.0+1
+  flutter_styled_toast: ^1.5.0+1
 ```
 
 ```dart
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ```
-Simple global configuration
+
+```dart
+//Simple to use
+showToast("hello styled toast",context:context);
+
+//Customize toast content widget
+showToastWidget(Text('hello styled toast'),context:context);
+```
+
+Simple global configuration, wrap you app with StyledToast.
 ```dart
 StyledToast(
   locale: const Locale('en', 'US'),
@@ -72,10 +81,10 @@ StyledToast(
 ```
 
 ```dart
-//general use
+//After global configuration, general use
 showToast("hello styled toast");
 
-// Customize toast content widget
+//After global configuration, Customize toast content widget
 showToastWidget(Text('hello styled toast'));
 ```
 
@@ -215,7 +224,11 @@ reverseCurve         | Curve (default Curves.linear)
 dismissOtherOnShow   | bool (default true)     
 movingOnWindowChange | bool (default true)
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
-fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.) 
+fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.)
+isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
+animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
+reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
+
 
 
 ### showToast param
@@ -247,7 +260,10 @@ reverseEndOffset     | Offset
 textAlign            | TextAlign (default TextAlign.center)    
 curve                | Curve (default Curves.linear)    
 reverseCurve         | Curve (default Curves.linear)
-fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.) 
+fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.)
+isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
+animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
+reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
     
 
 
@@ -273,7 +289,10 @@ endOffset            | Offset
 reverseStartOffset   | Offset
 reverseEndOffset     | Offset
 curve                | Curve (default Curves.linear)    
-reverseCurve         | Curve (default Curves.linear)    
+reverseCurve         | Curve (default Curves.linear)
+isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
+animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
+reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
 
 
 ## Example

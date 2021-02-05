@@ -44,7 +44,7 @@ ToastFuture showToast(
   VoidCallback onDismiss,
   TextDirection textDirection,
   bool dismissOtherToast,
-  bool movingOnWindowChange,
+  @deprecated bool movingOnWindowChange,
   StyledToastAnimation animation,
   StyledToastAnimation reverseAnimation,
   AlignmentGeometry alignment,
@@ -58,8 +58,8 @@ ToastFuture showToast(
   Curve reverseCurve,
   bool fullWidth,
   bool isHideKeyboard,
-  CustomAnimationBuilder customAnimationBuilder,
-  CustomAnimationBuilder customReverseAnimationBuilder,
+  CustomAnimationBuilder animationBuilder,
+  CustomAnimationBuilder reverseAnimBuilder,
 }) {
   context = context != null ? context : currentContext;
   assert(context != null);
@@ -113,7 +113,6 @@ ToastFuture showToast(
     onDismiss: onDismiss,
     position: position,
     dismissOtherToast: dismissOtherToast,
-    movingOnWindowChange: movingOnWindowChange,
     textDirection: textDirection,
     alignment: alignment,
     axis: axis,
@@ -126,8 +125,8 @@ ToastFuture showToast(
     animation: animation,
     reverseAnimation: reverseAnimation,
     isHideKeyboard: isHideKeyboard,
-    customAnimationBuilder: customAnimationBuilder,
-    customReverseAnimationBuilder: customReverseAnimationBuilder,
+    animationBuilder: animationBuilder,
+    reverseAnimBuilder: reverseAnimBuilder,
   );
 }
 
@@ -139,7 +138,7 @@ ToastFuture showToastWidget(
   Duration animDuration,
   VoidCallback onDismiss,
   bool dismissOtherToast,
-  bool movingOnWindowChange,
+  @deprecated bool movingOnWindowChange,
   TextDirection textDirection,
   AlignmentGeometry alignment,
   Axis axis,
@@ -153,8 +152,8 @@ ToastFuture showToastWidget(
   Curve curve,
   Curve reverseCurve,
   bool isHideKeyboard,
-  CustomAnimationBuilder customAnimationBuilder,
-  CustomAnimationBuilder customReverseAnimationBuilder,
+  CustomAnimationBuilder animationBuilder,
+  CustomAnimationBuilder reverseAnimBuilder,
 }) {
   OverlayEntry entry;
   ToastFuture future;
@@ -184,22 +183,25 @@ ToastFuture showToastWidget(
   axis ??= _toastTheme?.axis ?? Axis.vertical;
 
   startOffset ??= _toastTheme?.startOffset;
+
   endOffset ??= _toastTheme?.endOffset;
+
   reverseStartOffset ??= _toastTheme?.reverseStartOffset;
+
   reverseEndOffset ??= _toastTheme?.reverseEndOffset;
 
   curve ??= curve ?? _toastTheme?.curve ?? Curves.linear;
 
   reverseCurve ??= reverseCurve ?? _toastTheme?.reverseCurve ?? Curves.linear;
+
   animation ??=
       animation ?? _toastTheme?.toastAnimation ?? StyledToastAnimation.fade;
+
   reverseAnimation ??= reverseAnimation ?? _toastTheme?.reverseAnimation;
 
-  customAnimationBuilder ??=
-      customAnimationBuilder ?? _toastTheme?.customAnimationBuilder;
+  animationBuilder ??= animationBuilder ?? _toastTheme?.animationBuilder;
 
-  customReverseAnimationBuilder ??= customReverseAnimationBuilder ??
-      _toastTheme?.customReverseAnimationBuilder;
+  reverseAnimBuilder ??= reverseAnimBuilder ?? _toastTheme?.reverseAnimBuilder;
 
   onDismiss ??= onDismiss ?? _toastTheme?.onDismiss;
 
@@ -216,7 +218,6 @@ ToastFuture showToastWidget(
         duration: duration,
         animDuration: animDuration,
         position: position,
-        movingOnWindowChange: movingOnWindowChange,
         animation: animation,
         reverseAnimation: reverseAnimation,
         alignment: alignment,
@@ -228,8 +229,8 @@ ToastFuture showToastWidget(
         curve: curve,
         reverseCurve: reverseCurve,
         key: key,
-        customAnimationBuilder: customAnimationBuilder,
-        customReverseAnimationBuilder: customReverseAnimationBuilder,
+        animationBuilder: animationBuilder,
+        reverseAnimBuilder: reverseAnimBuilder,
         child: Directionality(
           textDirection: textDirection,
           child: Material(
@@ -335,6 +336,7 @@ class StyledToast extends StatelessWidget {
   final bool dismissOtherOnShow;
 
   ///When window change, moving toast.
+  @deprecated
   final bool movingOnWindowChange;
 
   ///The locale of you app
@@ -347,10 +349,10 @@ class StyledToast extends StatelessWidget {
   final bool isHideKeyboard;
 
   ///Custom animation builder method
-  final CustomAnimationBuilder customAnimationBuilder;
+  final CustomAnimationBuilder animationBuilder;
 
   ///Custom animation builder method
-  final CustomAnimationBuilder customReverseAnimationBuilder;
+  final CustomAnimationBuilder reverseAnimBuilder;
 
   StyledToast({
     Key key,
@@ -381,8 +383,8 @@ class StyledToast extends StatelessWidget {
     this.onDismiss,
     this.fullWidth,
     this.isHideKeyboard,
-    this.customAnimationBuilder,
-    this.customReverseAnimationBuilder,
+    this.animationBuilder,
+    this.reverseAnimBuilder,
   }) : super(key: key);
 
   @override
@@ -455,12 +457,11 @@ class StyledToast extends StatelessWidget {
           curve: curve,
           reverseCurve: reverseCurve,
           dismissOtherOnShow: dismissOtherOnShow,
-          movingOnWindowChange: movingOnWindowChange,
           onDismiss: onDismiss,
           fullWidth: fullWidth,
           isHideKeyboard: isHideKeyboard,
-          customAnimationBuilder: customAnimationBuilder,
-          customReverseAnimationBuilder: customReverseAnimationBuilder,
+          animationBuilder: animationBuilder,
+          reverseAnimBuilder: reverseAnimBuilder,
         ),
       ),
       data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
@@ -520,13 +521,14 @@ class _StyledToastWidget extends StatefulWidget {
   final StyledToastAnimation reverseAnimation;
 
   ///When window change, moving toast.
+  @deprecated
   final bool movingOnWindowChange;
 
   ///Custom animation builder method
-  final CustomAnimationBuilder customAnimationBuilder;
+  final CustomAnimationBuilder animationBuilder;
 
   ///Custom animation builder method
-  final CustomAnimationBuilder customReverseAnimationBuilder;
+  final CustomAnimationBuilder reverseAnimBuilder;
 
   _StyledToastWidget({
     Key key,
@@ -545,8 +547,8 @@ class _StyledToastWidget extends StatefulWidget {
     this.animation = StyledToastAnimation.fade,
     this.reverseAnimation,
     this.movingOnWindowChange = true,
-    this.customAnimationBuilder,
-    this.customReverseAnimationBuilder,
+    this.animationBuilder,
+    this.reverseAnimBuilder,
   })  : assert(animDuration * 2 <= duration),
         super(key: key);
 
@@ -623,6 +625,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   double opacity = 1.0;
 
   ///When window change, moving toast.
+  @deprecated
   bool get movingOnWindowChange => widget.movingOnWindowChange;
 
   ///Toast position offset
@@ -643,7 +646,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
     _animationController.forward();
 
-    //Dismiss toast
+    ///Dismiss toast
     _toastTimer = Timer(widget.duration - widget.animDuration, () async {
       dismissToastAnim();
     });
@@ -889,9 +892,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
         break;
     }
 
-    if (widget.reverseAnimation != null &&
-        widget.animation != widget.reverseAnimation) {
-
+    if (widget.reverseAnimation != null) {
       switch (widget.reverseAnimation) {
         case StyledToastAnimation.fade:
           fadeAnimReverse = Tween<double>(begin: 1.0, end: 0.0).animate(
@@ -1125,15 +1126,14 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   Widget build(BuildContext context) {
     Widget w = widget.child;
 
-    if (widget.customAnimationBuilder != null ||
-        widget.customReverseAnimationBuilder != null) {
-      w = widget.customAnimationBuilder != null
-          ? widget.customAnimationBuilder.call(
-              context, _animationController, widget.duration, w)
+    if (widget.animationBuilder != null || widget.reverseAnimBuilder != null) {
+      w = widget.animationBuilder != null
+          ? widget.animationBuilder
+              .call(context, _animationController, widget.duration, w)
           : w;
-      w = widget.customReverseAnimationBuilder != null
-          ? widget.customReverseAnimationBuilder.call(
-              context, _reverseAnimController, widget.duration, w)
+      w = widget.reverseAnimBuilder != null
+          ? widget.reverseAnimBuilder
+              .call(context, _reverseAnimController, widget.duration, w)
           : w;
     } else {
       w = createAnimWidget(w);
@@ -1144,22 +1144,14 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       child: w,
     );
 
-    if (movingOnWindowChange != true) {
-      MediaQueryData mediaQueryData = MediaQueryData.fromWindow(ui.window);
-
-      w = Container(
-        padding: EdgeInsets.only(
-            bottom: mediaQueryData.padding.bottom,
-            top: mediaQueryData.padding.top),
-        alignment: positionAlignment,
-        child: w,
-      );
-    } else {
-      w = Container(
-        alignment: positionAlignment,
-        child: w,
-      );
-    }
+    MediaQueryData mediaQueryData = MediaQueryData.fromWindow(ui.window);
+    w = Container(
+      padding: EdgeInsets.only(
+          bottom: mediaQueryData.padding.bottom,
+          top: mediaQueryData.padding.top),
+      alignment: positionAlignment,
+      child: w,
+    );
 
     if (Alignment.center == positionAlignment) {
     } else if (Alignment.bottomCenter == positionAlignment) {
@@ -1516,7 +1508,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       return;
     }
     try {
-      if (_reverseAnimController != null) {
+      if (_reverseAnimController != null&&(widget.animation!=widget.reverseAnimation||widget.reverseAnimBuilder!=null)) {
         await _reverseAnimController.forward().orCancel;
       } else {
         await _animationController.reverse().orCancel;
@@ -1531,7 +1523,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     if (_animationController != null) {
       _animationController.dispose();
     }
-    if ( _reverseAnimController != null) {
+    if (_reverseAnimController != null) {
       _reverseAnimController.dispose();
     }
     super.dispose();
