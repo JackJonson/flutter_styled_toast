@@ -616,21 +616,29 @@ class _MyHomePageState extends State<MyHomePage>
                 showToast(
                   'This is normal toast with custom animation',
                   context: context,
-                  animationBuilder: (BuildContext context,
-                      AnimationController controller,
-                      Duration duration,
-                      Widget child,){
+                  animationBuilder: (
+                    BuildContext context,
+                    AnimationController controller,
+                    Duration duration,
+                    Widget child,
+                  ) {
                     return SlideTransition(
-                      position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
+                      position: getAnimation<Offset>(
+                          Offset(0.0, 3.0), Offset(0, 0), controller,
+                          curve: Curves.bounceInOut),
                       child: child,
                     );
                   },
-                  reverseAnimBuilder: (BuildContext context,
-                      AnimationController controller,
-                      Duration duration,
-                      Widget child,){
+                  reverseAnimBuilder: (
+                    BuildContext context,
+                    AnimationController controller,
+                    Duration duration,
+                    Widget child,
+                  ) {
                     return SlideTransition(
-                      position: getAnimation<Offset>(Offset(0.0, 0.0),Offset(-3.0,0), controller,curve: Curves.bounceInOut),
+                      position: getAnimation<Offset>(
+                          Offset(0.0, 0.0), Offset(-3.0, 0), controller,
+                          curve: Curves.bounceInOut),
                       child: child,
                     );
                   },

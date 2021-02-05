@@ -27,7 +27,8 @@ const animationDuration = Duration(milliseconds: 400);
 const double _defaultHorizontalMargin = 50.0;
 
 ///When toast widget [initState], this callback will be called.
-typedef OnInitStateCallback=Function(Duration toastDuration,Duration animDuration);
+typedef OnInitStateCallback = Function(
+    Duration toastDuration, Duration animDuration);
 
 /// Show normal toast with style and animation
 /// Can be used without wrapping you app with StyledToast, but must specify context;
@@ -111,30 +112,28 @@ ToastFuture showToast(
     ),
   );
 
-  return showToastWidget(
-    widget,
-    context: context,
-    duration: duration,
-    animDuration: animDuration,
-    onDismiss: onDismiss,
-    position: position,
-    dismissOtherToast: dismissOtherToast,
-    textDirection: textDirection,
-    alignment: alignment,
-    axis: axis,
-    startOffset: startOffset,
-    endOffset: endOffset,
-    reverseStartOffset: reverseStartOffset,
-    reverseEndOffset: reverseEndOffset,
-    curve: curve,
-    reverseCurve: reverseCurve,
-    animation: animation,
-    reverseAnimation: reverseAnimation,
-    isHideKeyboard: isHideKeyboard,
-    animationBuilder: animationBuilder,
-    reverseAnimBuilder: reverseAnimBuilder,
-    onInitState: onInitState
-  );
+  return showToastWidget(widget,
+      context: context,
+      duration: duration,
+      animDuration: animDuration,
+      onDismiss: onDismiss,
+      position: position,
+      dismissOtherToast: dismissOtherToast,
+      textDirection: textDirection,
+      alignment: alignment,
+      axis: axis,
+      startOffset: startOffset,
+      endOffset: endOffset,
+      reverseStartOffset: reverseStartOffset,
+      reverseEndOffset: reverseEndOffset,
+      curve: curve,
+      reverseCurve: reverseCurve,
+      animation: animation,
+      reverseAnimation: reverseAnimation,
+      isHideKeyboard: isHideKeyboard,
+      animationBuilder: animationBuilder,
+      reverseAnimBuilder: reverseAnimBuilder,
+      onInitState: onInitState);
 }
 
 /// Show custom content widget toast
@@ -659,7 +658,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
     _animationController.forward();
 
-    widget.onInitState?.call(widget.duration,widget.animDuration);
+    widget.onInitState?.call(widget.duration, widget.animDuration);
 
     ///Dismiss toast
     _toastTimer = Timer(widget.duration - widget.animDuration, () async {
