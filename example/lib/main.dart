@@ -645,12 +645,14 @@ class _MyHomePageState extends State<MyHomePage>
                   context: context,
                   onInitState:
                       (Duration toastDuration, Duration animDuration) async {
-                    await mController.forward().orCancel;
-                    Future.delayed(toastDuration - animDuration, () async {
-                      await mReverseController.forward().orCancel;
-                      mController.reset();
-                      mReverseController.reset();
-                    });
+                    try {
+                      await mController.forward().orCancel;
+                      Future.delayed(toastDuration - animDuration, () async {
+                        await mReverseController.forward().orCancel;
+                        mController.reset();
+                        mReverseController.reset();
+                      });
+                    } on TickerCanceled {}
                   },
                   animationBuilder: (
                     BuildContext context,

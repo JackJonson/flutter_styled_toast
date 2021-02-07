@@ -178,8 +178,6 @@ ToastFuture showToastWidget(
 
   dismissOtherToast ??= _toastTheme?.dismissOtherOnShow ?? true;
 
-  movingOnWindowChange ??= _toastTheme?.movingOnWindowChange ?? true;
-
   textDirection ??=
       textDirection ?? _toastTheme?.textDirection ?? TextDirection.ltr;
 
