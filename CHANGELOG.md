@@ -1,3 +1,7 @@
+## [1.5.0+2]
+Delete deprecated parameter [movingOnWindowChange] usage.
+
+
 ## [1.5.0+1]
 Add parameter isHideKeyboard (default is true), if true, when toast show, keyboard will be hidden.
 Add parameter animationBuilder, builder method for custom animation
