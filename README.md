@@ -365,6 +365,7 @@ fullWidth            | bool (default false)(Full width parameter that the width 
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
+onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 
 
 

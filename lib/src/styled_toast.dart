@@ -112,28 +112,29 @@ ToastFuture showToast(
     ),
   );
 
-  return showToastWidget(widget,
-      context: context,
-      duration: duration,
-      animDuration: animDuration,
-      onDismiss: onDismiss,
-      position: position,
-      dismissOtherToast: dismissOtherToast,
-      textDirection: textDirection,
-      alignment: alignment,
-      axis: axis,
-      startOffset: startOffset,
-      endOffset: endOffset,
-      reverseStartOffset: reverseStartOffset,
-      reverseEndOffset: reverseEndOffset,
-      curve: curve,
-      reverseCurve: reverseCurve,
-      animation: animation,
-      reverseAnimation: reverseAnimation,
-      isHideKeyboard: isHideKeyboard,
-      animationBuilder: animationBuilder,
-      reverseAnimBuilder: reverseAnimBuilder,
-      onInitState: onInitState,
+  return showToastWidget(
+    widget,
+    context: context,
+    duration: duration,
+    animDuration: animDuration,
+    onDismiss: onDismiss,
+    position: position,
+    dismissOtherToast: dismissOtherToast,
+    textDirection: textDirection,
+    alignment: alignment,
+    axis: axis,
+    startOffset: startOffset,
+    endOffset: endOffset,
+    reverseStartOffset: reverseStartOffset,
+    reverseEndOffset: reverseEndOffset,
+    curve: curve,
+    reverseCurve: reverseCurve,
+    animation: animation,
+    reverseAnimation: reverseAnimation,
+    isHideKeyboard: isHideKeyboard,
+    animationBuilder: animationBuilder,
+    reverseAnimBuilder: reverseAnimBuilder,
+    onInitState: onInitState,
   );
 }
 
@@ -448,7 +449,8 @@ class _StyledToastState extends State<StyledToast> {
 
     Color mBackgroundColor = widget.backgroundColor ?? const Color(0x99000000);
 
-    BorderRadius mBorderRadius = widget.borderRadius ?? BorderRadius.circular(5.0);
+    BorderRadius mBorderRadius =
+        widget.borderRadius ?? BorderRadius.circular(5.0);
 
     TextAlign mTextAlign = widget.textAlign ?? TextAlign.center;
     EdgeInsets mTextPadding = widget.textPadding ??
