@@ -133,7 +133,8 @@ ToastFuture showToast(
       isHideKeyboard: isHideKeyboard,
       animationBuilder: animationBuilder,
       reverseAnimBuilder: reverseAnimBuilder,
-      onInitState: onInitState);
+      onInitState: onInitState,
+  );
 }
 
 /// Show custom content widget toast
@@ -208,6 +209,8 @@ ToastFuture showToastWidget(
 
   reverseAnimBuilder ??= reverseAnimBuilder ?? _toastTheme?.reverseAnimBuilder;
 
+  onInitState ??= onInitState ?? _toastTheme?.onInitState;
+
   onDismiss ??= onDismiss ?? _toastTheme?.onDismiss;
 
   if (isHideKeyboard) {
@@ -271,7 +274,7 @@ ToastFuture showToastWidget(
 ///description:
 ///Toast configuration widget, which we use to save the overall configuration for toast widget in.
 ///
-class StyledToast extends StatelessWidget {
+class StyledToast extends StatefulWidget {
   ///Child of toast scope
   final Widget child;
 
@@ -360,6 +363,9 @@ class StyledToast extends StatelessWidget {
   ///Custom animation builder method
   final CustomAnimationBuilder reverseAnimBuilder;
 
+  ///When toast widget [initState], this callback will be called.
+  final OnInitStateCallback onInitState;
+
   StyledToast({
     Key key,
     @required this.child,
@@ -391,7 +397,26 @@ class StyledToast extends StatelessWidget {
     this.isHideKeyboard,
     this.animationBuilder,
     this.reverseAnimBuilder,
+    this.onInitState,
   }) : super(key: key);
+
+  @override
+  State<StatefulWidget> createState() {
+    // TODO: implement createState
+    return _StyledToastState();
+  }
+}
+
+class _StyledToastState extends State<StyledToast> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -399,12 +424,12 @@ class StyledToast extends StatelessWidget {
       initialEntries: <OverlayEntry>[
         OverlayEntry(builder: (ctx) {
           currentContext = ctx;
-          return child;
+          return widget.child;
         })
       ],
     );
 
-    TextDirection mTextDirection = textDirection ?? TextDirection.ltr;
+    TextDirection mTextDirection = widget.textDirection ?? TextDirection.ltr;
 
     Widget wrapper = Directionality(
         textDirection: mTextDirection,
@@ -414,19 +439,19 @@ class StyledToast extends StatelessWidget {
           ],
         ));
 
-    TextStyle mTextStyle = textStyle ??
+    TextStyle mTextStyle = widget.textStyle ??
         TextStyle(
           fontSize: 16.0,
           fontWeight: FontWeight.normal,
           color: Colors.white,
         );
 
-    Color mBackgroundColor = backgroundColor ?? const Color(0x99000000);
+    Color mBackgroundColor = widget.backgroundColor ?? const Color(0x99000000);
 
-    BorderRadius mBorderRadius = borderRadius ?? BorderRadius.circular(5.0);
+    BorderRadius mBorderRadius = widget.borderRadius ?? BorderRadius.circular(5.0);
 
-    TextAlign mTextAlign = textAlign ?? TextAlign.center;
-    EdgeInsets mTextPadding = textPadding ??
+    TextAlign mTextAlign = widget.textAlign ?? TextAlign.center;
+    EdgeInsets mTextPadding = widget.textPadding ??
         const EdgeInsets.symmetric(
           horizontal: 17.0,
           vertical: 8.0,
@@ -439,7 +464,7 @@ class StyledToast extends StatelessWidget {
           GlobalCupertinoLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
         ],
-        locale: locale ?? const Locale('en', 'US'),
+        locale: widget.locale ?? const Locale('en', 'US'),
         child: StyledToastTheme(
           child: wrapper,
           textAlign: mTextAlign,
@@ -448,26 +473,27 @@ class StyledToast extends StatelessWidget {
           backgroundColor: mBackgroundColor,
           textPadding: mTextPadding,
           textStyle: mTextStyle,
-          shapeBorder: shapeBorder,
-          duration: duration,
-          animDuration: animDuration,
-          toastPositions: toastPositions,
-          toastAnimation: toastAnimation,
-          reverseAnimation: reverseAnimation,
-          alignment: alignment,
-          axis: axis,
-          startOffset: startOffset,
-          endOffset: endOffset,
-          reverseStartOffset: reverseStartOffset,
-          reverseEndOffset: reverseEndOffset,
-          curve: curve,
-          reverseCurve: reverseCurve,
-          dismissOtherOnShow: dismissOtherOnShow,
-          onDismiss: onDismiss,
-          fullWidth: fullWidth,
-          isHideKeyboard: isHideKeyboard,
-          animationBuilder: animationBuilder,
-          reverseAnimBuilder: reverseAnimBuilder,
+          shapeBorder: widget.shapeBorder,
+          duration: widget.duration,
+          animDuration: widget.animDuration,
+          toastPositions: widget.toastPositions,
+          toastAnimation: widget.toastAnimation,
+          reverseAnimation: widget.reverseAnimation,
+          alignment: widget.alignment,
+          axis: widget.axis,
+          startOffset: widget.startOffset,
+          endOffset: widget.endOffset,
+          reverseStartOffset: widget.reverseStartOffset,
+          reverseEndOffset: widget.reverseEndOffset,
+          curve: widget.curve,
+          reverseCurve: widget.reverseCurve,
+          dismissOtherOnShow: widget.dismissOtherOnShow,
+          onDismiss: widget.onDismiss,
+          fullWidth: widget.fullWidth,
+          isHideKeyboard: widget.isHideKeyboard,
+          animationBuilder: widget.animationBuilder,
+          reverseAnimBuilder: widget.reverseAnimBuilder,
+          onInitState: widget.onInitState,
         ),
       ),
       data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),

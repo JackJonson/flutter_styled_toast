@@ -1,3 +1,8 @@
+## [1.5.1+1]
+Change [StyledToast] from StatelessWidget to StatefulWidget.
+Add [onInitState] to StyledToast and StyledToastTheme.
+
+
 ## [1.5.0+2]
 Delete deprecated parameter [movingOnWindowChange] usage.
 

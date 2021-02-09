@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/src/custom_animation.dart';
+import 'package:flutter_styled_toast/src/styled_toast.dart';
 import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
 
 ///
@@ -97,6 +98,9 @@ class StyledToastTheme extends InheritedWidget {
   ///Custom animation builder method
   final CustomAnimationBuilder reverseAnimBuilder;
 
+  ///When toast widget [initState], this callback will be called.
+  final OnInitStateCallback onInitState;
+
   StyledToastTheme({
     this.child,
     this.textAlign,
@@ -126,6 +130,7 @@ class StyledToastTheme extends InheritedWidget {
     this.isHideKeyboard,
     this.animationBuilder,
     this.reverseAnimBuilder,
+    this.onInitState,
   }) : super(child: child);
 
   @override

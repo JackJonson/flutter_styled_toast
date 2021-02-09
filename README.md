@@ -13,7 +13,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ```yaml
 dependencies:
-  flutter_styled_toast: ^1.5.0+1
+  flutter_styled_toast: ^1.5.1+1
 ```
 
 ```dart
@@ -50,6 +50,105 @@ showToast('This is normal toast with animation',
 
 ```dart
 
+
+```dart
+///Custom animation and custom reverse animation,
+///combination different animation and reverse animation to achieve amazing effect.
+
+AnimationController mController;
+AnimationController mReverseController;
+
+@override
+void initState() {
+  super.initState();
+  mController =
+      AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+  mReverseController =
+      AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+}
+
+showToast('This is normal toast with custom animation',
+   context: context,
+   position: StyledToastPosition.bottom,
+   animDuration: Duration(seconds: 1),
+   duration: Duration(seconds: 4),
+   animationBuilder: (
+       BuildContext context,
+       AnimationController controller,
+       Duration duration,
+       Widget child,
+   ) {
+      return SlideTransition(
+          position: getAnimation<Offset>(
+          Offset(0.0, 3.0), Offset(0, 0), controller,
+          curve: Curves.bounceInOut),
+          child: child,
+      );
+   },
+   reverseAnimBuilder: (
+      BuildContext context,
+      AnimationController controller,
+      Duration duration,
+      Widget child,
+   ) {
+      return SlideTransition(
+          position: getAnimation<Offset>(
+          Offset(0.0, 0.0), Offset(-3.0, 0), controller,
+          curve: Curves.bounceInOut),
+          child: child,
+      );
+   },
+);
+
+```dart
+
+
+```dart
+///Custom animation, custom reverse animation and custom animation controller
+showToast('This is normal toast with custom animation and controller',
+   context: context,
+   position: StyledToastPosition.bottom,
+   animDuration: Duration(seconds: 1),
+   duration: Duration(seconds: 4),
+   onInitState:(Duration toastDuration, Duration animDuration) async {
+      try {
+         await mController.forward().orCancel;
+         Future.delayed(toastDuration - animDuration, () async {
+            await mReverseController.forward().orCancel;
+            mController.reset();
+            mReverseController.reset();
+         });
+      } on TickerCanceled {}
+   },
+   animationBuilder: (
+       BuildContext context,
+       AnimationController controller,
+       Duration duration,
+       Widget child,
+   ) {
+      return SlideTransition(
+          position: getAnimation<Offset>(
+          Offset(0.0, 3.0), Offset(0, 0), controller,
+          curve: Curves.bounceInOut),
+          child: child,
+      );
+   },
+   reverseAnimBuilder: (
+      BuildContext context,
+      AnimationController controller,
+      Duration duration,
+      Widget child,
+   ) {
+      return SlideTransition(
+          position: getAnimation<Offset>(
+          Offset(0.0, 0.0), Offset(-3.0, 0), controller,
+          curve: Curves.bounceInOut),
+          child: child,
+      );
+   },
+);
+
+```dart
 
 
 
@@ -116,7 +215,7 @@ StyledToast(
           ),
         ),
 );
-```
+```dart
 
 ```dart
 //After global configuration, use in a single line.
