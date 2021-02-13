@@ -98,6 +98,9 @@ class StyledToastTheme extends InheritedWidget {
   ///Custom animation builder method
   final CustomAnimationBuilder reverseAnimBuilder;
 
+  ///Is the input ignored for the toast.
+  final bool isIgnoring;
+
   ///When toast widget [initState], this callback will be called.
   final OnInitStateCallback onInitState;
 
@@ -130,6 +133,7 @@ class StyledToastTheme extends InheritedWidget {
     this.isHideKeyboard,
     this.animationBuilder,
     this.reverseAnimBuilder,
+    this.isIgnoring,
     this.onInitState,
   }) : super(child: child);
 
