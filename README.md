@@ -365,8 +365,8 @@ fullWidth            | bool (default false)(Full width parameter that the width 
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
+isIgnoring           | bool (default true)
 onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
-isIgnoringPointer    | bool (default true)
 
 
 
@@ -403,8 +403,8 @@ fullWidth            | bool (default false)(Full width parameter that the width 
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
-onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 isIgnoring           | bool (default true)
+onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 
 
 
@@ -434,8 +434,8 @@ reverseCurve         | Curve (default Curves.linear)
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
-onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 isIgnoring           | bool (default true)
+onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 
 
 ## Example
