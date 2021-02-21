@@ -1,3 +1,6 @@
+## [1.5.1+2]
+* Ability to set `ignoring` parameter for `IgnorePointer` widget (contributed by @agordn52).
+
 ## [1.5.1+1]
 Change [StyledToast] from StatelessWidget to StatefulWidget.
 Add [onInitState] to StyledToast and StyledToastTheme.

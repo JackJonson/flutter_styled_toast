@@ -66,6 +66,7 @@ ToastFuture showToast(
   bool isHideKeyboard,
   CustomAnimationBuilder animationBuilder,
   CustomAnimationBuilder reverseAnimBuilder,
+  bool isIgnoring = true,
   OnInitStateCallback onInitState,
 }) {
   context = context != null ? context : currentContext;
@@ -134,6 +135,7 @@ ToastFuture showToast(
     isHideKeyboard: isHideKeyboard,
     animationBuilder: animationBuilder,
     reverseAnimBuilder: reverseAnimBuilder,
+    isIgnoring: isIgnoring,
     onInitState: onInitState,
   );
 }
@@ -162,6 +164,7 @@ ToastFuture showToastWidget(
   bool isHideKeyboard,
   CustomAnimationBuilder animationBuilder,
   CustomAnimationBuilder reverseAnimBuilder,
+  bool isIgnoring = true,
   OnInitStateCallback onInitState,
 }) {
   OverlayEntry entry;
@@ -223,6 +226,7 @@ ToastFuture showToastWidget(
 
   entry = OverlayEntry(builder: (ctx) {
     return IgnorePointer(
+      ignoring: isIgnoring,
       child: _StyledToastWidget(
         duration: duration,
         animDuration: animDuration,
@@ -364,6 +368,9 @@ class StyledToast extends StatefulWidget {
   ///Custom animation builder method
   final CustomAnimationBuilder reverseAnimBuilder;
 
+  ///Is the input ignored for the toast.
+  final bool isIgnoring;
+
   ///When toast widget [initState], this callback will be called.
   final OnInitStateCallback onInitState;
 
@@ -398,6 +405,7 @@ class StyledToast extends StatefulWidget {
     this.isHideKeyboard,
     this.animationBuilder,
     this.reverseAnimBuilder,
+    this.isIgnoring = true,
     this.onInitState,
   }) : super(key: key);
 
@@ -495,6 +503,7 @@ class _StyledToastState extends State<StyledToast> {
           isHideKeyboard: widget.isHideKeyboard,
           animationBuilder: widget.animationBuilder,
           reverseAnimBuilder: widget.reverseAnimBuilder,
+          isIgnoring: widget.isIgnoring,
           onInitState: widget.onInitState,
         ),
       ),
