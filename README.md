@@ -13,7 +13,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 ```yaml
 dependencies:
-  flutter_styled_toast: ^1.5.1+2
+  flutter_styled_toast: ^1.5.2+1
 ```
 
 ```dart
@@ -29,7 +29,50 @@ showToastWidget(Text('hello styled toast'),context:context);
 ```
 
 ```dart
-//Set a animation
+//Interactive toast, set [isIgnoring] false.
+showToastWidget(
+   Container(
+       padding: EdgeInsets.symmetric(horizontal: 18.0),
+       margin: EdgeInsets.symmetric(horizontal: 50.0),
+       decoration: ShapeDecoration(
+           shape: RoundedRectangleBorder(
+               borderRadius: BorderRadius.circular(5.0),
+           ),
+           color: Colors.green[600],
+       ),
+       child: Row(
+           children: [
+               Text(
+                   'Jump to new page',
+                   style: TextStyle(
+                       color: Colors.white,
+                   ),
+               ),
+               IconButton(
+                   onPressed: () {
+                       ToastManager().dismissAll(showAnim: true);
+                       Navigator.push(context,
+                           MaterialPageRoute(builder: (context) {
+                           return SecondPage();
+                       }));
+                   },
+                   icon: Icon(
+                       Icons.add_circle_outline_outlined,
+                       color: Colors.white,
+                   ),
+               ),
+           ],
+           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+       ),
+   ),
+   context: context,
+   isIgnoring: false,
+   duration: Duration.zero,
+);
+```
+
+```dart
+//Set an animation
 showToast('This is normal toast with animation',
    context: context,
    animation: StyledToastAnimation.scale,
@@ -184,12 +227,13 @@ StyledToast(
   reverseAnimation: StyledToastAnimation.fade, //The reverse animation of toast (display When dismiss toast)
   curve: Curves.fastOutSlowIn,  //The curve of animation
   reverseCurve: Curves.fastLinearToSlowEaseIn, //The curve of reverse animation
-  duration: Duration(seconds: 4), //The duration of toast showing
+  duration: Duration(seconds: 4), //The duration of toast showing, when set [duration] to Duration.zero, toast won't dismiss automatically.
   animDuration: Duration(seconds: 1), //The duration of animation(including reverse) of toast 
   dismissOtherOnShow: true,  //When we show a toast and other toast is showing, dismiss any other showing toast before.
   movingOnWindowChange: true, //When the window configuration changes, move the toast.
   fullWidth: false, //Whether the toast is full screen (subtract the horizontal margin)
   isHideKeyboard: false, //Is hide keyboard when toast show
+  isIgnoring: true, //Is the input ignored for the toast
   animationBuilder: (BuildContext context,AnimationController controller,Duration duration,Widget child,){  // Builder method for custom animation
      return SlideTransition(
         position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
@@ -345,7 +389,7 @@ textPadding          | EdgeInsetsGeometry (default EdgeInsets.symmetric(horizont
 toastHorizontalMargin| double (default 50.0)   
 textStyle            | TextStyle (default TextStyle(fontSize: 16.0,fontWeight: FontWeight.normal,color: Colors.white))   
 shapeBorder          | ShapeBorder (default RoundedRectangleBorder(borderRadius: borderRadius))
-duration             | Duration (default 2.3s)
+duration             | Duration (default 2.3s)(When set [duration] to Duration.zero, toast won't dismiss automatically)
 animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= duration, conditions must be met for toast to display properly)
 toastPositions       | StyledToastPosition (default StyledToastPosition.bottom)
 toastAnimation       | StyledToastAnimation (default StyledToastAnimation.fade)
@@ -376,7 +420,7 @@ property             | description
 ---------------------|----------------------------
 msg                  | String (Not Null)(required)
 context              | BuildContext (If you don't wrap app with StyledToast, context is required, otherwise, is not)
-duration             | Duration (default 2.3s)
+duration             | Duration (default 2.3s)(When set [duration] to Duration.zero, toast won't dismiss automatically)
 animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= duration, conditions must be met for toast to display properly)
 position             | StyledToastPosition (default StyledToastPosition.bottom)
 textStyle            | TextStyle (default TextStyle(fontSize: 16.0,fontWeight: FontWeight.normal,color: Colors.white))   
@@ -403,7 +447,7 @@ fullWidth            | bool (default false)(Full width parameter that the width 
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
-isIgnoring           | bool (default true)
+isIgnoring           | bool (default true)(Is the input ignored for the toast)
 onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 
 
@@ -414,7 +458,7 @@ property             | description
 ---------------------|----------------------------
 widget               | Widget (Not Null)(required)
 context              | BuildContext (If you don't wrap app with StyledToast, context is required, otherwise, is not)
-duration             | Duration (default 2.3s)
+duration             | Duration (default 2.3s)(When set [duration] to Duration.zero, toast won't dismiss automatically)
 animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= duration, conditions must be met for toast to display properly)
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
 dismissOtherOnShow   | bool (default true)        
@@ -434,7 +478,7 @@ reverseCurve         | Curve (default Curves.linear)
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
-isIgnoring           | bool (default true)
+isIgnoring           | bool (default true )(Is the input ignored for the toast)
 onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
 
 

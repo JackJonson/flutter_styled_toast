@@ -1,5 +1,6 @@
-## [1.5.1+2]
+## [1.5.2+1]
 * Ability to set `ignoring` parameter for `IgnorePointer` widget (contributed by @agordn52).
+* Permanent toast, when set [duration] to Duration.zero, toast won't dismiss automatically.
 
 ## [1.5.1+1]
 Change [StyledToast] from StatelessWidget to StatefulWidget.

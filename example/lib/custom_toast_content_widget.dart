@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_styled_toast/flutter_styled_toast.dart';
+
+import 'main.dart';
 
 ///
 ///created time: 2019-06-25 16:42
@@ -8,7 +11,7 @@ import 'package:flutter/material.dart';
 ///file name: toast_content_widget.dart
 ///description: Toast with icon
 ///
-class IconToastWidget extends StatefulWidget {
+class IconToastWidget extends StatelessWidget {
   final Key key;
   final Color backgroundColor;
   final String message;
@@ -40,40 +43,16 @@ class IconToastWidget extends StatefulWidget {
       );
 
   @override
-  State<StatefulWidget> createState() {
-    // TODO: implement createState
-    return _IconToastWidgetState();
-  }
-}
-
-class _IconToastWidgetState extends State<IconToastWidget>
-    with TickerProviderStateMixin<IconToastWidget> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-  }
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     // TODO: implement build
     Widget content = Material(
       color: Colors.transparent,
       child: Container(
           margin: EdgeInsets.symmetric(horizontal: 50.0),
-          padding: widget.padding ??
-              EdgeInsets.symmetric(vertical: 20.0, horizontal: 17.0),
+          padding:
+              padding ?? EdgeInsets.symmetric(vertical: 20.0, horizontal: 17.0),
           decoration: ShapeDecoration(
-            color: widget.backgroundColor ?? const Color(0x9F000000),
+            color: backgroundColor ?? const Color(0x9F000000),
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10.0),
             ),
@@ -85,7 +64,7 @@ class _IconToastWidgetState extends State<IconToastWidget>
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 5.0),
                 child: Image.asset(
-                  widget.assetName,
+                  assetName,
                   fit: BoxFit.fill,
                   width: 30,
                   height: 30,
@@ -93,9 +72,9 @@ class _IconToastWidgetState extends State<IconToastWidget>
               ),
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 5.0),
-                child: widget.textWidget ??
+                child: textWidget ??
                     Text(
-                      widget.message ?? '',
+                      message ?? '',
                       style: TextStyle(
                           fontSize: Theme.of(context).textTheme.title.fontSize,
                           color: Colors.white),
@@ -178,5 +157,69 @@ class BannerToastWidget extends StatelessWidget {
     );
 
     return content;
+  }
+}
+
+///Toast with action widget
+class ActionToastWidget extends StatelessWidget {
+  ///Text
+  final String text;
+
+  ///Text widget
+  final Widget textWidget;
+
+  ///Action widget
+  final Widget actionWidget;
+
+  ActionToastWidget({
+    this.text,
+    this.textWidget,
+    this.actionWidget,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.symmetric(horizontal: 18.0),
+      margin: EdgeInsets.symmetric(horizontal: 50.0),
+      decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          color: Colors.green[600],
+          shadows: [
+            const BoxShadow(
+              offset: Offset.zero,
+              spreadRadius: 10,
+              blurRadius: 10,
+              color: const Color(0x040D0229),
+            ),
+          ]),
+      child: Row(
+        children: [
+          textWidget ??
+              Text(
+                text ?? '',
+                style: TextStyle(
+                  color: Colors.white,
+                ),
+              ),
+          actionWidget ??
+              IconButton(
+                onPressed: () {
+                  ToastManager().dismissAll(showAnim: true);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) {
+                    return SecondPage();
+                  }));
+                },
+                icon: Icon(
+                  Icons.add_circle_outline_outlined,
+                  color: Colors.white,
+                ),
+              ),
+        ],
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      ),
+    );
   }
 }

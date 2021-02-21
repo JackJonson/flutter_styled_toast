@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/src/styled_toast.dart';
 
@@ -19,34 +17,36 @@ class ToastFuture {
 
   ///Is toast showing
   bool _isShow = true;
-  final GlobalKey<StyledToastWidgetState> _containerKey;
 
-  /// A [Timer] used to dismiss this toast future after the given period of time.
-  Timer _timer;
+  ///Toast widget key
+  final GlobalKey<StyledToastWidgetState> _containerKey;
 
   ToastFuture.create(
     Duration duration,
     this._entry,
     this._onDismiss,
     this._containerKey,
-  ) {
-    _timer = Timer(duration, () => dismiss());
-  }
+  );
 
   ///Dismiss toast
-  void dismiss(
-      {bool showAnim = false, Duration animDuration = animationDuration}) {
+  void dismiss({
+    bool showAnim = false,
+  }) {
     if (!_isShow) {
       return;
     }
 
     _isShow = false;
-    _timer.cancel();
     _onDismiss?.call();
     ToastManager().removeFuture(this);
-
-    _containerKey.currentState?.dismissToast();
-    _entry.remove();
+    if (showAnim) {
+      _containerKey.currentState?.dismissToastAnim(onAnimationEnd: () {
+        _entry.remove();
+      });
+    } else {
+      _containerKey.currentState?.dismissToast();
+      _entry.remove();
+    }
   }
 }
 
@@ -66,7 +66,9 @@ class ToastManager {
   Set<ToastFuture> toastSet = Set();
 
   ///Dismiss all toast
-  void dismissAll({bool showAnim = false}) {
+  void dismissAll({
+    bool showAnim = false,
+  }) {
     toastSet.toList().forEach((v) {
       v.dismiss(showAnim: showAnim);
     });

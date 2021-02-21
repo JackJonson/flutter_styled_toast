@@ -66,7 +66,7 @@ ToastFuture showToast(
   bool isHideKeyboard,
   CustomAnimationBuilder animationBuilder,
   CustomAnimationBuilder reverseAnimBuilder,
-  bool isIgnoring = true,
+  bool isIgnoring,
   OnInitStateCallback onInitState,
 }) {
   context = context != null ? context : currentContext;
@@ -164,7 +164,7 @@ ToastFuture showToastWidget(
   bool isHideKeyboard,
   CustomAnimationBuilder animationBuilder,
   CustomAnimationBuilder reverseAnimBuilder,
-  bool isIgnoring = true,
+  bool isIgnoring,
   OnInitStateCallback onInitState,
 }) {
   OverlayEntry entry;
@@ -216,6 +216,8 @@ ToastFuture showToastWidget(
   onInitState ??= onInitState ?? _toastTheme?.onInitState;
 
   onDismiss ??= onDismiss ?? _toastTheme?.onDismiss;
+
+  isIgnoring ??= _toastTheme?.isIgnoring ?? true;
 
   if (isHideKeyboard) {
     ///Hide keyboard
@@ -596,7 +598,7 @@ class _StyledToastWidget extends StatefulWidget {
     this.animationBuilder,
     this.reverseAnimBuilder,
     this.onInitState,
-  })  : assert(animDuration * 2 <= duration),
+  })  : assert(animDuration * 2 <= duration || duration == Duration.zero),
         super(key: key);
 
   @override
@@ -695,10 +697,13 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
     widget.onInitState?.call(widget.duration, widget.animDuration);
 
-    ///Dismiss toast
-    _toastTimer = Timer(widget.duration - widget.animDuration, () async {
-      dismissToastAnim();
-    });
+    ///If toast duration is zero, then the toast won't dismiss automatically
+    if (widget.duration != Duration.zero) {
+      ///Dismiss toast
+      _toastTimer = Timer(widget.duration - widget.animDuration, () async {
+        dismissToastAnim();
+      });
+    }
 
     WidgetsBinding.instance.addObserver(this);
   }
@@ -1549,6 +1554,9 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
   ///Dismiss toast
   void dismissToast() {
+    if (!mounted) {
+      return;
+    }
     _toastTimer?.cancel();
     setState(() {
       opacity = 0.0;
@@ -1556,10 +1564,11 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   }
 
   ///Dismiss toast with animation
-  void dismissToastAnim() async {
+  void dismissToastAnim({VoidCallback onAnimationEnd}) async {
     if (!mounted) {
       return;
     }
+    _toastTimer?.cancel();
     try {
       if (_reverseAnimController != null &&
           (widget.animation != widget.reverseAnimation ||
@@ -1568,6 +1577,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       } else {
         await _animationController.reverse().orCancel;
       }
+      onAnimationEnd?.call();
     } on TickerCanceled {}
   }
 

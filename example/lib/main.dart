@@ -51,6 +51,7 @@ class _MyAppState extends State<MyApp> {
       dismissOtherOnShow: true,
       fullWidth: false,
       isHideKeyboard: false,
+      isIgnoring: true,
       child: MaterialApp(
         title: appTitle,
         showPerformanceOverlay: showPerformance,
@@ -141,6 +142,19 @@ class _MyHomePageState extends State<MyHomePage>
                     axis: Axis.horizontal,
                     alignment: Alignment.center,
                     position: StyledToastPosition.bottom);
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text('Permanent toast'),
+              onTap: () {
+                showToast(
+                  'This is a permanent toast',
+                  context: context,
+                  duration: Duration.zero,
+                );
               },
             ),
             Divider(
@@ -723,6 +737,53 @@ class _MyHomePageState extends State<MyHomePage>
               height: 0.5,
             ),
             ListTile(
+              title: Text('Interactive toast'),
+              onTap: () {
+                showToastWidget(
+                  Container(
+                    padding: EdgeInsets.symmetric(horizontal: 18.0),
+                    margin: EdgeInsets.symmetric(horizontal: 50.0),
+                    decoration: ShapeDecoration(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(5.0),
+                      ),
+                      color: Colors.green[600],
+                    ),
+                    child: Row(
+                      children: [
+                        Text(
+                          'Jump to new page',
+                          style: TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        IconButton(
+                          onPressed: () {
+                            ToastManager().dismissAll(showAnim: true);
+                            Navigator.push(context,
+                                MaterialPageRoute(builder: (context) {
+                              return SecondPage();
+                            }));
+                          },
+                          icon: Icon(
+                            Icons.add_circle_outline_outlined,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ],
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    ),
+                  ),
+                  context: context,
+                  isIgnoring: false,
+                  duration: Duration.zero,
+                );
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
               title: Text(
                 "Custom toast content widget with icon convinient fail",
               ),
@@ -787,7 +848,7 @@ class _SecondPageState extends State<SecondPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title ?? 'Second Page'),
       ),
       body: Center(
         child: ListView(
