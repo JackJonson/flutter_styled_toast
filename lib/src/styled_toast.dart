@@ -205,9 +205,9 @@ ToastFuture showToastWidget(
   reverseCurve ??= reverseCurve ?? _toastTheme?.reverseCurve ?? Curves.linear;
 
   animation ??=
-      animation ?? _toastTheme?.toastAnimation ?? StyledToastAnimation.fade;
+      animation ?? _toastTheme?.toastAnimation ?? StyledToastAnimation.size;
 
-  reverseAnimation ??= reverseAnimation ?? _toastTheme?.reverseAnimation;
+  reverseAnimation ??= reverseAnimation ?? _toastTheme?.reverseAnimation?? StyledToastAnimation.size;
 
   animationBuilder ??= animationBuilder ?? _toastTheme?.animationBuilder;
 
