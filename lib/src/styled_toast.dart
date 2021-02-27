@@ -701,7 +701,11 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     if (widget.duration != Duration.zero) {
       ///Dismiss toast
       _toastTimer = Timer(widget.duration - widget.animDuration, () async {
-        dismissToastAnim();
+        if(widget.reverseAnimation==StyledToastAnimation.none){
+          dismissToast();
+        }else {
+          dismissToastAnim();
+        }
       });
     }
 
