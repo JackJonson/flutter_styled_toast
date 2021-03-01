@@ -3,13 +3,13 @@ import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('TestAppWidget has a styled toast global configuration', (WidgetTester tester) async {
+  testWidgets('TestAppWidget has a styled toast global configuration',
+      (WidgetTester tester) async {
     // Test code goes here.
     await tester.pumpWidget(TestAppWidget());
     // Create the Finders.
   });
 }
-
 
 class TestAppWidget extends StatefulWidget {
   @override
@@ -45,7 +45,9 @@ class _TestAppWidgetState extends State<TestAppWidget> {
         title: appTitle,
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
-            return Container(color: Colors.blue,);
+            return Container(
+              color: Colors.blue,
+            );
           },
         ),
       ),

@@ -207,7 +207,9 @@ ToastFuture showToastWidget(
   animation ??=
       animation ?? _toastTheme?.toastAnimation ?? StyledToastAnimation.size;
 
-  reverseAnimation ??= reverseAnimation ?? _toastTheme?.reverseAnimation?? StyledToastAnimation.size;
+  reverseAnimation ??= reverseAnimation ??
+      _toastTheme?.reverseAnimation ??
+      StyledToastAnimation.size;
 
   animationBuilder ??= animationBuilder ?? _toastTheme?.animationBuilder;
 
@@ -701,9 +703,9 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     if (widget.duration != Duration.zero) {
       ///Dismiss toast
       _toastTimer = Timer(widget.duration - widget.animDuration, () async {
-        if(widget.reverseAnimation==StyledToastAnimation.none){
+        if (widget.reverseAnimation == StyledToastAnimation.none) {
           dismissToast();
-        }else {
+        } else {
           dismissToastAnim();
         }
       });
