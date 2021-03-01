@@ -1,3 +1,6 @@
+## [1.5.2+2]
+Fix bug.
+
 ## [1.5.2+1]
 * Ability to set `ignoring` parameter for `IgnorePointer` widget (contributed by @agordn52).
 * Permanent toast, when set [duration] to Duration.zero, toast won't dismiss automatically.
