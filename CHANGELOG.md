@@ -1,3 +1,8 @@
+## [2.0.0 null-safety]
+Migrate to null safety.
+Remove deprecated param movingOnWindowChange.
+
+
 ## [1.5.2+3]
 Format.
 

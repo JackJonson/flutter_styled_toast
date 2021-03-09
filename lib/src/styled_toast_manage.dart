@@ -13,7 +13,7 @@ class ToastFuture {
   final OverlayEntry _entry;
 
   ///Callback when toast dismiss
-  final VoidCallback _onDismiss;
+  final VoidCallback? _onDismiss;
 
   ///Is toast showing
   bool _isShow = true;
@@ -55,11 +55,11 @@ class ToastManager {
   ToastManager._();
 
   ///Instance of ToastManager
-  static ToastManager _instance;
+  static ToastManager? _instance;
 
   factory ToastManager() {
     _instance ??= ToastManager._();
-    return _instance;
+    return _instance!;
   }
 
   ///Set used to save [ToastFuture]

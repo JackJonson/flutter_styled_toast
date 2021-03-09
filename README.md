@@ -16,6 +16,12 @@ dependencies:
   flutter_styled_toast: ^1.5.2+3
 ```
 
+## Null safety
+```yaml
+dependencies:
+  flutter_styled_toast: ^2.0.0
+```
+
 ```dart
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ```
@@ -403,8 +409,7 @@ reverseEndOffset     | Offset
 curve                | Curve (default Curves.linear)
 reverseCurve         | Curve (default Curves.linear)
 dismissOtherOnShow   | bool (default true)     
-movingOnWindowChange | bool (default true)
-onDismiss            | VoidCallback (Invoked when toast dismiss) 
+onDismiss            | VoidCallback (Invoked when toast dismiss)
 fullWidth            | bool (default false)(Full width parameter that the width of the screen minus the width of the margin.)
 isHideKeyboard       | bool (default false)(Is hide keyboard when toast show)
 animationBuilder     | CustomAnimationBuilder (Builder method for custom animation)
@@ -431,7 +436,6 @@ shapeBorder          | ShapeBorder (default RoundedRectangleBorder(borderRadius:
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
 textDirection        | TextDirection (default TextDirection.ltr)  
 dismissOtherOnShow   | bool (default true)     
-movingOnWindowChange | bool (default true)
 toastAnimation       | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 
 alignment            | AlignmentGeometry (default Alignment.center)
@@ -462,8 +466,7 @@ duration             | Duration (default 2.3s)(When set [duration] to Duration.z
 animDuration         | Duration (default 400 milliseconds, animDuration * 2  <= duration, conditions must be met for toast to display properly)
 onDismiss            | VoidCallback (Invoked when toast dismiss) 
 dismissOtherOnShow   | bool (default true)        
-movingOnWindowChange | bool (default true)   
-textDirection        | TextDirection (default TextDirection.ltr)  
+textDirection        | TextDirection (default TextDirection.ltr)
 position             | StyledToastPosition (default )
 animation            | StyledToastAnimation (default StyledToastAnimation.fade)
 reverseAnimation     | StyledToastAnimation 

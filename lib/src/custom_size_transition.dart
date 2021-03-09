@@ -35,22 +35,19 @@ class CustomSizeTransition extends AnimatedWidget {
   /// defaults to 0.0, which centers the child along the main axis during the
   /// transition.
   const CustomSizeTransition({
-    Key key,
+    Key? key,
     this.axis = Axis.vertical,
     this.alignment,
-    @required Animation<double> sizeFactor,
+    required Animation<double> sizeFactor,
     this.axisAlignment = 0.0,
     this.child,
-  })  : assert(axis != null),
-        assert(sizeFactor != null),
-        assert(axisAlignment != null),
-        super(key: key, listenable: sizeFactor);
+  }) : super(key: key, listenable: sizeFactor);
 
   /// [Axis.horizontal] if [sizeFactor] modifies the width, otherwise
   /// [Axis.vertical].
   final Axis axis;
 
-  final AlignmentGeometry alignment;
+  final AlignmentGeometry? alignment;
 
   /// The animation that controls the (clipped) size of the child.
   ///
@@ -60,7 +57,7 @@ class CustomSizeTransition extends AnimatedWidget {
   ///
   /// If the value of [sizeFactor] is less than one, the child will be clipped
   /// in the appropriate axis.
-  Animation<double> get sizeFactor => listenable;
+  Animation<double> get sizeFactor => listenable as Animation<double>;
 
   /// Describes how to align the child along the axis that [sizeFactor] is
   /// modifying.
@@ -78,7 +75,7 @@ class CustomSizeTransition extends AnimatedWidget {
   /// The widget below this widget in the tree.
   ///
   /// {@macro flutter.widgets.child}
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

@@ -3,7 +3,7 @@ import 'package:flutter/widgets.dart';
 ///Toast position
 class StyledToastPosition {
   ///Toast position align
-  final AlignmentGeometry align;
+  final Alignment align;
 
   ///Toast position offset
   ///if align is topLeft/topCenter/topRight, offset is the distance from top.
