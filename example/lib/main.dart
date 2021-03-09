@@ -71,11 +71,11 @@ class _MyAppState extends State<MyApp> {
 // The StatefulWidget's job is to take in some data and create a State class.
 // In this case, the Widget takes a title, and creates a _MyHomePageState.
 class MyHomePage extends StatefulWidget {
-  final String title;
+  final String? title;
 
-  final VoidCallback onSetting;
+  final VoidCallback? onSetting;
 
-  MyHomePage({Key key, this.title, this.onSetting}) : super(key: key);
+  MyHomePage({Key? key, this.title, this.onSetting}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
@@ -91,9 +91,9 @@ class _MyHomePageState extends State<MyHomePage>
 
   TextEditingController controller = TextEditingController();
 
-  AnimationController mController;
+  late AnimationController mController;
 
-  AnimationController mReverseController;
+  late AnimationController mReverseController;
 
   @override
   void initState() {
@@ -108,7 +108,7 @@ class _MyHomePageState extends State<MyHomePage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(widget.title),
+        title: Text(widget.title ?? ''),
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.settings),
@@ -831,9 +831,9 @@ class _MyHomePageState extends State<MyHomePage>
 // The StatefulWidget's job is to take in some data and create a State class.
 // In this case, the Widget takes a title, and creates a _MyHomePageState.
 class SecondPage extends StatefulWidget {
-  final String title;
+  final String? title;
 
-  SecondPage({Key key, this.title}) : super(key: key);
+  SecondPage({Key? key, this.title}) : super(key: key);
 
   @override
   _SecondPageState createState() => _SecondPageState();
@@ -846,6 +846,20 @@ class _SecondPageState extends State<SecondPage> {
 
   @override
   Widget build(BuildContext context) {
+    Color getColor(Set<MaterialState> states) {
+      const Set<MaterialState> interactiveStates = <MaterialState>{
+        MaterialState.pressed,
+        MaterialState.hovered,
+        MaterialState.focused,
+      };
+      if (states.any(interactiveStates.contains)) {
+        return Colors.blue;
+      }
+      return Colors.red;
+    }
+
+    ;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title ?? 'Second Page'),
@@ -865,13 +879,14 @@ class _SecondPageState extends State<SecondPage> {
             Container(
               height: 50.0,
               margin: EdgeInsets.only(bottom: 20.0),
-              child: RaisedButton(
+              child: ElevatedButton(
                 onPressed: () {
                   showToast(
                     'This is normal toast',
                   );
                 },
-                color: Colors.blue,
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateProperty.resolveWith(getColor)),
                 child: Text(
                   "normal toast",
                   style: TextStyle(fontSize: 15.0, color: Colors.white),

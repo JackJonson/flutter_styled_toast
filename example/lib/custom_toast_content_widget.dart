@@ -12,14 +12,14 @@ import 'main.dart';
 ///description: Toast with icon
 ///
 class IconToastWidget extends StatelessWidget {
-  final Key key;
-  final Color backgroundColor;
-  final String message;
-  final Widget textWidget;
-  final double height;
-  final double width;
-  final String assetName;
-  final EdgeInsetsGeometry padding;
+  final Key? key;
+  final Color? backgroundColor;
+  final String? message;
+  final Widget? textWidget;
+  final double? height;
+  final double? width;
+  final String? assetName;
+  final EdgeInsetsGeometry? padding;
 
   IconToastWidget({
     this.key,
@@ -32,12 +32,12 @@ class IconToastWidget extends StatelessWidget {
     this.padding,
   }) : super(key: key);
 
-  factory IconToastWidget.fail({String msg}) => IconToastWidget(
+  factory IconToastWidget.fail({String? msg}) => IconToastWidget(
         message: msg,
         assetName: 'assets/ic_fail.png',
       );
 
-  factory IconToastWidget.success({String msg}) => IconToastWidget(
+  factory IconToastWidget.success({String? msg}) => IconToastWidget(
         message: msg,
         assetName: 'assets/ic_success.png',
       );
@@ -64,7 +64,7 @@ class IconToastWidget extends StatelessWidget {
               Container(
                 padding: EdgeInsets.symmetric(horizontal: 5.0),
                 child: Image.asset(
-                  assetName,
+                  assetName!,
                   fit: BoxFit.fill,
                   width: 30,
                   height: 30,
@@ -76,7 +76,7 @@ class IconToastWidget extends StatelessWidget {
                     Text(
                       message ?? '',
                       style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.title.fontSize,
+                          fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                           color: Colors.white),
                       softWrap: true,
                       maxLines: 200,
@@ -99,13 +99,13 @@ class IconToastWidget extends StatelessWidget {
 ///description: Banner type toast widget, example of custom toast content widget when you use [showToastWidget]
 ///
 class BannerToastWidget extends StatelessWidget {
-  final Key key;
-  final Color backgroundColor;
-  final String message;
-  final Widget textWidget;
-  final double offset;
-  final double height;
-  final double width;
+  final Key? key;
+  final Color? backgroundColor;
+  final String? message;
+  final Widget? textWidget;
+  final double? offset;
+  final double? height;
+  final double? width;
 
   BannerToastWidget(
       {this.key,
@@ -114,12 +114,12 @@ class BannerToastWidget extends StatelessWidget {
       this.message,
       this.height,
       this.width,
-      Offset offset})
-      : this.offset = offset == null ? 10.0 : offset,
+      double? offset})
+      : this.offset = (offset == null ? 10.0 : offset),
         super(key: key);
 
   factory BannerToastWidget.success(
-          {String msg, Widget text, BuildContext context}) =>
+          {String? msg, Widget? text, BuildContext? context}) =>
       BannerToastWidget(
         backgroundColor: context != null
             ? Theme.of(context).toggleableActiveColor
@@ -129,7 +129,7 @@ class BannerToastWidget extends StatelessWidget {
       );
 
   factory BannerToastWidget.fail(
-          {String msg, Widget text, BuildContext context}) =>
+          {String? msg, Widget? text, BuildContext? context}) =>
       BannerToastWidget(
         backgroundColor: context != null
             ? Theme.of(context).errorColor
@@ -151,7 +151,7 @@ class BannerToastWidget extends StatelessWidget {
           Text(
             message ?? '',
             style: TextStyle(
-                fontSize: Theme.of(context).textTheme.title.fontSize,
+                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
                 color: Colors.white),
           ),
     );
@@ -163,13 +163,13 @@ class BannerToastWidget extends StatelessWidget {
 ///Toast with action widget
 class ActionToastWidget extends StatelessWidget {
   ///Text
-  final String text;
+  final String? text;
 
   ///Text widget
-  final Widget textWidget;
+  final Widget? textWidget;
 
   ///Action widget
-  final Widget actionWidget;
+  final Widget? actionWidget;
 
   ActionToastWidget({
     this.text,
