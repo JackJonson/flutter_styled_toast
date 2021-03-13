@@ -106,7 +106,7 @@ ToastFuture showToast(
     ),
     padding: textPadding,
     child: Text(
-      msg??'',
+      msg ?? '',
       style: textStyle,
       textAlign: textAlign,
     ),
@@ -259,7 +259,7 @@ ToastFuture showToastWidget(
   });
 
   if (dismissOtherToast) {
-    ToastManager().dismissAll();
+    dismissAllToast();
   }
 
   future = ToastFuture.create(duration, entry, onDismiss, key);
@@ -1552,7 +1552,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   }
 
   ///Dismiss toast with animation
-  void dismissToastAnim({VoidCallback? onAnimationEnd}) async {
+  Future<void> dismissToastAnim({VoidCallback? onAnimationEnd}) async {
     if (!mounted) {
       return;
     }

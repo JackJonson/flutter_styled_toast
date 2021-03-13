@@ -76,7 +76,8 @@ class IconToastWidget extends StatelessWidget {
                     Text(
                       message ?? '',
                       style: TextStyle(
-                          fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                          fontSize:
+                              Theme.of(context).textTheme.headline6!.fontSize,
                           color: Colors.white),
                       softWrap: true,
                       maxLines: 200,
@@ -207,7 +208,7 @@ class ActionToastWidget extends StatelessWidget {
           actionWidget ??
               IconButton(
                 onPressed: () {
-                  ToastManager().dismissAll(showAnim: true);
+                  dismissAllToast(showAnim: true);
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
                     return SecondPage();
                   }));

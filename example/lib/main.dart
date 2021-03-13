@@ -759,7 +759,7 @@ class _MyHomePageState extends State<MyHomePage>
                         ),
                         IconButton(
                           onPressed: () {
-                            ToastManager().dismissAll(showAnim: true);
+                            dismissAllToast(showAnim: true);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
                               return SecondPage();
@@ -858,8 +858,6 @@ class _SecondPageState extends State<SecondPage> {
       return Colors.red;
     }
 
-    ;
-
     return Scaffold(
       appBar: AppBar(
         title: Text(widget.title ?? 'Second Page'),
@@ -886,7 +884,8 @@ class _SecondPageState extends State<SecondPage> {
                   );
                 },
                 style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.resolveWith(getColor)),
+                    backgroundColor:
+                        MaterialStateProperty.resolveWith(getColor)),
                 child: Text(
                   "normal toast",
                   style: TextStyle(fontSize: 15.0, color: Colors.white),

@@ -14,8 +14,13 @@ dependencies:
     sdk: flutter
 
 dev_dependencies:
+  flutter_driver:
+    sdk: flutter
   flutter_test:
     sdk: flutter
+  mockito: ^5.0.0-nullsafety.0
+  integration_test: ^1.0.2+2
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://www.dartlang.org/tools/pub/pubspec
