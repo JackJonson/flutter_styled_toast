@@ -18,7 +18,6 @@ dev_dependencies:
     sdk: flutter
   flutter_test:
     sdk: flutter
-  integration_test: ^1.0.2+2
 
 
 # For information on the generic Dart part of this file, see the
