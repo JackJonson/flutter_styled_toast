@@ -3,35 +3,41 @@ import 'dart:async';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/src/styled_toast.dart';
 
-/// Use the method to dismiss all toast.
+/// The method to dismiss all toast.
 void dismissAllToast({bool showAnim = false}) {
   ToastManager().dismissAll(showAnim: showAnim);
 }
 
+/// The class for managing the overlay and dismiss.
+///
 /// Use the [dismiss] to dismiss toast.
-/// When the Toast is dismissed, call [onDismiss] if specified;
+/// When the Toast is dismissed, call [onDismiss] if specified.
 class ToastFuture {
-  ///Toast overlay
+  /// Toast overlay.
   final OverlayEntry _entry;
 
-  ///Callback when toast dismiss
+  /// Callback when toast dismiss.
   final VoidCallback? _onDismiss;
 
-  ///Toast widget key
+  ///Toast widget key.
   final GlobalKey<StyledToastWidgetState> _containerKey;
 
-  ///Is toast showing
+  ///Is toast showing.
   bool _isShow = true;
 
   /// A [Timer] used to dismiss this toast future after the given period of time.
   Timer? _timer;
 
+  /// Get the [_entry].
   OverlayEntry get entry => _entry;
 
+  /// Get the [_onDismiss].
   VoidCallback? get onDismiss => _onDismiss;
 
+  /// Get the [_isShow].
   bool get isShow => _isShow;
 
+  /// Get the [_containerKey]
   GlobalKey get containerKey => _containerKey;
 
   ToastFuture.create(
@@ -45,7 +51,9 @@ class ToastFuture {
     }
   }
 
-  ///Dismiss toast
+  /// Dismiss toast overlay.
+  ///
+  /// [showAnim] Can be used to dismiss a toast with animation effect or not.
   Future<void> dismiss({
     bool showAnim = false,
   }) async {
@@ -66,22 +74,23 @@ class ToastFuture {
   }
 }
 
-///Toast manager, manage toast list
+/// Toast manager, manage toast list.
 class ToastManager {
   ToastManager._();
 
-  ///Instance of ToastManager
+  /// Instance of [ToastManager].
   static ToastManager? _instance;
 
+  /// Factory to create [ToastManager] singleton.
   factory ToastManager() {
     _instance ??= ToastManager._();
     return _instance!;
   }
 
-  ///Set used to save [ToastFuture]
+  /// [Set] used to save [ToastFuture].
   Set<ToastFuture> toastSet = Set();
 
-  ///Dismiss all toast
+  /// Dismiss all toast.
   void dismissAll({
     bool showAnim = false,
   }) {
@@ -90,12 +99,12 @@ class ToastManager {
     });
   }
 
-  ///Remove toast.
+  /// Remove [ToastFuture].
   void removeFuture(ToastFuture future) {
     toastSet.remove(future);
   }
 
-  ///Add toast
+  /// Add [ToastFuture].
   void addFuture(ToastFuture future) {
     toastSet.add(future);
   }

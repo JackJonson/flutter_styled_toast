@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-///Builder method for custom animation
-///[context] Widget context
-///[controller] Default animation controller
-///[duration] Toast duration
-///[child] Toast widget
+/// Builder method for custom animation.
+///
+/// Get custom animation widget for the [child] toast widget,
+/// you can use the internal or external [controller].
 typedef CustomAnimationBuilder = Widget Function(
   BuildContext context,
   AnimationController controller,
@@ -12,11 +11,9 @@ typedef CustomAnimationBuilder = Widget Function(
   Widget child,
 );
 
-///Get the animation simply
-///[start] Animation start value
-///[end] Animation end value
-///[controller] Animation controller
-///[curve] Curve
+/// Get the animation simply.
+///
+/// Get the curved [Animation] object conveniently from [start], [end] value drove by the controller.
 Animation<T> getAnimation<T>(
   T start,
   T end,

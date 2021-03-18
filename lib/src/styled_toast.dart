@@ -9,31 +9,32 @@ import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
 import 'package:flutter_styled_toast/src/styled_toast_manage.dart';
 import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
 
-///Current context of the page which uses the toast
+/// Current context of the page which uses the toast.
 BuildContext? currentContext;
 
-///Default toast duration
+/// Default toast duration for showing.
 const _defaultDuration = Duration(
   milliseconds: 2300,
 );
 
-///Default animation duration
-///When you use Curves.elasticOut, you can specify a longer duration to achieve beautiful effect
-///But [animDuration] * 2  <= toast [duration], conditions must be met for toast to display properly
-///so when you specify a longer animation duration, you must also specify toast duration to satisfy conditions above
+/// Default animation duration.
 const animationDuration = Duration(milliseconds: 400);
 
-///The default horizontal margin of toast
+/// The default horizontal margin of toast.
 const double _defaultHorizontalMargin = 50.0;
 
-///When toast widget [initState], this callback will be called.
+/// Callback of the life cycle hook [initState] of toast widget.
+///
+/// When the life cycle [initState] of toast widget is called, this callback will be called,
+/// the duration of toast [toastDuration] and animation [animDuration] will pass over.
 typedef OnInitStateCallback = Function(
     Duration toastDuration, Duration animDuration);
 
-/// Show normal toast with style and animation
-/// Can be used without wrapping you app with StyledToast, but must specify context;
-/// When you wrap your app with StyledToast, [context] is optional;
-/// [animationBuilder] If not null, [animation] is not working;
+/// Show normal toast with style and animation.
+///
+/// Can be used without wrapping you app with StyledToast, but must specify context,
+/// When you wrap your app with StyledToast, [context] is optional,
+/// [animationBuilder] If not null, [animation] is not working,
 /// [reverseAnimBuilder] If not null, [reverseAnimation] is not working.
 ToastFuture showToast(
   String? msg, {
@@ -139,7 +140,7 @@ ToastFuture showToast(
   );
 }
 
-/// Show custom content widget toast
+/// Show custom content widget for toasting.
 ToastFuture showToastWidget(
   Widget widget, {
   BuildContext? context,
@@ -220,7 +221,7 @@ ToastFuture showToastWidget(
   isIgnoring ??= _toastTheme?.isIgnoring ?? true;
 
   if (isHideKeyboard) {
-    ///Hide keyboard
+    /// Hide keyboard.
     FocusScope.of(context).requestFocus(FocusNode());
   }
 
@@ -270,104 +271,96 @@ ToastFuture showToastWidget(
   return future;
 }
 
-///
-///created time: 2019-06-18 10:47
-///author linzhiliang
-///version 1.5.0
-///since
-///file name: styled_toast.dart
-///description:
-///Toast configuration widget, which we use to save the overall configuration for toast widget in.
-///
+/// Toast configuration widget, which we use to save the overall configuration for toast widget in.
 class StyledToast extends StatefulWidget {
-  ///Child of toast scope
+  /// Child of toast scope.
   final Widget child;
 
-  ///Text align
+  /// Text align.
   final TextAlign? textAlign;
 
-  ///Text direction
+  /// Text direction.
   final TextDirection? textDirection;
 
-  ///Border radius
+  /// Border radius.
   final BorderRadius? borderRadius;
 
-  ///Background color
+  /// Background color.
   final Color? backgroundColor;
 
-  ///Padding for the text and the container edges
+  /// Padding for the text and the container edges.
   final EdgeInsets? textPadding;
 
-  ///Text style for content
+  /// Text style for content.
   final TextStyle? textStyle;
 
-  ///Shape for the container
+  /// Shape for the container.
   final ShapeBorder? shapeBorder;
 
-  ///Toast show duration
+  /// Toast show duration.
   final Duration? duration;
 
-  ///Toast animation duration
+  /// Toast animation duration.
   final Duration? animDuration;
 
-  ///Position of the toast widget in current window
+  /// Position of the toast widget in current window.
   final StyledToastPosition? toastPositions;
 
-  ///Toast animation
+  /// Toast animation.
   final StyledToastAnimation? toastAnimation;
 
-  ///Toast reverse animation
+  /// Toast reverse animation.
   final StyledToastAnimation? reverseAnimation;
 
-  ///Alignment of animation, like size, rotate animation.
+  /// Alignment of animation, like size, rotate animation.
   final Alignment? alignment;
 
-  ///Axis of animation, like size animation
+  /// Axis of animation, like size animation.
   final Axis? axis;
 
-  ///Start offset of slide animation
+  /// Start offset of slide animation.
   final Offset? startOffset;
 
-  ///End offset of slide animation
+  /// End offset of slide animation.
   final Offset? endOffset;
 
-  ///Start offset of reverse slide animation
+  /// Start offset of reverse slide animation.
   final Offset? reverseStartOffset;
 
-  ///End offset of reverse slide animation
+  /// End offset of reverse slide animation.
   final Offset? reverseEndOffset;
 
-  ///Animation curve
+  /// Animation curve.
   final Curve? curve;
 
-  ///Animation reverse curve
+  /// Animation reverse curve.
   final Curve? reverseCurve;
 
-  ///callback when toast dismissed
+  /// callback when toast dismissed.
   final VoidCallback? onDismiss;
 
-  ///Dismiss old toast when new one shows
+  /// Dismiss old toast when new one shows.
   final bool? dismissOtherOnShow;
 
-  ///The locale of you app
+  /// The locale of you app.
   final Locale locale;
 
-  ///Full width that the width of the screen minus the width of the margin.
+  /// Full width that the width of the screen minus the width of the margin.
   final bool? fullWidth;
 
-  ///Is hide keyboard when toast show
+  /// Is hide keyboard when toast show.
   final bool? isHideKeyboard;
 
-  ///Custom animation builder method
+  /// Custom animation builder method.
   final CustomAnimationBuilder? animationBuilder;
 
-  ///Custom animation builder method
+  /// Custom animation builder method.
   final CustomAnimationBuilder? reverseAnimBuilder;
 
-  ///Is the input ignored for the toast.
+  /// Is the input ignored for the toast.
   final bool? isIgnoring;
 
-  ///When toast widget [initState], this callback will be called.
+  /// When toast widget [initState], this callback will be called.
   final OnInitStateCallback? onInitState;
 
   StyledToast({
@@ -406,7 +399,6 @@ class StyledToast extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _StyledToastState();
   }
 }
@@ -507,64 +499,57 @@ class _StyledToastState extends State<StyledToast> {
   }
 }
 
-///
-///created time: 2019-06-18 10:44
-///author linzhiliang
-///version 1.5.0
-///since
-///file name: styled_toast.dart
-///description: Toast widget
-///
+/// Styled Toast widget.
 class _StyledToastWidget extends StatefulWidget {
-  ///Child widget
+  /// Child widget.
   final Widget child;
 
-  ///Toast duration
+  /// Toast duration.
   final Duration duration;
 
-  ///Toast animation duration
+  /// Toast animation duration.
   final Duration animDuration;
 
-  ///Animation curve
+  /// Animation curve.
   final Curve curve;
 
-  ///Animation reverse curve
+  /// Animation reverse curve.
   final Curve reverseCurve;
 
-  ///Toast position
+  /// Toast position.
   final StyledToastPosition? position;
 
-  ///Alignment of animation, scale, rotate animation.
+  /// Alignment of animation, scale, rotate animation.
   final Alignment? alignment;
 
-  ///Axis of animation, like size animation
+  /// Axis of animation, like size animation.
   final Axis? axis;
 
-  ///Start offset of slide animation
+  /// Start offset of slide animation.
   final Offset? startOffset;
 
-  ///End offset of slide animation
+  /// End offset of slide animation.
   final Offset? endOffset;
 
-  ///Start offset of reverse slide animation
+  /// Start offset of reverse slide animation.
   final Offset? reverseStartOffset;
 
-  ///End offset of reverse slide animation
+  /// End offset of reverse slide animation.
   final Offset? reverseEndOffset;
 
-  ///Toast animation
+  /// Toast animation.
   final StyledToastAnimation? animation;
 
-  ///Toast reverse animation
+  /// Toast reverse animation.
   final StyledToastAnimation? reverseAnimation;
 
-  ///Custom animation builder method
+  /// Custom animation builder method.
   final CustomAnimationBuilder? animationBuilder;
 
-  ///Custom animation builder method
+  /// Custom animation builder method.
   final CustomAnimationBuilder? reverseAnimBuilder;
 
-  ///Custom animation builder method
+  /// Custom animation builder method.
   final OnInitStateCallback? onInitState;
 
   _StyledToastWidget({
@@ -591,84 +576,84 @@ class _StyledToastWidget extends StatefulWidget {
 
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return StyledToastWidgetState();
   }
 }
 
 class StyledToastWidgetState extends State<_StyledToastWidget>
     with TickerProviderStateMixin<_StyledToastWidget>, WidgetsBindingObserver {
-  ///Animation controller
+  /// Animation controller.
   late AnimationController _animationController;
 
-  ///Reverse animation controller
+  /// Reverse animation controller.
   late AnimationController _reverseAnimController;
 
-  ///Fade animation
+  /// Fade animation.
   late Animation<double> fadeAnim;
 
-  ///Scale animation
+  /// Scale animation.
   late Animation<double> scaleAnim;
 
-  ///Size animation
+  /// Size animation.
   late Animation<double> sizeAnim;
 
-  ///Slide from top animation
+  /// Slide from top animation.
   late Animation<Offset> slideFromTopAnim;
 
-  ///Slide from bottom animation
+  /// Slide from bottom animation.
   late Animation<Offset> slideFromBottomAnim;
 
-  ///Slide from left animation
+  /// Slide from left animation.
   late Animation<Offset> slideFromLeftAnim;
 
-  ///Slide from right animation
+  /// Slide from right animation.
   late Animation<Offset> slideFromRightAnim;
 
-  ///Fade scale animation
+  /// Fade scale animation.
   late Animation<double> fadeScaleAnim;
 
-  ///Rotate animation
+  /// Rotate animation.
   late Animation<double> rotateAnim;
 
-  ///Fade animation reverse
+  /// Fade animation reverse.
   late Animation<double> fadeAnimReverse;
 
-  ///Scale animation reverse
+  /// Scale animation reverse.
   late Animation<double> scaleAnimReverse;
 
-  ///Size animation reverse
+  /// Size animation reverse.
   late Animation<double> sizeAnimReverse;
 
-  ///Slide from top animation reverse
+  /// Slide from top animation reverse.
   late Animation<Offset> slideToTopAnimReverse;
 
-  ///Slide from bottom animation reverse
+  /// Slide from bottom animation reverse.
   late Animation<Offset> slideToBottomAnimReverse;
 
-  ///Slide from left animation reverse
+  /// Slide from left animation reverse.
   late Animation<Offset> slideToLeftAnimReverse;
 
-  ///Slide from right animation reverse
+  /// Slide from right animation reverse.
   late Animation<Offset> slideToRightAnimReverse;
 
-  ///Fade scale animation reverse
+  /// Fade scale animation reverse.
   late Animation<double> fadeScaleAnimReverse;
 
-  ///Rotate animation reverse
+  /// Rotate animation reverse.
   late Animation<double> rotateAnimReverse;
 
-  ///Opacity of this widget
+  /// Opacity of this widget.
   double opacity = 1.0;
 
-  ///Toast position offset
+  /// Toast position offset.
   double? get offset => widget.position?.offset;
 
-  ///Toast alignment in the screen
+  /// Toast alignment in the screen.
   Alignment? get positionAlignment => widget.position?.align;
 
-  /// A [Timer] needed to dismiss the toast with animation
-  /// after the given [duration] of time.
+  /// A [Timer] needed to dismiss the toast with animation.
+  ///
+  /// After the given [duration] of time, the toast will be dismissed.
   Timer? _toastTimer;
 
   @override
@@ -681,9 +666,9 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
 
     widget.onInitState?.call(widget.duration, widget.animDuration);
 
-    ///If toast duration is zero, then the toast won't dismiss automatically
+    /// If toast duration is zero, then the toast won't dismiss automatically.
     if (widget.duration != Duration.zero) {
-      ///Dismiss toast
+      /// Dismiss toast.
       _toastTimer = Timer(widget.duration - widget.animDuration, () async {
         if (widget.reverseAnimation == StyledToastAnimation.none) {
           dismissToast();
@@ -696,7 +681,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     WidgetsBinding.instance!.addObserver(this);
   }
 
-  ///Init animation
+  /// Init animation.
   void _initAnim() {
     _animationController =
         AnimationController(vsync: this, duration: widget.animDuration);
@@ -1247,7 +1232,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     return w;
   }
 
-  ///Create animation widget
+  /// Create animation widget for [w].
   Widget createAnimWidget(Widget w) {
     switch (widget.animation) {
       case StyledToastAnimation.fade:
@@ -1397,7 +1382,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     return w;
   }
 
-  ///Create reverse animation widget
+  /// Create reverse animation widget for [w].
   Widget createReverseAnimWidget(Widget w) {
     if (widget.reverseAnimation != null &&
         widget.animation != widget.reverseAnimation) {
@@ -1540,7 +1525,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     return w;
   }
 
-  ///Dismiss toast
+  /// Dismiss toast
   void dismissToast() {
     if (!mounted) {
       return;
@@ -1551,7 +1536,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     });
   }
 
-  ///Dismiss toast with animation
+  /// Dismiss toast with animation.
   Future<void> dismissToastAnim({VoidCallback? onAnimationEnd}) async {
     if (!mounted) {
       return;

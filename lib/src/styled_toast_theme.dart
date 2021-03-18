@@ -3,101 +3,95 @@ import 'package:flutter_styled_toast/src/custom_animation.dart';
 import 'package:flutter_styled_toast/src/styled_toast.dart';
 import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
 
+/// Toast theme, only for default content widget.
 ///
-///created time: 2019-06-18 10:49
-///author linzhiliang
-///version 1.5.0
-///since
-///file name: styled_toast.dart
-///description: Toast theme, only for default content widget;
-///If you have specified a custom content widget, ToastTheme will not be working.
-///
+/// If you have specified a custom content widget, [ToastTheme] will not be working.
 class StyledToastTheme extends InheritedWidget {
-  ///Child widget
+  /// Child widget.
   final Widget child;
 
-  ///Text align
+  /// Text align.
   final TextAlign? textAlign;
 
-  ///Text direction
+  /// Text direction.
   final TextDirection? textDirection;
 
-  ///Border radius
+  /// Border radius.
   final BorderRadius? borderRadius;
 
-  ///Background color
+  /// Background color.
   final Color? backgroundColor;
 
-  ///Padding for the text and the container edges
+  /// Padding for the text and the container edges.
   final EdgeInsets? textPadding;
 
-  ///Text style for content
+  /// Text style for content.
   final TextStyle? textStyle;
 
-  ///Shape for the container
+  /// Shape for the container.
   final ShapeBorder? shapeBorder;
 
-  ///Toast show duration
+  /// Toast show duration.
   final Duration? duration;
 
-  ///Toast animation duration
+  /// Toast animation duration.
   final Duration? animDuration;
 
-  ///Position of the toast widget in current window
+  /// Position of the toast widget in current window.
   final StyledToastPosition? toastPositions;
 
-  ///Alignment of animation, like size, rotate animation.
+  /// Alignment of animation, like size, rotate animation.
   final Alignment? alignment;
 
-  ///Axis of animation, like size animation
+  /// Axis of animation, like size animation.
   final Axis? axis;
 
-  ///Start offset of slide animation
+  /// Start offset of slide animation.
   final Offset? startOffset;
 
-  ///End offset of slide animation
+  /// End offset of slide animation.
   final Offset? endOffset;
 
-  ///Start offset of reverse slide animation
+  /// Start offset of reverse slide animation.
   final Offset? reverseStartOffset;
 
-  ///End offset of reverse slide animation
+  /// End offset of reverse slide animation.
   final Offset? reverseEndOffset;
 
-  ///Toast animation
+  /// Toast animation.
   final StyledToastAnimation? toastAnimation;
 
-  ///Toast reverse animation
+  /// Toast reverse animation.
   final StyledToastAnimation? reverseAnimation;
 
-  ///Animation curve
+  /// Animation curve.
   final Curve? curve;
 
-  ///Animation reverse curve
+  /// Animation reverse curve.
   final Curve? reverseCurve;
 
-  ///Dismiss old toast when new one shows
+  /// Dismiss old toast when new one shows.
   final bool? dismissOtherOnShow;
 
-  ///Callback when toast dismissed
+  /// Callback when toast dismissed.
   final VoidCallback? onDismiss;
 
-  ///Full width that the width of the screen minus the width of the margin.
+  /// Full width that the width of the screen minus the width of the margin.
   final bool? fullWidth;
 
-  ///Is hide keyboard when toast show
+  /// Is hide keyboard when toast show.
   final bool? isHideKeyboard;
 
-  ///Custom animation builder method
+  /// Custom animation builder method.
   final CustomAnimationBuilder? animationBuilder;
 
-  ///Custom animation builder method
+  /// Custom animation builder method.
   final CustomAnimationBuilder? reverseAnimBuilder;
 
-  ///Is the input ignored for the toast.
+  /// Is the input ignored for the toast.
   final bool? isIgnoring;
 
-  ///When toast widget [initState], this callback will be called.
+  /// When toast widget [initState], this callback will be called.
   final OnInitStateCallback? onInitState;
 
   StyledToastTheme({
@@ -134,10 +128,10 @@ class StyledToastTheme extends InheritedWidget {
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
-    // TODO: implement updateShouldNotify
     return true;
   }
 
+  /// Get the [StyledToastTheme] object.
   static StyledToastTheme? of(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<StyledToastTheme>();
 }
