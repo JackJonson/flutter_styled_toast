@@ -1,10 +1,7 @@
 import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'styled_toast_test.dart';
 
 void main() {
   group('custom size transition', () {
