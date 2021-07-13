@@ -5,3 +5,4 @@ export 'src/styled_toast_enum.dart';
 export 'src/styled_toast_manage.dart';
 export 'src/custom_size_transition.dart';
 export 'src/custom_animation.dart';
+export 'src/styled_toast_theme.dart';
