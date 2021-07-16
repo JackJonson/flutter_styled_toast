@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 
+import 'blur_transition.dart';
 import 'custom_toast_content_widget.dart';
 
 void main() {
@@ -636,6 +637,87 @@ class _MyHomePageState extends State<MyHomePage>
                           Offset(0.0, 0.0), Offset(-3.0, 0), controller,
                           curve: Curves.bounceInOut),
                       child: child,
+                    );
+                  },
+                  position: StyledToastPosition.bottom,
+                  animDuration: Duration(milliseconds: 1000),
+                  duration: Duration(seconds: 4),
+                  curve: Curves.elasticOut,
+                  reverseCurve: Curves.linear,
+                );
+              },
+            ),
+            Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: Text(
+                "Normal toast(custom multiple anim)",
+              ),
+              onTap: () async {
+                showToast(
+                  'This is normal toast with custom multiple animation',
+                  context: context,
+                  animationBuilder: (context, controller, duration, child) {
+                    final scale = Tween<double>(begin: 1.3, end: 1.0).animate(
+                      CurvedAnimation(
+                          parent: controller,
+                          curve: Curves.easeInSine,
+                          reverseCurve: Curves.easeOutSine
+                      ),
+                    );
+                    final sigma = Tween<double>(begin: 0.0, end: 8.0).animate(
+                      CurvedAnimation(
+                          parent: controller,
+                          curve: Curves.easeInSine,
+                          reverseCurve: Curves.easeOutSine
+                      ),
+                    );
+                    final opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+                      CurvedAnimation(
+                          parent: controller,
+                          curve: Curves.easeInSine,
+                          reverseCurve: Curves.easeOutSine
+                      ),
+                    );
+                    return ScaleTransition(
+                        scale: scale,
+                        child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: BlurTransition(
+                              sigma: sigma,
+                              child: FadeTransition(
+                                opacity: opacity,
+                                child: child,
+                              ),
+                            )
+                        )
+                    );
+                  },
+                  reverseAnimBuilder: (context, controller, duration, child) {
+                    final sigma = Tween<double>(begin: 10.0, end: 0.0).animate(
+                      CurvedAnimation(
+                          parent: controller,
+                          curve: Curves.easeOutSine,
+                          reverseCurve: Curves.easeInSine
+                      ),
+                    );
+                    final opacity = Tween<double>(begin: 1.0, end: 0.0).animate(
+                      CurvedAnimation(
+                          parent: controller,
+                          curve: Curves.easeOutSine,
+                          reverseCurve: Curves.easeInSine
+                      ),
+                    );
+                    return ClipRRect(
+                      borderRadius: BorderRadius.circular(10),
+                      child: BlurTransition(
+                        sigma: sigma,
+                        child: FadeTransition(
+                          opacity: opacity,
+                          child: child,
+                        ),
+                      ),
                     );
                   },
                   position: StyledToastPosition.bottom,
