@@ -1,3 +1,9 @@
+## [2.1.2 null-safety]
+Add multiple animation demo in the example.
+Upgrade example android embedding to v2.
+Fix warnings.
+
+
 ## [2.0.0 null-safety]
 Migrate to null safety.
 Remove deprecated param movingOnWindowChange.

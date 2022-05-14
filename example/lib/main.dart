@@ -663,22 +663,19 @@ class _MyHomePageState extends State<MyHomePage>
                       CurvedAnimation(
                           parent: controller,
                           curve: Curves.easeInSine,
-                          reverseCurve: Curves.easeOutSine
-                      ),
+                          reverseCurve: Curves.easeOutSine),
                     );
                     final sigma = Tween<double>(begin: 0.0, end: 8.0).animate(
                       CurvedAnimation(
                           parent: controller,
                           curve: Curves.easeInSine,
-                          reverseCurve: Curves.easeOutSine
-                      ),
+                          reverseCurve: Curves.easeOutSine),
                     );
                     final opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
                       CurvedAnimation(
                           parent: controller,
                           curve: Curves.easeInSine,
-                          reverseCurve: Curves.easeOutSine
-                      ),
+                          reverseCurve: Curves.easeOutSine),
                     );
                     return ScaleTransition(
                         scale: scale,
@@ -690,24 +687,20 @@ class _MyHomePageState extends State<MyHomePage>
                                 opacity: opacity,
                                 child: child,
                               ),
-                            )
-                        )
-                    );
+                            )));
                   },
                   reverseAnimBuilder: (context, controller, duration, child) {
                     final sigma = Tween<double>(begin: 10.0, end: 0.0).animate(
                       CurvedAnimation(
                           parent: controller,
                           curve: Curves.easeOutSine,
-                          reverseCurve: Curves.easeInSine
-                      ),
+                          reverseCurve: Curves.easeInSine),
                     );
                     final opacity = Tween<double>(begin: 1.0, end: 0.0).animate(
                       CurvedAnimation(
                           parent: controller,
                           curve: Curves.easeOutSine,
-                          reverseCurve: Curves.easeInSine
-                      ),
+                          reverseCurve: Curves.easeInSine),
                     );
                     return ClipRRect(
                       borderRadius: BorderRadius.circular(10),

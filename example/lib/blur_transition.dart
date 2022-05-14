@@ -8,7 +8,7 @@ class BlurTransition extends AnimatedWidget {
   /// Creates a blur transition.
   const BlurTransition({
     Key? key,
-    required this.sigma ,
+    required this.sigma,
     this.child,
   }) : super(key: key, listenable: sigma);
 
