@@ -494,7 +494,7 @@ class _StyledToastState extends State<StyledToast> {
           onInitState: widget.onInitState,
         ),
       ),
-      data: MediaQueryData.fromWindow(WidgetsBinding.instance!.window),
+      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
     );
   }
 }
@@ -678,7 +678,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       });
     }
 
-    WidgetsBinding.instance!.addObserver(this);
+    WidgetsBinding.instance.addObserver(this);
   }
 
   /// Init animation.
@@ -1556,7 +1556,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
   @override
   void dispose() {
     _toastTimer?.cancel();
-    WidgetsBinding.instance!.removeObserver(this);
+    WidgetsBinding.instance.removeObserver(this);
     _animationController.dispose();
     _reverseAnimController.dispose();
     super.dispose();
