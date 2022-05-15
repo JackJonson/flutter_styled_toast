@@ -494,7 +494,7 @@ class _StyledToastState extends State<StyledToast> {
           onInitState: widget.onInitState,
         ),
       ),
-      data: MediaQueryData.fromWindow(WidgetsBinding.instance?.window as SingletonFlutterWindow),
+      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
     );
   }
 }
