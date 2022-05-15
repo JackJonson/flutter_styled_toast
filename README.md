@@ -11,7 +11,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 ## Null safety
 ```yaml
 dependencies:
-  flutter_styled_toast: ^2.1.2
+  flutter_styled_toast: ^2.1.3
 ```
 
 ## Getting Started

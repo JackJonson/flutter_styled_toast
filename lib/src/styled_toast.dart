@@ -3,8 +3,8 @@ import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_styled_toast/src/custom_animation.dart';
+import 'package:flutter_styled_toast/src/custom_size_transition.dart';
 import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
 import 'package:flutter_styled_toast/src/styled_toast_manage.dart';
 import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
