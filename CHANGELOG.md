@@ -1,3 +1,7 @@
+## [2.1.2+1 null-safety]
+Fix errors in flutter 2.10.x.
+
+
 ## [2.1.3 null-safety]
 Fix warnings.
 

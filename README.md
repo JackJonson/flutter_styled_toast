@@ -9,13 +9,19 @@ Beautify toast with a series of animations and make toast more beautiful.
 <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/OverallAnimations.gif" width="50%">
 
 ## Null safety
+
+### Flutter>=3.0.0 
 ```yaml
 dependencies:
   flutter_styled_toast: ^2.1.3
 ```
+### Flutter<3.0.0
+```yaml
+dependencies:
+  flutter_styled_toast: ^2.1.2+1
+```
 
 ## Getting Started
-
 ```yaml
 dependencies:
   flutter_styled_toast: ^1.5.2+3
