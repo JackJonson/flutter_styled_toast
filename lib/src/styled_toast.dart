@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ui' as ui;
 
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -265,7 +264,7 @@ ToastFuture showToastWidget(
 
   future = ToastFuture.create(duration, entry, onDismiss, key);
 
-  Overlay.of(context)!.insert(entry);
+  Overlay.of(context).insert(entry);
   ToastManager().addFuture(future);
 
   return future;
@@ -494,7 +493,7 @@ class _StyledToastState extends State<StyledToast> {
           onInitState: widget.onInitState,
         ),
       ),
-      data: MediaQueryData.fromWindow(WidgetsBinding.instance.window),
+      data: MediaQuery.of(context),
     );
   }
 }
@@ -1172,7 +1171,7 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
       child: w,
     );
 
-    MediaQueryData mediaQueryData = MediaQueryData.fromWindow(ui.window);
+    MediaQueryData mediaQueryData = MediaQuery.of(context);
     w = Container(
       padding: EdgeInsets.only(
           bottom: mediaQueryData.padding.bottom,

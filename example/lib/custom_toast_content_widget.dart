@@ -44,7 +44,6 @@ class IconToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     Widget content = Material(
       color: Colors.transparent,
       child: Container(
@@ -77,7 +76,7 @@ class IconToastWidget extends StatelessWidget {
                       message ?? '',
                       style: TextStyle(
                           fontSize:
-                              Theme.of(context).textTheme.headline6!.fontSize,
+                              Theme.of(context).textTheme.titleLarge!.fontSize,
                           color: Colors.white),
                       softWrap: true,
                       maxLines: 200,
@@ -123,7 +122,7 @@ class BannerToastWidget extends StatelessWidget {
           {String? msg, Widget? text, BuildContext? context}) =>
       BannerToastWidget(
         backgroundColor: context != null
-            ? Theme.of(context).toggleableActiveColor
+            ? Theme.of(context).toggleButtonsTheme.fillColor
             : Colors.green,
         message: msg,
         textWidget: text,
@@ -133,7 +132,7 @@ class BannerToastWidget extends StatelessWidget {
           {String? msg, Widget? text, BuildContext? context}) =>
       BannerToastWidget(
         backgroundColor: context != null
-            ? Theme.of(context).errorColor
+            ? Theme.of(context).colorScheme.error
             : const Color(0xEFCC2E2E),
         message: msg,
         textWidget: text,
@@ -141,18 +140,17 @@ class BannerToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     Widget content = Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(17.0),
       height: 60.0,
       alignment: Alignment.center,
-      color: backgroundColor ?? Theme.of(context).backgroundColor,
+      color: backgroundColor ?? Theme.of(context).colorScheme.background,
       child: textWidget ??
           Text(
             message ?? '',
             style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
                 color: Colors.white),
           ),
     );
