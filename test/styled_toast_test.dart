@@ -1,32 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('StyleToastWidget', () {
     testWidgets('Create StyleToastWidget', (WidgetTester tester) async {
-      final locale = Locale('en', 'US');
-      final textStyle = TextStyle(fontSize: 16.0, color: Colors.white);
-      final backgroundColor = Color(0x99000000);
-      final borderRadius = BorderRadius.circular(5.0);
-      final textPadding =
-          EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
-      final toastAnimation = StyledToastAnimation.size;
-      final reverseAnimation = StyledToastAnimation.size;
-      final startOffset = Offset(0.0, -1.0);
-      final reverseEndOffset = Offset(0.0, -1.0);
-      final duration = Duration(seconds: 4);
-      final animDuration = Duration(seconds: 1);
-      final alignment = Alignment.center;
-      final toastPositions = StyledToastPosition.center;
-      final curve = Curves.fastOutSlowIn;
-      final reverseCurve = Curves.fastOutSlowIn;
-      final dismissOtherOnShow = true;
-      final fullWidth = false;
-      final isHideKeyboard = false;
-      final isIgnoring = true;
+      const textStyle = TextStyle(fontSize: 16.0, color: Colors.white);
+      const backgroundColor = Color(0x99000000);
+      const  borderRadius = BorderRadius.all(Radius.circular(5.0));
+      const textPadding = EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
+      const toastAnimation = StyledToastAnimation.size;
+      const reverseAnimation = StyledToastAnimation.size;
+      const startOffset = Offset(0.0, -1.0);
+      const reverseEndOffset = Offset(0.0, -1.0);
+      const duration = Duration(seconds: 4);
+      const animDuration = Duration(seconds: 1);
+      const alignment = Alignment.center;
+      const toastPositions = StyledToastPosition.center;
+      const curve = Curves.fastOutSlowIn;
+      const reverseCurve = Curves.fastOutSlowIn;
+      const dismissOtherOnShow = true;
+      const fullWidth = false;
+      const isHideKeyboard = false;
+      const isIgnoring = true;
       final child = MaterialApp(
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -34,7 +30,7 @@ void main() {
               width: 100,
               height: 100,
               color: Colors.blue,
-              child: Text('test1'),
+              child: const Text('test1'),
             );
           },
         ),
@@ -42,7 +38,6 @@ void main() {
 
       final styledToast = StyledToast(
         //You have to set this parameters to your locale
-        locale: locale,
         textStyle: textStyle,
         backgroundColor: backgroundColor,
         borderRadius: borderRadius,
@@ -58,26 +53,27 @@ void main() {
         curve: curve,
         reverseCurve: reverseCurve,
         dismissOtherOnShow: dismissOtherOnShow,
+        locale: const Locale('en', 'US'),
         fullWidth: fullWidth,
         isHideKeyboard: isHideKeyboard,
         isIgnoring: isIgnoring,
         child: child,
       );
       await tester.pumpWidget(styledToast);
-      await tester.pump(Duration(milliseconds: 1000));
-      expect(styledToast.locale, Locale('en', 'US'));
+      await tester.pump(const Duration(milliseconds: 1000));
+      expect(styledToast.locale, const Locale('en', 'US'));
       expect(styledToast.textStyle,
-          TextStyle(fontSize: 16.0, color: Colors.white));
-      expect(styledToast.backgroundColor, Color(0x99000000));
+          const TextStyle(fontSize: 16.0, color: Colors.white));
+      expect(styledToast.backgroundColor, const Color(0x99000000));
       expect(styledToast.borderRadius, BorderRadius.circular(5.0));
       expect(styledToast.textPadding,
-          EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0));
+          const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0));
       expect(styledToast.toastAnimation, StyledToastAnimation.size);
       expect(styledToast.reverseAnimation, StyledToastAnimation.size);
-      expect(styledToast.startOffset, Offset(0.0, -1.0));
-      expect(styledToast.reverseEndOffset, Offset(0.0, -1.0));
-      expect(styledToast.duration, Duration(seconds: 4));
-      expect(styledToast.animDuration, Duration(seconds: 1));
+      expect(styledToast.startOffset, const Offset(0.0, -1.0));
+      expect(styledToast.reverseEndOffset, const Offset(0.0, -1.0));
+      expect(styledToast.duration, const Duration(seconds: 4));
+      expect(styledToast.animDuration, const Duration(seconds: 1));
       expect(styledToast.alignment, Alignment.center);
       expect(styledToast.toastPositions, StyledToastPosition.center);
       expect(styledToast.curve, Curves.fastOutSlowIn);
@@ -97,16 +93,16 @@ void main() {
       await tester.pumpWidget(testAppWidget);
       showToast(
         'toast0',
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 2),
+        duration: const Duration(seconds: 4),
+        animDuration: const Duration(seconds: 2),
         position: StyledToastPosition.bottom,
         textStyle: TextStyle(fontSize: 20, color: Colors.green[700]),
-        textPadding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
+        textPadding: const EdgeInsets.symmetric(horizontal: 50, vertical: 20),
         toastHorizontalMargin: 40,
         backgroundColor: Colors.black45,
         borderRadius: BorderRadius.circular(20),
         shapeBorder: RoundedRectangleBorder(
-            side: BorderSide(
+            side: const BorderSide(
                 color: Colors.blue, width: 1.0, style: BorderStyle.solid),
             borderRadius: BorderRadius.circular(5)),
         onDismiss: () {},
@@ -116,10 +112,10 @@ void main() {
         reverseAnimation: StyledToastAnimation.slideToLeftFade,
         alignment: Alignment.center,
         axis: Axis.horizontal,
-        startOffset: Offset(0, 1.0),
-        endOffset: Offset(0, 0),
-        reverseStartOffset: Offset(0, 0),
-        reverseEndOffset: Offset(-1, 0),
+        startOffset: const Offset(0, 1.0),
+        endOffset: const Offset(0, 0),
+        reverseStartOffset: const Offset(0, 0),
+        reverseEndOffset: const Offset(-1, 0),
         textAlign: TextAlign.center,
         curve: Curves.decelerate,
         reverseCurve: Curves.linear,
@@ -127,11 +123,11 @@ void main() {
         isHideKeyboard: true,
         isIgnoring: true,
       );
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('toast0'), findsOneWidget);
 
-      await tester.pump(Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 4));
 
       expect(find.text('toast0'), findsNothing);
     });
@@ -141,11 +137,9 @@ void main() {
       final testAppWidget = TestAppWidget(key: key);
       await tester.pumpWidget(testAppWidget);
       showToastWidget(
-        Container(
-          child: Text('custom widget'),
-        ),
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 2),
+        const Text('custom widget'),
+        duration: const Duration(seconds: 4),
+        animDuration: const Duration(seconds: 2),
         position: StyledToastPosition.bottom,
         onDismiss: () {},
         textDirection: TextDirection.ltr,
@@ -154,20 +148,20 @@ void main() {
         reverseAnimation: StyledToastAnimation.slideToLeftFade,
         alignment: Alignment.center,
         axis: Axis.horizontal,
-        startOffset: Offset(0, 1.0),
-        endOffset: Offset(0, 0),
-        reverseStartOffset: Offset(0, 0),
-        reverseEndOffset: Offset(-1, 0),
+        startOffset: const Offset(0, 1.0),
+        endOffset: const Offset(0, 0),
+        reverseStartOffset: const Offset(0, 0),
+        reverseEndOffset: const Offset(-1, 0),
         curve: Curves.decelerate,
         reverseCurve: Curves.linear,
         isHideKeyboard: true,
         isIgnoring: true,
       );
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('custom widget'), findsOneWidget);
 
-      await tester.pump(Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 4));
 
       expect(find.text('custom widget'), findsNothing);
     });
@@ -177,11 +171,9 @@ void main() {
       final testAppWidget = TestAppWidget(key: key);
       await tester.pumpWidget(testAppWidget);
       showToastWidget(
-        Container(
-          child: Text('custom widget'),
-        ),
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 2),
+        const Text('custom widget'),
+        duration: const Duration(seconds: 4),
+        animDuration: const Duration(seconds: 2),
         position: StyledToastPosition.bottom,
         onDismiss: () {},
         textDirection: TextDirection.ltr,
@@ -190,20 +182,20 @@ void main() {
         reverseAnimation: StyledToastAnimation.slideToLeftFade,
         alignment: Alignment.center,
         axis: Axis.horizontal,
-        startOffset: Offset(0, 1.0),
-        endOffset: Offset(0, 0),
-        reverseStartOffset: Offset(0, 0),
-        reverseEndOffset: Offset(-1, 0),
+        startOffset: const Offset(0, 1.0),
+        endOffset: const Offset(0, 0),
+        reverseStartOffset: const Offset(0, 0),
+        reverseEndOffset: const Offset(-1, 0),
         curve: Curves.decelerate,
         reverseCurve: Curves.linear,
         isHideKeyboard: true,
         isIgnoring: true,
       );
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('custom widget'), findsOneWidget);
 
-      await tester.pump(Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 4));
 
       expect(find.text('custom widget'), findsNothing);
     });
@@ -213,12 +205,7 @@ void main() {
 class TestAppWidget extends StatefulWidget {
   final OverlayEntry? overlayEntry;
 
-  final GlobalKey<TestAppWidgetState> key;
-
-  TestAppWidget({
-    this.overlayEntry,
-    required this.key,
-  });
+  const TestAppWidget({ super.key, this.overlayEntry });
 
   @override
   TestAppWidgetState createState() => TestAppWidgetState();
@@ -229,35 +216,34 @@ class TestAppWidgetState extends State<TestAppWidget> {
 
   void insertEntry() {
     if (widget.overlayEntry != null) {
-      Overlay.of(_context)?.insert(widget.overlayEntry!);
+      Overlay.of(_context).insert(widget.overlayEntry!);
     }
   }
 
   StyledToastTheme? getStyleToastTheme() {
-    StyledToastTheme.of(_context);
+    return StyledToastTheme.maybeOf(_context);
   }
 
   @override
   Widget build(BuildContext context) {
-    final appTitle = 'Styled Toast Example';
+    const appTitle = 'Styled Toast Example';
     return StyledToast(
-      locale: const Locale('en', 'US'),
-      //You have to set this parameters to your locale
-      textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-      backgroundColor: Color(0x99000000),
-      borderRadius: BorderRadius.circular(5.0),
-      textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+      textStyle: const TextStyle(fontSize: 16.0, color: Colors.white),
+      backgroundColor: const Color(0x99000000),
+      borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+      textPadding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
       toastAnimation: StyledToastAnimation.size,
       reverseAnimation: StyledToastAnimation.size,
-      startOffset: Offset(0.0, -1.0),
-      reverseEndOffset: Offset(0.0, -1.0),
-      duration: Duration(seconds: 4),
-      animDuration: Duration(seconds: 1),
+      startOffset: const Offset(0.0, -1.0),
+      reverseEndOffset: const Offset(0.0, -1.0),
+      duration: const Duration(seconds: 4),
+      animDuration: const Duration(seconds: 1),
       alignment: Alignment.center,
       toastPositions: StyledToastPosition.center,
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
+      locale: const Locale('en', 'US'),
       fullWidth: false,
       isHideKeyboard: false,
       isIgnoring: true,

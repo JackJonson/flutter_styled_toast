@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -11,11 +10,9 @@ void main() {
       await tester.pumpWidget(testAppWidget);
 
       showToastWidget(
-        Container(
-          child: Text('custom widget'),
-        ),
-        duration: Duration(seconds: 4),
-        animDuration: Duration(seconds: 2),
+        const Text('custom widget'),
+        duration: const Duration(seconds: 4),
+        animDuration: const Duration(seconds: 2),
         position: StyledToastPosition.bottom,
         onDismiss: () {},
         textDirection: TextDirection.ltr,
@@ -24,10 +21,10 @@ void main() {
         reverseAnimation: StyledToastAnimation.slideToLeftFade,
         alignment: Alignment.center,
         axis: Axis.horizontal,
-        startOffset: Offset(0, 1.0),
-        endOffset: Offset(0, 0),
-        reverseStartOffset: Offset(0, 0),
-        reverseEndOffset: Offset(-1, 0),
+        startOffset: const Offset(0, 1.0),
+        endOffset: const Offset(0, 0),
+        reverseStartOffset: const Offset(0, 0),
+        reverseEndOffset: const Offset(-1, 0),
         curve: Curves.decelerate,
         reverseCurve: Curves.linear,
         isHideKeyboard: true,
@@ -39,9 +36,12 @@ void main() {
           Widget child,
         ) {
           return SlideTransition(
-            position: getAnimation<Offset>(Offset(0.0, 3.0), Offset(0, 0),
-                key.currentState!.animationController,
-                curve: Curves.bounceInOut),
+            position: getAnimation<Offset>(
+              const Offset(0.0, 3.0),
+              const Offset(0, 0),
+              key.currentState!.animationController,
+              curve: Curves.bounceInOut,
+            ),
             child: child,
           );
         },
@@ -52,18 +52,21 @@ void main() {
           Widget child,
         ) {
           return SlideTransition(
-            position: getAnimation<Offset>(Offset(0.0, 0.0), Offset(-3.0, 0),
-                key.currentState!.reverseAnimationController,
-                curve: Curves.bounceInOut),
+            position: getAnimation<Offset>(
+              const Offset(0.0, 0.0),
+              const Offset(-3.0, 0),
+              key.currentState!.reverseAnimationController,
+              curve: Curves.bounceInOut,
+            ),
             child: child,
           );
         },
       );
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('custom widget'), findsOneWidget);
 
-      await tester.pump(Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 4));
 
       expect(find.text('custom widget'), findsNothing);
     });
@@ -71,11 +74,7 @@ void main() {
 }
 
 class CustomAnimationTestAppWidget extends StatefulWidget {
-  final GlobalKey<CustomAnimationTestAppWidgetState> key;
-
-  CustomAnimationTestAppWidget({
-    required this.key,
-  });
+  const CustomAnimationTestAppWidget({ super.key });
 
   @override
   CustomAnimationTestAppWidgetState createState() =>
@@ -94,33 +93,36 @@ class CustomAnimationTestAppWidgetState
   void initState() {
     super.initState();
 
-    _mController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
-    _mReverseController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    _mController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
+    _mReverseController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 200),
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    final appTitle = 'Styled Toast Example';
+    const appTitle = 'Styled Toast Example';
     return StyledToast(
-      locale: const Locale('en', 'US'),
-      //You have to set this parameters to your locale
-      textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-      backgroundColor: Color(0x99000000),
+      textStyle: const TextStyle(fontSize: 16.0, color: Colors.white),
+      backgroundColor: const Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
-      textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+      textPadding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
       toastAnimation: StyledToastAnimation.size,
       reverseAnimation: StyledToastAnimation.size,
-      startOffset: Offset(0.0, -1.0),
-      reverseEndOffset: Offset(0.0, -1.0),
-      duration: Duration(seconds: 4),
-      animDuration: Duration(seconds: 1),
+      startOffset: const Offset(0.0, -1.0),
+      reverseEndOffset: const Offset(0.0, -1.0),
+      duration: const Duration(seconds: 4),
+      animDuration: const Duration(seconds: 1),
       alignment: Alignment.center,
       toastPositions: StyledToastPosition.center,
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
+      locale: const Locale('en', 'US'),
       fullWidth: false,
       isHideKeyboard: false,
       isIgnoring: true,

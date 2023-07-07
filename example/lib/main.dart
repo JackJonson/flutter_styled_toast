@@ -1,4 +1,3 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
@@ -14,7 +13,6 @@ void main() {
 class MyApp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    // TODO: implement createState
     return _MyAppState();
   }
 }
@@ -30,11 +28,8 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     final appTitle = 'Styled Toast Example';
     return StyledToast(
-      locale: const Locale('en', 'US'),
-      //You have to set this parameters to your locale
       textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
       backgroundColor: Color(0x99000000),
       borderRadius: BorderRadius.circular(5.0),
@@ -50,6 +45,7 @@ class _MyAppState extends State<MyApp> {
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
+      locale: const Locale('en', 'US'),
       fullWidth: false,
       isHideKeyboard: false,
       isIgnoring: true,
@@ -198,7 +194,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(custom borderRadius textStyle etc)",
+                'Normal toast(custom borderRadius textStyle etc)',
               ),
               onTap: () {
                 showToast('This is normal toast',
@@ -219,7 +215,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(position)",
+                'Normal toast(position)',
               ),
               onTap: () {
                 showToast('This is normal toast',
@@ -234,7 +230,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(custom position)",
+                'Normal toast(custom position)',
               ),
               onTap: () {
                 showToast('This is toast',
@@ -249,7 +245,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(fade anim)",
+                'Normal toast(fade anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with fade animation',
@@ -264,7 +260,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(slideFromTop anim)",
+                'Normal toast(slideFromTop anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -286,7 +282,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(slideFromTopFade anim)",
+                'Normal toast(slideFromTopFade anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -309,7 +305,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(slideFromBottom anim)",
+                'Normal toast(slideFromBottom anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -331,7 +327,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(slideFromBottomFade anim)",
+                'Normal toast(slideFromBottomFade anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -354,7 +350,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "normal toast(slideFromLeft anim)",
+                'normal toast(slideFromLeft anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -377,7 +373,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "normal toast(slideFromLeftFade anim)",
+                'normal toast(slideFromLeftFade anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -402,7 +398,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(slideFromRight anim)",
+                'Normal toast(slideFromRight anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -423,7 +419,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(slideFromRightFade anim)",
+                'Normal toast(slideFromRightFade anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -446,7 +442,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "normal toast(size anim)",
+                'normal toast(size anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -466,7 +462,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "normal toast(sizefade anim)",
+                'normal toast(sizefade anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -486,7 +482,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "normal toast(scale anim)",
+                'normal toast(scale anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -505,7 +501,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(fadeScale anim)",
+                'Normal toast(fadeScale anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -524,7 +520,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(rotate anim)",
+                'Normal toast(rotate anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -543,7 +539,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(fadeRotate anim)",
+                'Normal toast(fadeRotate anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -562,7 +558,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(scaleRotate anim)",
+                'Normal toast(scaleRotate anim)',
               ),
               onTap: () {
                 showToast('This is normal toast with animation',
@@ -581,24 +577,25 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast with onDismissed($dismissRemind)",
+                'Normal toast with onDismissed($dismissRemind)',
               ),
               onTap: () {
                 setState(() {
                   dismissRemind = '';
                 });
                 showToast('This is normal toast with onDismissed',
-                    context: context,
-                    animation: StyledToastAnimation.fade,
-                    //Toast duration   animDuration * 2 <= duration
-                    duration: Duration(seconds: 2),
-                    //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(milliseconds: 1000), onDismiss: () {
-                  print('onDismissed');
-                  setState(() {
-                    dismissRemind = 'dismissed';
-                  });
-                }, curve: Curves.decelerate, reverseCurve: Curves.linear);
+                  context: context,
+                  animation: StyledToastAnimation.fade,
+                  duration: Duration(seconds: 2),
+                  animDuration: Duration(milliseconds: 1000),
+                  onDismiss: () {
+                    setState(() {
+                      dismissRemind = 'dismissed';
+                    });
+                  },
+                  curve: Curves.decelerate,
+                  reverseCurve: Curves.linear,
+                );
               },
             ),
             Divider(
@@ -607,7 +604,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(custom anim)",
+                'Normal toast(custom anim)',
               ),
               onTap: () async {
                 showToast(
@@ -652,7 +649,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(custom multiple anim)",
+                'Normal toast(custom multiple anim)',
               ),
               onTap: () async {
                 showToast(
@@ -726,7 +723,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Normal toast(custom anim with custom animation controller)",
+                'Normal toast(custom anim with custom animation controller)',
               ),
               onTap: () async {
                 showToast(
@@ -789,7 +786,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Custom toast content widget",
+                'Custom toast content widget',
               ),
               onTap: () {
                 showToastWidget(BannerToastWidget.fail(msg: 'Request failed'),
@@ -860,7 +857,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Custom toast content widget with icon convinient fail",
+                'Custom toast content widget with icon convinient fail',
               ),
               onTap: () {
                 showToastWidget(IconToastWidget.fail(msg: 'failed'),
@@ -879,7 +876,7 @@ class _MyHomePageState extends State<MyHomePage>
             ),
             ListTile(
               title: Text(
-                "Custom toast content widget with icon convenient success",
+                'Custom toast content widget with icon convenient success',
               ),
               onTap: () {
                 showToastWidget(IconToastWidget.success(msg: 'success'),
@@ -962,7 +959,7 @@ class _SecondPageState extends State<SecondPage> {
                     backgroundColor:
                         MaterialStateProperty.resolveWith(getColor)),
                 child: Text(
-                  "normal toast",
+                  'normal toast',
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
                 ),
               ),

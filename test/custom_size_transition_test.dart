@@ -1,4 +1,3 @@
-import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -15,8 +14,8 @@ void main() {
         ),
       );
       await tester.pumpWidget(child);
-      await tester.pump(Duration(milliseconds: 10));
-      await tester.pump(Duration(milliseconds: 1000));
+      await tester.pump(const Duration(milliseconds: 10));
+      await tester.pump(const Duration(milliseconds: 1000));
 
       expect(statusList, [AnimationStatus.forward, AnimationStatus.completed]);
     });
@@ -26,10 +25,10 @@ void main() {
 class TestWidget extends StatefulWidget {
   final Function(AnimationStatus value) valueCallback;
 
-  TestWidget(this.valueCallback);
+  const TestWidget(this.valueCallback, { super.key });
 
   @override
-  _TestWidgetState createState() => _TestWidgetState();
+  State<TestWidget> createState() => _TestWidgetState();
 }
 
 class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin {
@@ -40,7 +39,7 @@ class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin {
     super.initState();
     animationController = AnimationController(
       vsync: this,
-      duration: Duration(milliseconds: 1000),
+      duration: const Duration(milliseconds: 1000),
     );
     animationController.addStatusListener((status) {
       widget.valueCallback(status);
@@ -65,7 +64,7 @@ class _TestWidgetState extends State<TestWidget> with TickerProviderStateMixin {
         width: 100,
         height: 100,
         color: Colors.blue,
-        child: Text('test1'),
+        child: const Text('test1'),
       ),
     );
   }
