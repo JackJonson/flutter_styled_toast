@@ -12,7 +12,6 @@ import 'main.dart';
 ///description: Toast with icon
 ///
 class IconToastWidget extends StatelessWidget {
-  final Key? key;
   final Color? backgroundColor;
   final String? message;
   final Widget? textWidget;
@@ -22,7 +21,7 @@ class IconToastWidget extends StatelessWidget {
   final EdgeInsetsGeometry? padding;
 
   IconToastWidget({
-    this.key,
+    super.key,
     this.backgroundColor,
     this.textWidget,
     this.message,
@@ -30,7 +29,7 @@ class IconToastWidget extends StatelessWidget {
     this.width,
     @required this.assetName,
     this.padding,
-  }) : super(key: key);
+  });
 
   factory IconToastWidget.fail({String? msg}) => IconToastWidget(
         message: msg,
@@ -44,7 +43,6 @@ class IconToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     Widget content = Material(
       color: Colors.transparent,
       child: Container(
@@ -77,7 +75,7 @@ class IconToastWidget extends StatelessWidget {
                       message ?? '',
                       style: TextStyle(
                           fontSize:
-                              Theme.of(context).textTheme.headline6!.fontSize,
+                              Theme.of(context).textTheme.titleLarge!.fontSize,
                           color: Colors.white),
                       softWrap: true,
                       maxLines: 200,
@@ -100,7 +98,6 @@ class IconToastWidget extends StatelessWidget {
 ///description: Banner type toast widget, example of custom toast content widget when you use [showToastWidget]
 ///
 class BannerToastWidget extends StatelessWidget {
-  final Key? key;
   final Color? backgroundColor;
   final String? message;
   final Widget? textWidget;
@@ -108,22 +105,21 @@ class BannerToastWidget extends StatelessWidget {
   final double? height;
   final double? width;
 
-  BannerToastWidget(
-      {this.key,
-      this.backgroundColor,
-      this.textWidget,
-      this.message,
-      this.height,
-      this.width,
-      double? offset})
-      : this.offset = (offset == null ? 10.0 : offset),
-        super(key: key);
+  BannerToastWidget({
+    super.key,
+    this.backgroundColor,
+    this.textWidget,
+    this.message,
+    this.height,
+    this.width,
+    final double? offset,
+  }) : this.offset = (offset == null ? 10.0 : offset);
 
   factory BannerToastWidget.success(
           {String? msg, Widget? text, BuildContext? context}) =>
       BannerToastWidget(
         backgroundColor: context != null
-            ? Theme.of(context).toggleableActiveColor
+            ? Theme.of(context).toggleButtonsTheme.fillColor
             : Colors.green,
         message: msg,
         textWidget: text,
@@ -133,7 +129,7 @@ class BannerToastWidget extends StatelessWidget {
           {String? msg, Widget? text, BuildContext? context}) =>
       BannerToastWidget(
         backgroundColor: context != null
-            ? Theme.of(context).errorColor
+            ? Theme.of(context).colorScheme.error
             : const Color(0xEFCC2E2E),
         message: msg,
         textWidget: text,
@@ -141,18 +137,17 @@ class BannerToastWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
     Widget content = Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.all(17.0),
       height: 60.0,
       alignment: Alignment.center,
-      color: backgroundColor ?? Theme.of(context).backgroundColor,
+      color: backgroundColor ?? Theme.of(context).colorScheme.background,
       child: textWidget ??
           Text(
             message ?? '',
             style: TextStyle(
-                fontSize: Theme.of(context).textTheme.headline6!.fontSize,
+                fontSize: Theme.of(context).textTheme.titleLarge!.fontSize,
                 color: Colors.white),
           ),
     );

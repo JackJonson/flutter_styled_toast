@@ -1,30 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
-import 'package:flutter_styled_toast/src/styled_toast_theme.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   group('StyledToastTheme', () {
     testWidgets('Create StyleToastTheme', (WidgetTester tester) async {
-      final textStyle = TextStyle(fontSize: 16.0, color: Colors.white);
-      final backgroundColor = Color(0x99000000);
+      const textStyle = TextStyle(fontSize: 16.0, color: Colors.white);
+      const backgroundColor = Color(0x99000000);
       final borderRadius = BorderRadius.circular(5.0);
-      final textPadding =
-          EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
-      final toastAnimation = StyledToastAnimation.size;
-      final reverseAnimation = StyledToastAnimation.size;
-      final startOffset = Offset(0.0, -1.0);
-      final reverseEndOffset = Offset(0.0, -1.0);
-      final duration = Duration(seconds: 4);
-      final animDuration = Duration(seconds: 1);
-      final alignment = Alignment.center;
-      final toastPositions = StyledToastPosition.center;
-      final curve = Curves.fastOutSlowIn;
-      final reverseCurve = Curves.fastOutSlowIn;
-      final dismissOtherOnShow = true;
-      final fullWidth = false;
-      final isHideKeyboard = false;
-      final isIgnoring = true;
+      const textPadding = EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
+      const toastAnimation = StyledToastAnimation.size;
+      const reverseAnimation = StyledToastAnimation.size;
+      const startOffset = Offset(0.0, -1.0);
+      const reverseEndOffset = Offset(0.0, -1.0);
+      const duration = Duration(seconds: 4);
+      const animDuration = Duration(seconds: 1);
+      const alignment = Alignment.center;
+      const toastPositions = StyledToastPosition.center;
+      const curve = Curves.fastOutSlowIn;
+      const reverseCurve = Curves.fastOutSlowIn;
+      const dismissOtherOnShow = true;
+      const fullWidth = false;
+      const isHideKeyboard = false;
+      const isIgnoring = true;
       final child = MaterialApp(
         home: LayoutBuilder(
           builder: (BuildContext context, BoxConstraints constraints) {
@@ -32,7 +30,7 @@ void main() {
               width: 100,
               height: 100,
               color: Colors.blue,
-              child: Text('test1'),
+              child: const Text('test1'),
             );
           },
         ),
@@ -61,19 +59,19 @@ void main() {
         child: child,
       );
       await tester.pumpWidget(styledToastTheme);
-      await tester.pump(Duration(milliseconds: 1000));
+      await tester.pump(const Duration(milliseconds: 1000));
       expect(styledToastTheme.textStyle,
-          TextStyle(fontSize: 16.0, color: Colors.white));
-      expect(styledToastTheme.backgroundColor, Color(0x99000000));
+          const TextStyle(fontSize: 16.0, color: Colors.white));
+      expect(styledToastTheme.backgroundColor, const Color(0x99000000));
       expect(styledToastTheme.borderRadius, BorderRadius.circular(5.0));
       expect(styledToastTheme.textPadding,
-          EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0));
+          const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0));
       expect(styledToastTheme.toastAnimation, StyledToastAnimation.size);
       expect(styledToastTheme.reverseAnimation, StyledToastAnimation.size);
-      expect(styledToastTheme.startOffset, Offset(0.0, -1.0));
-      expect(styledToastTheme.reverseEndOffset, Offset(0.0, -1.0));
-      expect(styledToastTheme.duration, Duration(seconds: 4));
-      expect(styledToastTheme.animDuration, Duration(seconds: 1));
+      expect(styledToastTheme.startOffset, const Offset(0.0, -1.0));
+      expect(styledToastTheme.reverseEndOffset, const Offset(0.0, -1.0));
+      expect(styledToastTheme.duration, const Duration(seconds: 4));
+      expect(styledToastTheme.animDuration, const Duration(seconds: 1));
       expect(styledToastTheme.alignment, Alignment.center);
       expect(styledToastTheme.toastPositions, StyledToastPosition.center);
       expect(styledToastTheme.curve, Curves.fastOutSlowIn);

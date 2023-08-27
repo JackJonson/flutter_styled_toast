@@ -79,11 +79,9 @@ class CustomSizeTransition extends AnimatedWidget {
 
   @override
   Widget build(BuildContext context) {
-    AlignmentDirectional alignmentDirect;
-    if (axis == Axis.vertical)
-      alignmentDirect = AlignmentDirectional(-1.0, axisAlignment);
-    else
-      alignmentDirect = AlignmentDirectional(axisAlignment, -1.0);
+    final alignmentDirect = axis == Axis.vertical
+      ? AlignmentDirectional(-1.0, axisAlignment)
+      : AlignmentDirectional(axisAlignment, -1.0);
     return ClipRect(
       child: Align(
         alignment: alignment ?? alignmentDirect,

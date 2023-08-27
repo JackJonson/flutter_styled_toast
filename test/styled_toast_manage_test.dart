@@ -9,13 +9,13 @@ void main() {
     testWidgets('Create, store and dismiss a toast future',
         (WidgetTester tester) async {
       OverlayEntry entry = OverlayEntry(builder: (BuildContext context) {
-        return Text('toast future');
+        return const Text('toast future');
       });
       final GlobalKey<TestAppWidgetState> key = GlobalKey();
       final testAppWidget = TestAppWidget(overlayEntry: entry, key: key);
       await tester.pumpWidget(testAppWidget);
 
-      ToastFuture toastFuture = ToastFuture.create(Duration(seconds: 4), entry,
+      ToastFuture toastFuture = ToastFuture.create(const Duration(seconds: 4), entry,
           () {}, GlobalKey(debugLabel: 'toast future global key'));
       final toastManager = ToastManager();
       toastManager.addFuture(toastFuture);
@@ -31,8 +31,8 @@ void main() {
 
       toastFuture.dismiss(showAnim: true);
 
-      await tester.pump(Duration(seconds: 4));
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(entry.mounted, false);
     });
@@ -40,13 +40,13 @@ void main() {
   group('ToastManager', () {
     testWidgets('Add and remove ToastFuture', (WidgetTester tester) async {
       OverlayEntry entry = OverlayEntry(builder: (BuildContext context) {
-        return Text('toast future');
+        return const Text('toast future');
       });
       final GlobalKey<TestAppWidgetState> key = GlobalKey();
       final testAppWidget = TestAppWidget(overlayEntry: entry, key: key);
       await tester.pumpWidget(testAppWidget);
 
-      ToastFuture toastFuture = ToastFuture.create(Duration(seconds: 4), entry,
+      ToastFuture toastFuture = ToastFuture.create(const Duration(seconds: 4), entry,
           () {}, GlobalKey(debugLabel: 'toast future global key'));
 
       key.currentState?.insertEntry();
@@ -66,9 +66,9 @@ void main() {
       await tester.pumpWidget(testAppWidget);
       for (int i = 0; i < 4; i++) {
         showToast('toast$i',
-            dismissOtherToast: false, duration: Duration(seconds: 10));
+            dismissOtherToast: false, duration: const Duration(seconds: 10));
       }
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('toast0'), findsOneWidget);
       expect(find.text('toast1'), findsOneWidget);
@@ -77,7 +77,7 @@ void main() {
 
       dismissAllToast();
 
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('toast0'), findsNothing);
       expect(find.text('toast1'), findsNothing);
@@ -86,9 +86,9 @@ void main() {
 
       for (int i = 4; i < 8; i++) {
         showToast('toast$i',
-            dismissOtherToast: false, duration: Duration(seconds: 10));
+            dismissOtherToast: false, duration: const Duration(seconds: 10));
       }
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('toast4'), findsOneWidget);
       expect(find.text('toast5'), findsOneWidget);
@@ -97,7 +97,7 @@ void main() {
 
       ToastManager().dismissAll(showAnim: true);
 
-      await tester.pump(Duration(milliseconds: 100));
+      await tester.pump(const Duration(milliseconds: 100));
 
       expect(find.text('toast4'), findsNothing);
       expect(find.text('toast5'), findsNothing);

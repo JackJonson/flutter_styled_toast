@@ -1,7 +1,8 @@
 import 'dart:async';
 
 import 'package:flutter/widgets.dart';
-import 'package:flutter_styled_toast/src/styled_toast.dart';
+
+import 'styled_toast.dart';
 
 /// The method to dismiss all toast.
 void dismissAllToast({bool showAnim = false}) {
@@ -88,7 +89,7 @@ class ToastManager {
   }
 
   /// [Set] used to save [ToastFuture].
-  Set<ToastFuture> toastSet = Set();
+  Set<ToastFuture> toastSet = {};
 
   /// Dismiss all toast.
   void dismissAll({

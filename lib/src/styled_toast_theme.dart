@@ -1,14 +1,12 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_styled_toast/src/custom_animation.dart';
-import 'package:flutter_styled_toast/src/styled_toast.dart';
-import 'package:flutter_styled_toast/src/styled_toast_enum.dart';
+import 'custom_animation.dart';
+import 'styled_toast.dart';
+import 'styled_toast_enum.dart';
 
 /// Toast theme, only for default content widget.
 ///
 /// If you have specified a custom content widget, [ToastTheme] will not be working.
 class StyledToastTheme extends InheritedWidget {
-  /// Child widget.
-  final Widget child;
 
   /// Text align.
   final TextAlign? textAlign;
@@ -94,8 +92,9 @@ class StyledToastTheme extends InheritedWidget {
   /// When toast widget [initState], this callback will be called.
   final OnInitStateCallback? onInitState;
 
-  StyledToastTheme({
-    required this.child,
+  const StyledToastTheme({
+    super.key,
+    required super.child,
     this.textAlign,
     this.textDirection,
     this.borderRadius,
@@ -124,7 +123,7 @@ class StyledToastTheme extends InheritedWidget {
     this.reverseAnimBuilder,
     this.isIgnoring,
     this.onInitState,
-  }) : super(child: child);
+  });
 
   @override
   bool updateShouldNotify(InheritedWidget oldWidget) {
@@ -132,6 +131,10 @@ class StyledToastTheme extends InheritedWidget {
   }
 
   /// Get the [StyledToastTheme] object.
-  static StyledToastTheme? of(BuildContext context) =>
+  static StyledToastTheme of(BuildContext context) =>
+      context.dependOnInheritedWidgetOfExactType<StyledToastTheme>()!;
+
+  /// Try to find the [StyledToastTheme] object in the widgets tree.
+  static StyledToastTheme? maybeOf(BuildContext context) =>
       context.dependOnInheritedWidgetOfExactType<StyledToastTheme>();
 }
