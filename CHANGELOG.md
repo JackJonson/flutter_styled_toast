@@ -1,5 +1,9 @@
+## [2.2.1 null-safety]
+Fix warnings.
+
+
 ## [2.2.0 null-safety]
-Upgrade to Flutter 3.10.x
+Upgrade to Flutter 3.10.x.
 
 
 ## [2.1.3 null-safety]
