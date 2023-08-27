@@ -74,7 +74,7 @@ void main() {
 }
 
 class CustomAnimationTestAppWidget extends StatefulWidget {
-  const CustomAnimationTestAppWidget({ super.key });
+  const CustomAnimationTestAppWidget({super.key});
 
   @override
   CustomAnimationTestAppWidgetState createState() =>

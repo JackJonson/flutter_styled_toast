@@ -25,7 +25,7 @@ void main() {
 class TestWidget extends StatefulWidget {
   final Function(AnimationStatus value) valueCallback;
 
-  const TestWidget(this.valueCallback, { super.key });
+  const TestWidget(this.valueCallback, {super.key});
 
   @override
   State<TestWidget> createState() => _TestWidgetState();

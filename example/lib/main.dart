@@ -583,7 +583,8 @@ class _MyHomePageState extends State<MyHomePage>
                 setState(() {
                   dismissRemind = '';
                 });
-                showToast('This is normal toast with onDismissed',
+                showToast(
+                  'This is normal toast with onDismissed',
                   context: context,
                   animation: StyledToastAnimation.fade,
                   duration: Duration(seconds: 2),

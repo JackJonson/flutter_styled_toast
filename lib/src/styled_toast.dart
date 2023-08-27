@@ -75,18 +75,19 @@ ToastFuture showToast(
 
   position ??= toastTheme?.toastPositions ?? StyledToastPosition.bottom;
 
-  textStyle ??= toastTheme?.textStyle
-    ?? const TextStyle(fontSize: 16.0, color: Colors.white);
+  textStyle ??= toastTheme?.textStyle ??
+      const TextStyle(fontSize: 16.0, color: Colors.white);
 
-  textPadding ??= toastTheme?.textPadding
-    ?? const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
+  textPadding ??= toastTheme?.textPadding ??
+      const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
 
   backgroundColor ??= toastTheme?.backgroundColor ?? const Color(0x99000000);
   borderRadius ??= toastTheme?.borderRadius ?? BorderRadius.circular(5.0);
 
-  shapeBorder ??= toastTheme?.shapeBorder ?? RoundedRectangleBorder(
-    borderRadius: borderRadius,
-  );
+  shapeBorder ??= toastTheme?.shapeBorder ??
+      RoundedRectangleBorder(
+        borderRadius: borderRadius,
+      );
 
   textDirection ??= toastTheme?.textDirection ?? TextDirection.ltr;
 
@@ -402,11 +403,9 @@ class StyledToast extends StatefulWidget {
   }
 }
 
-class _StyledToastState extends State<StyledToast>
-{
+class _StyledToastState extends State<StyledToast> {
   @override
-  Widget build(final BuildContext context)
-  {
+  Widget build(final BuildContext context) {
     final overlay = Overlay(
       initialEntries: <OverlayEntry>[
         OverlayEntry(builder: (context) {
@@ -427,23 +426,23 @@ class _StyledToastState extends State<StyledToast>
       ),
     );
 
-    final textStyle = widget.textStyle ?? const TextStyle(
-      fontSize: 16.0,
-      fontWeight: FontWeight.normal,
-      color: Colors.white,
-    );
+    final textStyle = widget.textStyle ??
+        const TextStyle(
+          fontSize: 16.0,
+          fontWeight: FontWeight.normal,
+          color: Colors.white,
+        );
 
-    final backgroundColor = widget.backgroundColor
-      ?? const Color(0x99000000);
+    final backgroundColor = widget.backgroundColor ?? const Color(0x99000000);
 
-    final borderRadius = widget.borderRadius
-      ?? BorderRadius.circular(5.0);
+    final borderRadius = widget.borderRadius ?? BorderRadius.circular(5.0);
 
     final textAlign = widget.textAlign ?? TextAlign.center;
-    final textPadding = widget.textPadding ?? const EdgeInsets.symmetric(
-      horizontal: 17.0,
-      vertical: 8.0,
-    );
+    final textPadding = widget.textPadding ??
+        const EdgeInsets.symmetric(
+          horizontal: 17.0,
+          vertical: 8.0,
+        );
 
     return Localizations(
       delegates: const [
@@ -559,7 +558,7 @@ class _StyledToastWidget extends StatefulWidget {
     this.animationBuilder,
     this.reverseAnimBuilder,
     this.onInitState,
-  })  : assert(animDuration * 2 <= duration || duration == Duration.zero);
+  }) : assert(animDuration * 2 <= duration || duration == Duration.zero);
 
   @override
   State<StatefulWidget> createState() {
@@ -1497,9 +1496,8 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     }
     _toastTimer?.cancel();
     try {
-      if (widget.animation != widget.reverseAnimation
-        || widget.reverseAnimBuilder != null
-      ) {
+      if (widget.animation != widget.reverseAnimation ||
+          widget.reverseAnimBuilder != null) {
         await _reverseAnimController.forward().orCancel;
       } else {
         await _animationController.reverse().orCancel;

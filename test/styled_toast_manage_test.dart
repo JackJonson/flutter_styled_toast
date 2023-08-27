@@ -15,8 +15,8 @@ void main() {
       final testAppWidget = TestAppWidget(overlayEntry: entry, key: key);
       await tester.pumpWidget(testAppWidget);
 
-      ToastFuture toastFuture = ToastFuture.create(const Duration(seconds: 4), entry,
-          () {}, GlobalKey(debugLabel: 'toast future global key'));
+      ToastFuture toastFuture = ToastFuture.create(const Duration(seconds: 4),
+          entry, () {}, GlobalKey(debugLabel: 'toast future global key'));
       final toastManager = ToastManager();
       toastManager.addFuture(toastFuture);
 
@@ -46,8 +46,8 @@ void main() {
       final testAppWidget = TestAppWidget(overlayEntry: entry, key: key);
       await tester.pumpWidget(testAppWidget);
 
-      ToastFuture toastFuture = ToastFuture.create(const Duration(seconds: 4), entry,
-          () {}, GlobalKey(debugLabel: 'toast future global key'));
+      ToastFuture toastFuture = ToastFuture.create(const Duration(seconds: 4),
+          entry, () {}, GlobalKey(debugLabel: 'toast future global key'));
 
       key.currentState?.insertEntry();
       toastFuture.dismiss(showAnim: true);

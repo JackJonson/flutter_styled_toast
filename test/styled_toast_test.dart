@@ -7,8 +7,9 @@ void main() {
     testWidgets('Create StyleToastWidget', (WidgetTester tester) async {
       const textStyle = TextStyle(fontSize: 16.0, color: Colors.white);
       const backgroundColor = Color(0x99000000);
-      const  borderRadius = BorderRadius.all(Radius.circular(5.0));
-      const textPadding = EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
+      const borderRadius = BorderRadius.all(Radius.circular(5.0));
+      const textPadding =
+          EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
       const toastAnimation = StyledToastAnimation.size;
       const reverseAnimation = StyledToastAnimation.size;
       const startOffset = Offset(0.0, -1.0);
@@ -205,7 +206,7 @@ void main() {
 class TestAppWidget extends StatefulWidget {
   final OverlayEntry? overlayEntry;
 
-  const TestAppWidget({ super.key, this.overlayEntry });
+  const TestAppWidget({super.key, this.overlayEntry});
 
   @override
   TestAppWidgetState createState() => TestAppWidgetState();

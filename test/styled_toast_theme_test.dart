@@ -8,7 +8,8 @@ void main() {
       const textStyle = TextStyle(fontSize: 16.0, color: Colors.white);
       const backgroundColor = Color(0x99000000);
       final borderRadius = BorderRadius.circular(5.0);
-      const textPadding = EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
+      const textPadding =
+          EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0);
       const toastAnimation = StyledToastAnimation.size;
       const reverseAnimation = StyledToastAnimation.size;
       const startOffset = Offset(0.0, -1.0);

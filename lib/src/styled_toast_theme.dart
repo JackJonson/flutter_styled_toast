@@ -7,7 +7,6 @@ import 'styled_toast_enum.dart';
 ///
 /// If you have specified a custom content widget, [ToastTheme] will not be working.
 class StyledToastTheme extends InheritedWidget {
-
   /// Text align.
   final TextAlign? textAlign;
 
