@@ -29,38 +29,41 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final appTitle = 'Styled Toast Example';
-    return StyledToast(
-      textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-      backgroundColor: Color(0x99000000),
-      borderRadius: BorderRadius.circular(5.0),
-      textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-      toastAnimation: StyledToastAnimation.size,
-      reverseAnimation: StyledToastAnimation.size,
-      startOffset: Offset(0.0, -1.0),
-      reverseEndOffset: Offset(0.0, -1.0),
-      duration: Duration(seconds: 4),
-      animDuration: Duration(seconds: 1),
-      alignment: Alignment.center,
-      toastPositions: StyledToastPosition.center,
-      curve: Curves.fastOutSlowIn,
-      reverseCurve: Curves.fastOutSlowIn,
-      dismissOtherOnShow: true,
-      locale: const Locale('en', 'US'),
-      fullWidth: false,
-      isHideKeyboard: false,
-      isIgnoring: true,
-      child: MaterialApp(
-        title: appTitle,
-        showPerformanceOverlay: showPerformance,
-        home: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return MyHomePage(
-              title: appTitle,
-              onSetting: onSettingCallback,
-            );
-          },
-        ),
+    return MaterialApp(
+      title: appTitle,
+      theme: ThemeData(useMaterial3: true),
+      showPerformanceOverlay: showPerformance,
+      home: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return MyHomePage(
+            title: appTitle,
+            onSetting: onSettingCallback,
+          );
+        },
       ),
+      builder: (context, child) {
+        return StyledToast(
+          textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
+          backgroundColor: Color(0x99000000),
+          borderRadius: BorderRadius.circular(5.0),
+          textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+          toastAnimation: StyledToastAnimation.size,
+          reverseAnimation: StyledToastAnimation.size,
+          startOffset: Offset(0.0, -1.0),
+          reverseEndOffset: Offset(0.0, -1.0),
+          duration: Duration(seconds: 4),
+          animDuration: Duration(seconds: 1),
+          alignment: Alignment.center,
+          toastPositions: StyledToastPosition.center,
+          curve: Curves.fastOutSlowIn,
+          reverseCurve: Curves.fastOutSlowIn,
+          dismissOtherOnShow: true,
+          fullWidth: false,
+          isHideKeyboard: false,
+          isIgnoring: true,
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
     );
   }
 }
@@ -95,10 +98,14 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    mController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
-    mReverseController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    mController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
+    mReverseController = AnimationController(
+      vsync: this,
+      duration: Duration(milliseconds: 200),
+    );
   }
 
   @override
@@ -117,13 +124,9 @@ class _MyHomePageState extends State<MyHomePage>
       ),
       body: Center(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+          padding: EdgeInsets.symmetric(vertical: 4),
           children: <Widget>[
-            TextField(
-              controller: TextEditingController(),
-            ),
             Container(
-              margin: EdgeInsets.only(bottom: 10.0),
               padding: EdgeInsets.only(left: 15.0),
               height: 35.0,
               alignment: Alignment.centerLeft,
@@ -600,8 +603,7 @@ class _MyHomePageState extends State<MyHomePage>
               },
             ),
             Divider(
-              height: 10,
-              thickness: 10,
+              height: 0.5,
             ),
             ListTile(
               title: Text(
@@ -778,7 +780,6 @@ class _MyHomePageState extends State<MyHomePage>
 
             ///Custom toast content widget
             Container(
-              margin: EdgeInsets.only(bottom: 10.0, top: 50.0),
               padding: EdgeInsets.only(left: 15.0),
               height: 35.0,
               alignment: Alignment.centerLeft,

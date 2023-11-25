@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
+
 import 'custom_animation.dart';
 import 'custom_size_transition.dart';
 import 'styled_toast_enum.dart';
@@ -342,9 +342,6 @@ class StyledToast extends StatefulWidget {
   /// Dismiss old toast when new one shows.
   final bool? dismissOtherOnShow;
 
-  /// The locale of the app.
-  final Locale locale;
-
   /// Full width that the width of the screen minus the width of the margin.
   final bool? fullWidth;
 
@@ -388,7 +385,6 @@ class StyledToast extends StatefulWidget {
     this.reverseCurve,
     this.dismissOtherOnShow = true,
     this.onDismiss,
-    required this.locale,
     this.fullWidth,
     this.isHideKeyboard,
     this.animationBuilder,
@@ -419,11 +415,7 @@ class _StyledToastState extends State<StyledToast> {
 
     final wrapper = Directionality(
       textDirection: textDirection,
-      child: Stack(
-        children: <Widget>[
-          overlay,
-        ],
-      ),
+      child: overlay,
     );
 
     final textStyle = widget.textStyle ??
@@ -444,44 +436,36 @@ class _StyledToastState extends State<StyledToast> {
           vertical: 8.0,
         );
 
-    return Localizations(
-      delegates: const [
-        GlobalMaterialLocalizations.delegate,
-        GlobalCupertinoLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      locale: widget.locale,
-      child: StyledToastTheme(
-        textAlign: textAlign,
-        textDirection: textDirection,
-        borderRadius: borderRadius,
-        backgroundColor: backgroundColor,
-        textPadding: textPadding,
-        textStyle: textStyle,
-        shapeBorder: widget.shapeBorder,
-        duration: widget.duration,
-        animDuration: widget.animDuration,
-        toastPositions: widget.toastPositions,
-        toastAnimation: widget.toastAnimation,
-        reverseAnimation: widget.reverseAnimation,
-        alignment: widget.alignment,
-        axis: widget.axis,
-        startOffset: widget.startOffset,
-        endOffset: widget.endOffset,
-        reverseStartOffset: widget.reverseStartOffset,
-        reverseEndOffset: widget.reverseEndOffset,
-        curve: widget.curve,
-        reverseCurve: widget.reverseCurve,
-        dismissOtherOnShow: widget.dismissOtherOnShow,
-        onDismiss: widget.onDismiss,
-        fullWidth: widget.fullWidth,
-        isHideKeyboard: widget.isHideKeyboard,
-        animationBuilder: widget.animationBuilder,
-        reverseAnimBuilder: widget.reverseAnimBuilder,
-        isIgnoring: widget.isIgnoring,
-        onInitState: widget.onInitState,
-        child: wrapper,
-      ),
+    return StyledToastTheme(
+      textAlign: textAlign,
+      textDirection: textDirection,
+      borderRadius: borderRadius,
+      backgroundColor: backgroundColor,
+      textPadding: textPadding,
+      textStyle: textStyle,
+      shapeBorder: widget.shapeBorder,
+      duration: widget.duration,
+      animDuration: widget.animDuration,
+      toastPositions: widget.toastPositions,
+      toastAnimation: widget.toastAnimation,
+      reverseAnimation: widget.reverseAnimation,
+      alignment: widget.alignment,
+      axis: widget.axis,
+      startOffset: widget.startOffset,
+      endOffset: widget.endOffset,
+      reverseStartOffset: widget.reverseStartOffset,
+      reverseEndOffset: widget.reverseEndOffset,
+      curve: widget.curve,
+      reverseCurve: widget.reverseCurve,
+      dismissOtherOnShow: widget.dismissOtherOnShow,
+      onDismiss: widget.onDismiss,
+      fullWidth: widget.fullWidth,
+      isHideKeyboard: widget.isHideKeyboard,
+      animationBuilder: widget.animationBuilder,
+      reverseAnimBuilder: widget.reverseAnimBuilder,
+      isIgnoring: widget.isIgnoring,
+      onInitState: widget.onInitState,
+      child: wrapper,
     );
   }
 }

@@ -122,7 +122,6 @@ class CustomAnimationTestAppWidgetState
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
-      locale: const Locale('en', 'US'),
       fullWidth: false,
       isHideKeyboard: false,
       isIgnoring: true,
