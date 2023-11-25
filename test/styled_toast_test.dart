@@ -54,7 +54,6 @@ void main() {
         curve: curve,
         reverseCurve: reverseCurve,
         dismissOtherOnShow: dismissOtherOnShow,
-        locale: const Locale('en', 'US'),
         fullWidth: fullWidth,
         isHideKeyboard: isHideKeyboard,
         isIgnoring: isIgnoring,
@@ -62,7 +61,6 @@ void main() {
       );
       await tester.pumpWidget(styledToast);
       await tester.pump(const Duration(milliseconds: 1000));
-      expect(styledToast.locale, const Locale('en', 'US'));
       expect(styledToast.textStyle,
           const TextStyle(fontSize: 16.0, color: Colors.white));
       expect(styledToast.backgroundColor, const Color(0x99000000));
@@ -244,7 +242,6 @@ class TestAppWidgetState extends State<TestAppWidget> {
       curve: Curves.fastOutSlowIn,
       reverseCurve: Curves.fastOutSlowIn,
       dismissOtherOnShow: true,
-      locale: const Locale('en', 'US'),
       fullWidth: false,
       isHideKeyboard: false,
       isIgnoring: true,
