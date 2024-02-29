@@ -7,6 +7,7 @@ import 'custom_size_transition.dart';
 import 'styled_toast_enum.dart';
 import 'styled_toast_manage.dart';
 import 'styled_toast_theme.dart';
+import 'position_model.dart';
 
 /// Current context of the page which uses the toast.
 BuildContext? currentContext;
@@ -164,6 +165,7 @@ ToastFuture showToastWidget(
   CustomAnimationBuilder? reverseAnimBuilder,
   bool? isIgnoring,
   OnInitStateCallback? onInitState,
+  OverlayPosition? overlayPosition,
 }) {
   OverlayEntry entry;
   ToastFuture future;
@@ -227,31 +229,39 @@ ToastFuture showToastWidget(
   GlobalKey<StyledToastWidgetState> key = GlobalKey();
 
   entry = OverlayEntry(builder: (ctx) {
-    return IgnorePointer(
-      ignoring: isIgnoring!,
-      child: _StyledToastWidget(
-        duration: duration!,
-        animDuration: animDuration!,
-        position: position,
-        animation: animation,
-        reverseAnimation: reverseAnimation,
-        alignment: alignment,
-        axis: axis,
-        startOffset: startOffset,
-        endOffset: endOffset,
-        reverseStartOffset: reverseStartOffset,
-        reverseEndOffset: reverseEndOffset,
-        curve: curve!,
-        reverseCurve: reverseCurve!,
-        key: key,
-        animationBuilder: animationBuilder,
-        reverseAnimBuilder: reverseAnimBuilder,
-        onInitState: onInitState,
-        child: Directionality(
-          textDirection: textDirection!,
-          child: Material(
-            child: widget,
-            color: Colors.transparent,
+    return Positioned(
+      top: overlayPosition?.top,
+      bottom: overlayPosition?.bottom,
+      left: overlayPosition?.left,
+      right: overlayPosition?.right,
+      height: overlayPosition?.height,
+      width: overlayPosition?.width,
+      child: IgnorePointer(
+        ignoring: isIgnoring!,
+        child: _StyledToastWidget(
+          duration: duration!,
+          animDuration: animDuration!,
+          position: position,
+          animation: animation,
+          reverseAnimation: reverseAnimation,
+          alignment: alignment,
+          axis: axis,
+          startOffset: startOffset,
+          endOffset: endOffset,
+          reverseStartOffset: reverseStartOffset,
+          reverseEndOffset: reverseEndOffset,
+          curve: curve!,
+          reverseCurve: reverseCurve!,
+          key: key,
+          animationBuilder: animationBuilder,
+          reverseAnimBuilder: reverseAnimBuilder,
+          onInitState: onInitState,
+          child: Directionality(
+            textDirection: textDirection!,
+            child: Material(
+              child: widget,
+              color: Colors.transparent,
+            ),
           ),
         ),
       ),
