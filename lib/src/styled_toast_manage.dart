@@ -71,7 +71,9 @@ class ToastFuture {
     } else {
       _containerKey.currentState?.dismissToast();
     }
+   if (_entry.mounted) {
     _entry.remove();
+    }
   }
 }
 
