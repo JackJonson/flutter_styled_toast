@@ -7,10 +7,12 @@ import 'custom_toast_content_widget.dart';
 
 void main() {
   debugPaintSizeEnabled = false;
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _MyAppState();
@@ -28,59 +30,67 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    final appTitle = 'Styled Toast Example';
-    return StyledToast(
-      textStyle: TextStyle(fontSize: 16.0, color: Colors.white),
-      backgroundColor: Color(0x99000000),
-      borderRadius: BorderRadius.circular(5.0),
-      textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-      toastAnimation: StyledToastAnimation.size,
-      reverseAnimation: StyledToastAnimation.size,
-      startOffset: Offset(0.0, -1.0),
-      reverseEndOffset: Offset(0.0, -1.0),
-      duration: Duration(seconds: 4),
-      animDuration: Duration(seconds: 1),
-      alignment: Alignment.center,
-      toastPositions: StyledToastPosition.center,
-      curve: Curves.fastOutSlowIn,
-      reverseCurve: Curves.fastOutSlowIn,
-      dismissOtherOnShow: true,
-      locale: const Locale('en', 'US'),
-      fullWidth: false,
-      isHideKeyboard: false,
-      isIgnoring: true,
-      child: MaterialApp(
-        title: appTitle,
-        showPerformanceOverlay: showPerformance,
-        home: LayoutBuilder(
-          builder: (BuildContext context, BoxConstraints constraints) {
-            return MyHomePage(
-              title: appTitle,
-              onSetting: onSettingCallback,
-            );
-          },
-        ),
+    const appTitle = 'Styled Toast Example';
+    return MaterialApp(
+      title: appTitle,
+      showPerformanceOverlay: showPerformance,
+      home: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          return MyHomePage(
+            title: appTitle,
+            onSetting: onSettingCallback,
+          );
+        },
       ),
+      builder: (BuildContext context, Widget? child) {
+        final isDarkMode =
+            MediaQuery.of(context).platformBrightness == Brightness.dark;
+
+        return StyledToast(
+          textStyle: TextStyle(
+              fontSize: 16.0, color: isDarkMode ? Colors.black : Colors.white),
+          backgroundColor:
+              isDarkMode ? const Color(0xCCFFFFFF) : const Color(0x99000000),
+          borderRadius: BorderRadius.circular(5.0),
+          textPadding:
+              const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+          toastAnimation: StyledToastAnimation.size,
+          reverseAnimation: StyledToastAnimation.size,
+          startOffset: const Offset(0.0, -1.0),
+          reverseEndOffset: const Offset(0.0, -1.0),
+          duration: const Duration(seconds: 4),
+          animDuration: const Duration(seconds: 1),
+          alignment: Alignment.center,
+          toastPositions: StyledToastPosition.center,
+          curve: Curves.fastOutSlowIn,
+          reverseCurve: Curves.fastOutSlowIn,
+          dismissOtherOnShow: true,
+          fullWidth: false,
+          isHideKeyboard: false,
+          isIgnoring: true,
+          child: child ?? const SizedBox.shrink(),
+        );
+      },
     );
   }
 }
 
 // The StatefulWidget's job is to take in some data and create a State class.
-// In this case, the Widget takes a title, and creates a _MyHomePageState.
+// In this case, the Widget takes a title, and creates a MyHomePageState.
 class MyHomePage extends StatefulWidget {
   final String? title;
 
   final VoidCallback? onSetting;
 
-  MyHomePage({Key? key, this.title, this.onSetting}) : super(key: key);
+  const MyHomePage({Key? key, this.title, this.onSetting}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
 // The State class is responsible for two things: holding some data you can
 // update and building the UI using that data.
-class _MyHomePageState extends State<MyHomePage>
+class MyHomePageState extends State<MyHomePage>
     with TickerProviderStateMixin<MyHomePage> {
   // Whether the green box should be visible or invisible
 
@@ -95,10 +105,10 @@ class _MyHomePageState extends State<MyHomePage>
   @override
   void initState() {
     super.initState();
-    mController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
-    mReverseController =
-        AnimationController(vsync: this, duration: Duration(milliseconds: 200));
+    mController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
+    mReverseController = AnimationController(
+        vsync: this, duration: const Duration(milliseconds: 200));
   }
 
   @override
@@ -108,7 +118,7 @@ class _MyHomePageState extends State<MyHomePage>
         title: Text(widget.title ?? ''),
         actions: <Widget>[
           IconButton(
-            icon: Icon(Icons.settings),
+            icon: const Icon(Icons.settings),
             onPressed: () {
               widget.onSetting?.call();
             },
@@ -117,22 +127,22 @@ class _MyHomePageState extends State<MyHomePage>
       ),
       body: Center(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+          padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
           children: <Widget>[
             TextField(
               controller: TextEditingController(),
             ),
             Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              padding: EdgeInsets.only(left: 15.0),
+              margin: const EdgeInsets.only(bottom: 10.0),
+              padding: const EdgeInsets.only(left: 15.0),
               height: 35.0,
               alignment: Alignment.centerLeft,
-              child: Text('Normal Toast'),
+              child: const Text('Normal Toast'),
               color: const Color(0xFFDDDDDD),
             ),
 
             ListTile(
-              title: Text('Normal toast'),
+              title: const Text('Normal toast'),
               onTap: () {
                 showToast('This is toast',
                     context: context,
@@ -141,11 +151,11 @@ class _MyHomePageState extends State<MyHomePage>
                     position: StyledToastPosition.bottom);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text('Permanent toast'),
+              title: const Text('Permanent toast'),
               onTap: () {
                 showToast(
                   'This is a permanent toast',
@@ -154,11 +164,11 @@ class _MyHomePageState extends State<MyHomePage>
                 );
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text('Normal toast full width'),
+              title: const Text('Normal toast full width'),
               onTap: () {
                 showToast(
                   'This is normal',
@@ -172,11 +182,12 @@ class _MyHomePageState extends State<MyHomePage>
                 );
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text('Normal toast full width with horizontal margin'),
+              title:
+                  const Text('Normal toast full width with horizontal margin'),
               onTap: () {
                 showToast(
                   'This is normal',
@@ -189,62 +200,63 @@ class _MyHomePageState extends State<MyHomePage>
                 );
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(custom borderRadius textStyle etc)',
               ),
               onTap: () {
                 showToast('This is normal toast',
                     context: context,
-                    textStyle: TextStyle(fontSize: 20.0, color: Colors.red),
+                    textStyle:
+                        const TextStyle(fontSize: 20.0, color: Colors.red),
                     backgroundColor: Colors.yellow,
-                    textPadding:
-                        EdgeInsets.symmetric(vertical: 20.0, horizontal: 30.0),
-                    borderRadius: BorderRadius.vertical(
+                    textPadding: const EdgeInsets.symmetric(
+                        vertical: 20.0, horizontal: 30.0),
+                    borderRadius: const BorderRadius.vertical(
                         top: Radius.elliptical(10.0, 20.0),
                         bottom: Radius.elliptical(10.0, 20.0)),
                     textAlign: TextAlign.justify,
                     textDirection: TextDirection.rtl);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(position)',
               ),
               onTap: () {
                 showToast('This is normal toast',
                     context: context,
                     alignment: Alignment.center,
-                    position: StyledToastPosition(
+                    position: const StyledToastPosition(
                         align: Alignment.bottomCenter, offset: 20.0));
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(custom position)',
               ),
               onTap: () {
                 showToast('This is toast',
                     context: context,
                     toastHorizontalMargin: 10.0,
-                    position: StyledToastPosition(
+                    position: const StyledToastPosition(
                         align: Alignment.topLeft, offset: 20.0));
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(fade anim)',
               ),
               onTap: () {
@@ -255,11 +267,11 @@ class _MyHomePageState extends State<MyHomePage>
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(slideFromTop anim)',
               ),
               onTap: () {
@@ -268,20 +280,20 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.slideFromTop,
                     reverseAnimation: StyledToastAnimation.slideToTop,
                     position: StyledToastPosition.top,
-                    startOffset: Offset(0.0, -3.0),
-                    reverseEndOffset: Offset(0.0, -3.0),
-                    duration: Duration(seconds: 4),
+                    startOffset: const Offset(0.0, -3.0),
+                    reverseEndOffset: const Offset(0.0, -3.0),
+                    duration: const Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(seconds: 1),
+                    animDuration: const Duration(seconds: 1),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(slideFromTopFade anim)',
               ),
               onTap: () {
@@ -289,22 +301,22 @@ class _MyHomePageState extends State<MyHomePage>
                     context: context,
                     animation: StyledToastAnimation.slideFromTopFade,
                     reverseAnimation: StyledToastAnimation.slideToTopFade,
-                    position: StyledToastPosition(
+                    position: const StyledToastPosition(
                         align: Alignment.topCenter, offset: 0.0),
-                    startOffset: Offset(0.0, -3.0),
-                    reverseEndOffset: Offset(0.0, -3.0),
-                    duration: Duration(seconds: 4),
+                    startOffset: const Offset(0.0, -3.0),
+                    reverseEndOffset: const Offset(0.0, -3.0),
+                    duration: const Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(seconds: 1),
+                    animDuration: const Duration(seconds: 1),
                     curve: Curves.fastLinearToSlowEaseIn,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(slideFromBottom anim)',
               ),
               onTap: () {
@@ -312,21 +324,21 @@ class _MyHomePageState extends State<MyHomePage>
                     context: context,
                     animation: StyledToastAnimation.slideFromBottom,
                     reverseAnimation: StyledToastAnimation.slideToBottom,
-                    startOffset: Offset(0.0, 3.0),
-                    reverseEndOffset: Offset(0.0, 3.0),
+                    startOffset: const Offset(0.0, 3.0),
+                    reverseEndOffset: const Offset(0.0, 3.0),
                     position: StyledToastPosition.bottom,
-                    duration: Duration(seconds: 4),
+                    duration: const Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(seconds: 1),
+                    animDuration: const Duration(seconds: 1),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(slideFromBottomFade anim)',
               ),
               onTap: () {
@@ -334,22 +346,22 @@ class _MyHomePageState extends State<MyHomePage>
                     context: context,
                     animation: StyledToastAnimation.slideFromBottomFade,
                     reverseAnimation: StyledToastAnimation.slideToBottomFade,
-                    startOffset: Offset(0.0, 3.0),
-                    reverseEndOffset: Offset(0.0, 3.0),
-                    position: StyledToastPosition(
+                    startOffset: const Offset(0.0, 3.0),
+                    reverseEndOffset: const Offset(0.0, 3.0),
+                    position: const StyledToastPosition(
                         align: Alignment.bottomCenter, offset: 0.0),
-                    duration: Duration(seconds: 4),
+                    duration: const Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(milliseconds: 400),
+                    animDuration: const Duration(milliseconds: 400),
                     curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'normal toast(slideFromLeft anim)',
               ),
               onTap: () {
@@ -358,21 +370,21 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.slideFromLeft,
                     reverseAnimation: StyledToastAnimation.slideToTop,
                     position: StyledToastPosition.top,
-                    startOffset: Offset(-1.0, 0.0),
-                    reverseEndOffset: Offset(-1.0, 0.0),
+                    startOffset: const Offset(-1.0, 0.0),
+                    reverseEndOffset: const Offset(-1.0, 0.0),
                     //Toast duration   animDuration * 2 <= duration
-                    duration: Duration(seconds: 4),
+                    duration: const Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(seconds: 1),
+                    animDuration: const Duration(seconds: 1),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'normal toast(slideFromLeftFade anim)',
               ),
               onTap: () {
@@ -381,23 +393,23 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.slideFromLeftFade,
                     reverseAnimation: StyledToastAnimation.slideToTopFade,
                     toastHorizontalMargin: 0.0,
-                    position: StyledToastPosition(
+                    position: const StyledToastPosition(
                         align: Alignment.topLeft, offset: 20.0),
-                    startOffset: Offset(-1.0, 0.0),
-                    reverseEndOffset: Offset(-1.0, 0.0),
+                    startOffset: const Offset(-1.0, 0.0),
+                    reverseEndOffset: const Offset(-1.0, 0.0),
                     //Toast duration   animDuration * 2 <= duration
-                    duration: Duration(seconds: 4),
+                    duration: const Duration(seconds: 4),
                     //Animation duration   animDuration * 2 <= duration
-                    animDuration: Duration(seconds: 1),
+                    animDuration: const Duration(seconds: 1),
                     curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(slideFromRight anim)',
               ),
               onTap: () {
@@ -406,19 +418,19 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.slideFromRight,
                     reverseAnimation: StyledToastAnimation.slideToRight,
                     position: StyledToastPosition.top,
-                    startOffset: Offset(1.0, 0.0),
-                    reverseEndOffset: Offset(1.0, 0.0),
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
+                    startOffset: const Offset(1.0, 0.0),
+                    reverseEndOffset: const Offset(1.0, 0.0),
+                    animDuration: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
                     curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(slideFromRightFade anim)',
               ),
               onTap: () {
@@ -427,21 +439,21 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.slideFromRightFade,
                     reverseAnimation: StyledToastAnimation.slideToRightFade,
                     toastHorizontalMargin: 0.0,
-                    position: StyledToastPosition(
+                    position: const StyledToastPosition(
                         align: Alignment.topRight, offset: 20.0),
-                    startOffset: Offset(1.0, 0.0),
-                    reverseEndOffset: Offset(1.0, 0.0),
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
+                    startOffset: const Offset(1.0, 0.0),
+                    reverseEndOffset: const Offset(1.0, 0.0),
+                    animDuration: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
                     curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'normal toast(size anim)',
               ),
               onTap: () {
@@ -451,17 +463,17 @@ class _MyHomePageState extends State<MyHomePage>
                     reverseAnimation: StyledToastAnimation.size,
                     axis: Axis.horizontal,
                     position: StyledToastPosition.center,
-                    animDuration: Duration(milliseconds: 400),
-                    duration: Duration(seconds: 2),
+                    animDuration: const Duration(milliseconds: 400),
+                    duration: const Duration(seconds: 2),
                     curve: Curves.linear,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'normal toast(sizefade anim)',
               ),
               onTap: () {
@@ -471,17 +483,17 @@ class _MyHomePageState extends State<MyHomePage>
                     reverseAnimation: StyledToastAnimation.sizeFade,
                     axis: Axis.horizontal,
                     position: StyledToastPosition.center,
-                    animDuration: Duration(milliseconds: 400),
-                    duration: Duration(seconds: 2),
+                    animDuration: const Duration(milliseconds: 400),
+                    duration: const Duration(seconds: 2),
                     curve: Curves.linear,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'normal toast(scale anim)',
               ),
               onTap: () {
@@ -490,17 +502,17 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.scale,
                     reverseAnimation: StyledToastAnimation.fade,
                     position: StyledToastPosition.center,
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
+                    animDuration: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(fadeScale anim)',
               ),
               onTap: () {
@@ -509,17 +521,17 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.fadeScale,
                     reverseAnimation: StyledToastAnimation.scaleRotate,
                     position: StyledToastPosition.center,
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
+                    animDuration: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
                     curve: Curves.linear,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(rotate anim)',
               ),
               onTap: () {
@@ -528,17 +540,17 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.rotate,
                     reverseAnimation: StyledToastAnimation.fadeRotate,
                     position: StyledToastPosition.center,
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
+                    animDuration: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.elasticIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(fadeRotate anim)',
               ),
               onTap: () {
@@ -547,17 +559,17 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.fadeRotate,
                     reverseAnimation: StyledToastAnimation.fadeScale,
                     position: StyledToastPosition.center,
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
+                    animDuration: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
                     curve: Curves.linear,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(scaleRotate anim)',
               ),
               onTap: () {
@@ -566,13 +578,13 @@ class _MyHomePageState extends State<MyHomePage>
                     animation: StyledToastAnimation.scaleRotate,
                     reverseAnimation: StyledToastAnimation.fade,
                     position: StyledToastPosition.center,
-                    animDuration: Duration(seconds: 1),
-                    duration: Duration(seconds: 4),
+                    animDuration: const Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
@@ -587,8 +599,8 @@ class _MyHomePageState extends State<MyHomePage>
                   'This is normal toast with onDismissed',
                   context: context,
                   animation: StyledToastAnimation.fade,
-                  duration: Duration(seconds: 2),
-                  animDuration: Duration(milliseconds: 1000),
+                  duration: const Duration(seconds: 2),
+                  animDuration: const Duration(milliseconds: 1000),
                   onDismiss: () {
                     setState(() {
                       dismissRemind = 'dismissed';
@@ -599,12 +611,12 @@ class _MyHomePageState extends State<MyHomePage>
                 );
               },
             ),
-            Divider(
+            const Divider(
               height: 10,
               thickness: 10,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(custom anim)',
               ),
               onTap: () async {
@@ -618,8 +630,8 @@ class _MyHomePageState extends State<MyHomePage>
                     Widget child,
                   ) {
                     return SlideTransition(
-                      position: getAnimation<Offset>(
-                          Offset(0.0, 3.0), Offset(0, 0), controller,
+                      position: getAnimation<Offset>(const Offset(0.0, 3.0),
+                          const Offset(0, 0), controller,
                           curve: Curves.bounceInOut),
                       child: child,
                     );
@@ -631,25 +643,25 @@ class _MyHomePageState extends State<MyHomePage>
                     Widget child,
                   ) {
                     return SlideTransition(
-                      position: getAnimation<Offset>(
-                          Offset(0.0, 0.0), Offset(-3.0, 0), controller,
+                      position: getAnimation<Offset>(const Offset(0.0, 0.0),
+                          const Offset(-3.0, 0), controller,
                           curve: Curves.bounceInOut),
                       child: child,
                     );
                   },
                   position: StyledToastPosition.bottom,
-                  animDuration: Duration(milliseconds: 1000),
-                  duration: Duration(seconds: 4),
+                  animDuration: const Duration(milliseconds: 1000),
+                  duration: const Duration(seconds: 4),
                   curve: Curves.elasticOut,
                   reverseCurve: Curves.linear,
                 );
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(custom multiple anim)',
               ),
               onTap: () async {
@@ -712,18 +724,18 @@ class _MyHomePageState extends State<MyHomePage>
                     );
                   },
                   position: StyledToastPosition.bottom,
-                  animDuration: Duration(milliseconds: 1000),
-                  duration: Duration(seconds: 4),
+                  animDuration: const Duration(milliseconds: 1000),
+                  duration: const Duration(seconds: 4),
                   curve: Curves.elasticOut,
                   reverseCurve: Curves.linear,
                 );
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Normal toast(custom anim with custom animation controller)',
               ),
               onTap: () async {
@@ -739,7 +751,9 @@ class _MyHomePageState extends State<MyHomePage>
                         mController.reset();
                         mReverseController.reset();
                       });
-                    } on TickerCanceled {}
+                    } on TickerCanceled {
+                      return;
+                    }
                   },
                   animationBuilder: (
                     BuildContext context,
@@ -748,8 +762,8 @@ class _MyHomePageState extends State<MyHomePage>
                     Widget child,
                   ) {
                     return SlideTransition(
-                      position: getAnimation<Offset>(
-                          Offset(0.0, 3.0), Offset(0, 0), mController,
+                      position: getAnimation<Offset>(const Offset(0.0, 3.0),
+                          const Offset(0, 0), mController,
                           curve: Curves.bounceInOut),
                       child: child,
                     );
@@ -761,15 +775,15 @@ class _MyHomePageState extends State<MyHomePage>
                     Widget child,
                   ) {
                     return SlideTransition(
-                      position: getAnimation<Offset>(
-                          Offset(0.0, 0.0), Offset(-3.0, 0), mReverseController,
+                      position: getAnimation<Offset>(const Offset(0.0, 0.0),
+                          const Offset(-3.0, 0), mReverseController,
                           curve: Curves.bounceInOut),
                       child: child,
                     );
                   },
                   position: StyledToastPosition.bottom,
-                  animDuration: Duration(milliseconds: 1000),
-                  duration: Duration(seconds: 4),
+                  animDuration: const Duration(milliseconds: 1000),
+                  duration: const Duration(seconds: 4),
                   curve: Curves.elasticOut,
                   reverseCurve: Curves.linear,
                 );
@@ -778,15 +792,15 @@ class _MyHomePageState extends State<MyHomePage>
 
             ///Custom toast content widget
             Container(
-              margin: EdgeInsets.only(bottom: 10.0, top: 50.0),
-              padding: EdgeInsets.only(left: 15.0),
+              margin: const EdgeInsets.only(bottom: 10.0, top: 50.0),
+              padding: const EdgeInsets.only(left: 15.0),
               height: 35.0,
               alignment: Alignment.centerLeft,
-              child: Text('Custom toast content widget'),
+              child: const Text('Custom toast content widget'),
               color: const Color(0xFFDDDDDD),
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Custom toast content widget',
               ),
               onTap: () {
@@ -796,26 +810,26 @@ class _MyHomePageState extends State<MyHomePage>
                     reverseAnimation: StyledToastAnimation.slideToLeft,
                     alignment: Alignment.centerLeft,
                     axis: Axis.horizontal,
-                    position: StyledToastPosition(
+                    position: const StyledToastPosition(
                         align: Alignment.topCenter, offset: 0.0),
-                    startOffset: Offset(-1.0, 0.0),
-                    reverseEndOffset: Offset(-1.0, 0.0),
-                    animDuration: Duration(milliseconds: 400),
-                    duration: Duration(seconds: 2),
+                    startOffset: const Offset(-1.0, 0.0),
+                    reverseEndOffset: const Offset(-1.0, 0.0),
+                    animDuration: const Duration(milliseconds: 400),
+                    duration: const Duration(seconds: 2),
                     curve: Curves.linearToEaseOut,
                     reverseCurve: Curves.fastOutSlowIn);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text('Interactive toast'),
+              title: const Text('Interactive toast'),
               onTap: () {
                 showToastWidget(
                   Container(
-                    padding: EdgeInsets.symmetric(horizontal: 18.0),
-                    margin: EdgeInsets.symmetric(horizontal: 50.0),
+                    padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                    margin: const EdgeInsets.symmetric(horizontal: 50.0),
                     decoration: ShapeDecoration(
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(5.0),
@@ -824,7 +838,7 @@ class _MyHomePageState extends State<MyHomePage>
                     ),
                     child: Row(
                       children: [
-                        Text(
+                        const Text(
                           'Jump to new page',
                           style: TextStyle(
                             color: Colors.white,
@@ -835,10 +849,10 @@ class _MyHomePageState extends State<MyHomePage>
                             dismissAllToast(showAnim: true);
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context) {
-                              return SecondPage();
+                              return const SecondPage();
                             }));
                           },
-                          icon: Icon(
+                          icon: const Icon(
                             Icons.add_circle_outline_outlined,
                             color: Colors.white,
                           ),
@@ -853,11 +867,11 @@ class _MyHomePageState extends State<MyHomePage>
                 );
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Custom toast content widget with icon convinient fail',
               ),
               onTap: () {
@@ -866,17 +880,17 @@ class _MyHomePageState extends State<MyHomePage>
                     position: StyledToastPosition.center,
                     animation: StyledToastAnimation.scale,
                     reverseAnimation: StyledToastAnimation.fade,
-                    duration: Duration(seconds: 4),
-                    animDuration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
+                    animDuration: const Duration(seconds: 1),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
             ListTile(
-              title: Text(
+              title: const Text(
                 'Custom toast content widget with icon convenient success',
               ),
               onTap: () {
@@ -885,13 +899,13 @@ class _MyHomePageState extends State<MyHomePage>
                     position: StyledToastPosition.center,
                     animation: StyledToastAnimation.scale,
                     reverseAnimation: StyledToastAnimation.fade,
-                    duration: Duration(seconds: 4),
-                    animDuration: Duration(seconds: 1),
+                    duration: const Duration(seconds: 4),
+                    animDuration: const Duration(seconds: 1),
                     curve: Curves.elasticOut,
                     reverseCurve: Curves.linear);
               },
             ),
-            Divider(
+            const Divider(
               height: 0.5,
             ),
           ],
@@ -906,24 +920,24 @@ class _MyHomePageState extends State<MyHomePage>
 class SecondPage extends StatefulWidget {
   final String? title;
 
-  SecondPage({Key? key, this.title}) : super(key: key);
+  const SecondPage({Key? key, this.title}) : super(key: key);
 
   @override
-  _SecondPageState createState() => _SecondPageState();
+  SecondPageState createState() => SecondPageState();
 }
 
 // The State class is responsible for two things: holding some data you can
 // update and building the UI using that data.
-class _SecondPageState extends State<SecondPage> {
+class SecondPageState extends State<SecondPage> {
   // Whether the green box should be visible or invisible
 
   @override
   Widget build(BuildContext context) {
-    Color getColor(Set<MaterialState> states) {
-      const Set<MaterialState> interactiveStates = <MaterialState>{
-        MaterialState.pressed,
-        MaterialState.hovered,
-        MaterialState.focused,
+    Color getColor(Set<WidgetState> states) {
+      const Set<WidgetState> interactiveStates = <WidgetState>{
+        WidgetState.pressed,
+        WidgetState.hovered,
+        WidgetState.focused,
       };
       if (states.any(interactiveStates.contains)) {
         return Colors.blue;
@@ -937,19 +951,19 @@ class _SecondPageState extends State<SecondPage> {
       ),
       body: Center(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
+          padding: const EdgeInsets.all(4),
           children: <Widget>[
             Container(
-              margin: EdgeInsets.only(bottom: 10.0),
-              padding: EdgeInsets.only(left: 15.0),
+              margin: const EdgeInsets.only(bottom: 10.0),
+              padding: const EdgeInsets.only(left: 15.0),
               height: 35.0,
               alignment: Alignment.centerLeft,
-              child: Text('second page Toast'),
+              child: const Text('second page Toast'),
               color: const Color(0xFFDDDDDD),
             ),
             Container(
               height: 50.0,
-              margin: EdgeInsets.only(bottom: 20.0),
+              margin: const EdgeInsets.only(bottom: 20.0),
               child: ElevatedButton(
                 onPressed: () {
                   showToast(
@@ -957,9 +971,8 @@ class _SecondPageState extends State<SecondPage> {
                   );
                 },
                 style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.resolveWith(getColor)),
-                child: Text(
+                    backgroundColor: WidgetStateProperty.resolveWith(getColor)),
+                child: const Text(
                   'normal toast',
                   style: TextStyle(fontSize: 15.0, color: Colors.white),
                 ),

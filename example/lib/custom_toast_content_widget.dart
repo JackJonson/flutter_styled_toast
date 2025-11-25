@@ -20,14 +20,14 @@ class IconToastWidget extends StatelessWidget {
   final String? assetName;
   final EdgeInsetsGeometry? padding;
 
-  IconToastWidget({
+  const IconToastWidget({
     super.key,
     this.backgroundColor,
     this.textWidget,
     this.message,
     this.height,
     this.width,
-    @required this.assetName,
+    required this.assetName,
     this.padding,
   });
 
@@ -46,9 +46,9 @@ class IconToastWidget extends StatelessWidget {
     Widget content = Material(
       color: Colors.transparent,
       child: Container(
-          margin: EdgeInsets.symmetric(horizontal: 50.0),
-          padding:
-              padding ?? EdgeInsets.symmetric(vertical: 20.0, horizontal: 17.0),
+          margin: const EdgeInsets.symmetric(horizontal: 50.0),
+          padding: padding ??
+              const EdgeInsets.symmetric(vertical: 20.0, horizontal: 17.0),
           decoration: ShapeDecoration(
             color: backgroundColor ?? const Color(0x9F000000),
             shape: RoundedRectangleBorder(
@@ -60,7 +60,7 @@ class IconToastWidget extends StatelessWidget {
             crossAxisAlignment: WrapCrossAlignment.center,
             children: <Widget>[
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: Image.asset(
                   assetName!,
                   fit: BoxFit.fill,
@@ -69,7 +69,7 @@ class IconToastWidget extends StatelessWidget {
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 5.0),
+                padding: const EdgeInsets.symmetric(horizontal: 5.0),
                 child: textWidget ??
                     Text(
                       message ?? '',
@@ -105,7 +105,7 @@ class BannerToastWidget extends StatelessWidget {
   final double? height;
   final double? width;
 
-  BannerToastWidget({
+  const BannerToastWidget({
     super.key,
     this.backgroundColor,
     this.textWidget,
@@ -113,7 +113,7 @@ class BannerToastWidget extends StatelessWidget {
     this.height,
     this.width,
     final double? offset,
-  }) : this.offset = (offset == null ? 10.0 : offset);
+  }) : offset = (offset ?? 10.0);
 
   factory BannerToastWidget.success(
           {String? msg, Widget? text, BuildContext? context}) =>
@@ -139,10 +139,10 @@ class BannerToastWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     Widget content = Container(
       width: MediaQuery.of(context).size.width,
-      padding: EdgeInsets.all(17.0),
+      padding: const EdgeInsets.all(17.0),
       height: 60.0,
       alignment: Alignment.center,
-      color: backgroundColor ?? Theme.of(context).colorScheme.background,
+      color: backgroundColor ?? Theme.of(context).colorScheme.surface,
       child: textWidget ??
           Text(
             message ?? '',
@@ -167,7 +167,8 @@ class ActionToastWidget extends StatelessWidget {
   ///Action widget
   final Widget? actionWidget;
 
-  ActionToastWidget({
+  const ActionToastWidget({
+    super.key,
     this.text,
     this.textWidget,
     this.actionWidget,
@@ -176,19 +177,19 @@ class ActionToastWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 18.0),
-      margin: EdgeInsets.symmetric(horizontal: 50.0),
+      padding: const EdgeInsets.symmetric(horizontal: 18.0),
+      margin: const EdgeInsets.symmetric(horizontal: 50.0),
       decoration: ShapeDecoration(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(5.0),
           ),
           color: Colors.green[600],
-          shadows: [
-            const BoxShadow(
+          shadows: const [
+            BoxShadow(
               offset: Offset.zero,
               spreadRadius: 10,
               blurRadius: 10,
-              color: const Color(0x040D0229),
+              color: Color(0x040D0229),
             ),
           ]),
       child: Row(
@@ -196,7 +197,7 @@ class ActionToastWidget extends StatelessWidget {
           textWidget ??
               Text(
                 text ?? '',
-                style: TextStyle(
+                style: const TextStyle(
                   color: Colors.white,
                 ),
               ),
@@ -205,10 +206,10 @@ class ActionToastWidget extends StatelessWidget {
                 onPressed: () {
                   dismissAllToast(showAnim: true);
                   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return SecondPage();
+                    return const SecondPage();
                   }));
                 },
-                icon: Icon(
+                icon: const Icon(
                   Icons.add_circle_outline_outlined,
                   color: Colors.white,
                 ),

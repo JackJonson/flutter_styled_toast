@@ -11,7 +11,7 @@ Beautify toast with a series of animations and make toast more beautiful.
 ## Null safety
 ```yaml
 dependencies:
-  flutter_styled_toast: ^2.2.1
+  flutter_styled_toast: ^2.3.0
 ```
 
 ## Getting Started
@@ -221,50 +221,50 @@ StyledToast(
 
 Highly Customizable global configuration
 ```dart
-StyledToast(
-  locale: const Locale('en', 'US'),  //You have to set this parameters to your locale
-  textStyle: TextStyle(fontSize: 16.0, color: Colors.white), //Default text style of toast
-  backgroundColor: Color(0x99000000),  //Background color of toast
-  borderRadius: BorderRadius.circular(5.0), //Border radius of toast
-  textPadding: EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),//The padding of toast text
-  toastPositions: StyledToastPosition.bottom, //The position of toast
-  toastAnimation: StyledToastAnimation.fade,  //The animation type of toast
-  reverseAnimation: StyledToastAnimation.fade, //The reverse animation of toast (display When dismiss toast)
-  curve: Curves.fastOutSlowIn,  //The curve of animation
-  reverseCurve: Curves.fastLinearToSlowEaseIn, //The curve of reverse animation
-  duration: Duration(seconds: 4), //The duration of toast showing, when set [duration] to Duration.zero, toast won't dismiss automatically.
-  animDuration: Duration(seconds: 1), //The duration of animation(including reverse) of toast 
-  dismissOtherOnShow: true,  //When we show a toast and other toast is showing, dismiss any other showing toast before.
-  movingOnWindowChange: true, //When the window configuration changes, move the toast.
-  fullWidth: false, //Whether the toast is full screen (subtract the horizontal margin)
-  isHideKeyboard: false, //Is hide keyboard when toast show
-  isIgnoring: true, //Is the input ignored for the toast
-  animationBuilder: (BuildContext context,AnimationController controller,Duration duration,Widget child,){  // Builder method for custom animation
-     return SlideTransition(
-        position: getAnimation<Offset>(Offset(0.0, 3.0),Offset(0,0), controller,curve: Curves.bounceInOut),
-        child: child,
-     );
-  },
-  reverseAnimBuilder: (BuildContext context,AnimationController controller,Duration duration,Widget child,){ // Builder method for custom reverse animation
-     return SlideTransition(
-        position: getAnimation<Offset>(Offset(0.0, 0.0),Offset(-3.0,0), controller,curve: Curves.bounceInOut),
-        child: child,
-     );
-  },
-  child: MaterialApp(
+MaterialApp(
+  title: appTitle,
+  showPerformanceOverlay: showPerformance,
+    home: LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return MyHomePage(
           title: appTitle,
-          showPerformanceOverlay: showPerformance,
-          home: LayoutBuilder(
-            builder: (BuildContext context, BoxConstraints constraints) {
-              return MyHomePage(
-                title: appTitle,
-                onSetting: onSettingCallback,
-              );
-            },
-          ),
+          onSetting: onSettingCallback,
+        );
+      },
+    ),
+    builder: (BuildContext context, Widget? child) {
+      // Get the current platform brightness
+      final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+    
+      return StyledToast(
+        textStyle: TextStyle(
+          fontSize: 16.0,
+          color: isDarkMode ? Colors.black : Colors.white
         ),
+        backgroundColor: isDarkMode
+          ? const Color(0xCCFFFFFF)
+          : const Color(0x99000000),
+        borderRadius: BorderRadius.circular(5.0),
+        textPadding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+        toastAnimation: StyledToastAnimation.size,
+        reverseAnimation: StyledToastAnimation.size,
+        startOffset: const Offset(0.0, -1.0),
+        reverseEndOffset: const Offset(0.0, -1.0),
+        duration: const Duration(seconds: 4),
+        animDuration: const Duration(seconds: 1),
+        alignment: Alignment.center,
+        toastPositions: StyledToastPosition.center,
+        curve: Curves.fastOutSlowIn,
+        reverseCurve: Curves.fastOutSlowIn,
+        dismissOtherOnShow: true,
+        fullWidth: false,
+        isHideKeyboard: false,
+        isIgnoring: true,
+        child: child ?? const SizedBox.shrink(),
+      );
+    },
 );
-```dart
+```
 
 ```dart
 //After global configuration, use in a single line.

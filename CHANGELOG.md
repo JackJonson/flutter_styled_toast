@@ -1,3 +1,11 @@
+## [2.3.0 null-safety]
+Remove localization.
+Support StyledToast configuration in MaterialApp component.
+Dark and Light Theme change example.  
+Upgrade example android structure.
+Upgrade to Flutter 3.38.3.
+Fix warnings.
+
 ## [2.2.1 null-safety]
 Fix warnings.
 
