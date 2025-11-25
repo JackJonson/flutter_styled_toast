@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+
 import 'custom_animation.dart';
 import 'custom_size_transition.dart';
 import 'styled_toast_enum.dart';
@@ -66,6 +67,7 @@ ToastFuture showToast(
   final CustomAnimationBuilder? reverseAnimBuilder,
   final bool? isIgnoring,
   final OnInitStateCallback? onInitState,
+  final bool? enableGestureDismiss,
 }) {
   context ??= currentContext;
   assert(context != null);
@@ -135,6 +137,7 @@ ToastFuture showToast(
     reverseAnimBuilder: reverseAnimBuilder,
     isIgnoring: isIgnoring,
     onInitState: onInitState,
+    enableGestureDismiss: enableGestureDismiss,
   );
 }
 
@@ -163,6 +166,7 @@ ToastFuture showToastWidget(
   CustomAnimationBuilder? reverseAnimBuilder,
   bool? isIgnoring,
   OnInitStateCallback? onInitState,
+  bool? enableGestureDismiss,
 }) {
   OverlayEntry entry;
   ToastFuture future;
@@ -218,6 +222,9 @@ ToastFuture showToastWidget(
 
   isIgnoring ??= toastTheme?.isIgnoring ?? true;
 
+  enableGestureDismiss ??=
+      enableGestureDismiss ?? toastTheme?.enableGestureDismiss ?? false;
+
   if (isHideKeyboard) {
     /// Hide keyboard.
     FocusScope.of(context).requestFocus(FocusNode());
@@ -246,6 +253,7 @@ ToastFuture showToastWidget(
         animationBuilder: animationBuilder,
         reverseAnimBuilder: reverseAnimBuilder,
         onInitState: onInitState,
+        enableGestureDismiss: enableGestureDismiss,
         child: Directionality(
           textDirection: textDirection!,
           child: Material(
@@ -359,6 +367,9 @@ class StyledToast extends StatefulWidget {
   /// When toast widget [initState], this callback will be called.
   final OnInitStateCallback? onInitState;
 
+  // Dismiss it with a gesture
+  final bool? enableGestureDismiss;
+
   const StyledToast({
     super.key,
     required this.child,
@@ -390,6 +401,7 @@ class StyledToast extends StatefulWidget {
     this.reverseAnimBuilder,
     this.isIgnoring = true,
     this.onInitState,
+    this.enableGestureDismiss = false,
   });
 
   @override
@@ -468,6 +480,7 @@ class _StyledToastState extends State<StyledToast> {
       reverseAnimBuilder: widget.reverseAnimBuilder,
       isIgnoring: widget.isIgnoring,
       onInitState: widget.onInitState,
+      enableGestureDismiss: widget.enableGestureDismiss,
       child: wrapper,
     );
   }
@@ -526,6 +539,9 @@ class _StyledToastWidget extends StatefulWidget {
   /// Custom animation builder method.
   final OnInitStateCallback? onInitState;
 
+  // Dismiss it with a gesture
+  final bool? enableGestureDismiss;
+
   const _StyledToastWidget({
     super.key,
     required this.child,
@@ -545,6 +561,7 @@ class _StyledToastWidget extends StatefulWidget {
     this.animationBuilder,
     this.reverseAnimBuilder,
     this.onInitState,
+    this.enableGestureDismiss,
   }) : assert(animDuration * 2 <= duration || duration == Duration.zero);
 
   @override
@@ -643,15 +660,20 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     if (widget.duration != Duration.zero) {
       /// Dismiss toast.
       _toastTimer = Timer(widget.duration - widget.animDuration, () async {
-        if (widget.reverseAnimation == StyledToastAnimation.none) {
-          dismissToast();
-        } else {
-          dismissToastAnim();
-        }
+        dismiss();
       });
     }
 
     WidgetsBinding.instance.addObserver(this);
+  }
+
+  // Dismiss toast with anim or none
+  void dismiss() {
+    if (widget.reverseAnimation == StyledToastAnimation.none) {
+      dismissToast();
+    } else {
+      dismissToastAnim();
+    }
   }
 
   /// Init animation.
@@ -1118,7 +1140,22 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
           bottom: mediaQueryData.padding.bottom,
           top: mediaQueryData.padding.top),
       alignment: positionAlignment,
-      child: w,
+      child: widget.enableGestureDismiss == true
+          ? GestureDetector(
+              onTap: () {
+                // Dismiss with tap
+                debugPrint('onTap');
+                dismiss();
+              },
+              onPanUpdate: (details) {
+                // Dismiss with gesture
+                if (details.delta.dy.abs() > details.delta.dx.abs()) {
+                  dismiss();
+                }
+              },
+              child: w,
+            )
+          : w,
     );
 
     if (Alignment.center == positionAlignment) {
@@ -1483,8 +1520,16 @@ class StyledToastWidgetState extends State<_StyledToastWidget>
     }
     _toastTimer?.cancel();
     try {
-      if (widget.animation != widget.reverseAnimation ||
-          widget.reverseAnimBuilder != null) {
+      // Use anim controller to dismiss toast if reverse anim builder is null
+      if (widget.animationBuilder != null &&
+          widget.reverseAnimBuilder == null) {
+        if (_animationController.status != AnimationStatus.dismissed) {
+          await _animationController.reverse().orCancel;
+        } else {
+          onAnimationEnd?.call();
+          return;
+        }
+      } else if (widget.reverseAnimBuilder != null) {
         await _reverseAnimController.forward().orCancel;
       } else {
         await _animationController.reverse().orCancel;

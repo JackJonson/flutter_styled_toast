@@ -68,6 +68,7 @@ class _MyAppState extends State<MyApp> {
           fullWidth: false,
           isHideKeyboard: false,
           isIgnoring: true,
+          enableGestureDismiss: true,
           child: child ?? const SizedBox.shrink(),
         );
       },
@@ -129,9 +130,6 @@ class MyHomePageState extends State<MyHomePage>
         child: ListView(
           padding: const EdgeInsets.symmetric(horizontal: 30.0, vertical: 20.0),
           children: <Widget>[
-            TextField(
-              controller: TextEditingController(),
-            ),
             Container(
               margin: const EdgeInsets.only(bottom: 10.0),
               padding: const EdgeInsets.only(left: 15.0),
@@ -162,6 +160,22 @@ class MyHomePageState extends State<MyHomePage>
                   context: context,
                   duration: Duration.zero,
                 );
+              },
+            ),
+            const Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: const Text('Gesture dismiss'),
+              onTap: () {
+                showToast('Dismiss with gesture',
+                    context: context,
+                    axis: Axis.horizontal,
+                    alignment: Alignment.center,
+                    position: StyledToastPosition.top,
+                    isIgnoring: false,
+                    enableGestureDismiss: true,
+                    duration: const Duration(seconds: 10));
               },
             ),
             const Divider(
@@ -636,6 +650,38 @@ class MyHomePageState extends State<MyHomePage>
                       child: child,
                     );
                   },
+                  position: StyledToastPosition.bottom,
+                  animDuration: const Duration(milliseconds: 1000),
+                  duration: const Duration(seconds: 4),
+                  curve: Curves.elasticOut,
+                  reverseCurve: Curves.linear,
+                );
+              },
+            ),
+            const Divider(
+              height: 0.5,
+            ),
+            ListTile(
+              title: const Text(
+                'Normal toast(custom anim and reverse anim)',
+              ),
+              onTap: () async {
+                showToast(
+                  'This is normal toast with custom animation',
+                  context: context,
+                  animationBuilder: (
+                    BuildContext context,
+                    AnimationController controller,
+                    Duration duration,
+                    Widget child,
+                  ) {
+                    return SlideTransition(
+                      position: getAnimation<Offset>(const Offset(0.0, 3.0),
+                          const Offset(0, 0), controller,
+                          curve: Curves.bounceInOut),
+                      child: child,
+                    );
+                  },
                   reverseAnimBuilder: (
                     BuildContext context,
                     AnimationController controller,
@@ -645,7 +691,7 @@ class MyHomePageState extends State<MyHomePage>
                     return SlideTransition(
                       position: getAnimation<Offset>(const Offset(0.0, 0.0),
                           const Offset(-3.0, 0), controller,
-                          curve: Curves.bounceInOut),
+                          curve: Curves.easeOut),
                       child: child,
                     );
                   },

@@ -8,22 +8,96 @@ Beautify toast with a series of animations and make toast more beautiful.
 
 <img src="https://raw.githubusercontent.com/JackJonson/flutter_styled_toast/master/screenshots/OverallAnimations.gif" width="50%">
 
-## Null safety
+## Getting Started
+
+### Null safety
 ```yaml
 dependencies:
   flutter_styled_toast: ^2.3.0
 ```
 
-## Getting Started
-
-```yaml
-dependencies:
-  flutter_styled_toast: ^1.5.2+3
-```
-
 ```dart
 import 'package:flutter_styled_toast/flutter_styled_toast.dart';
 ```
+
+### Highly Customizable global configuration
+```dart
+MaterialApp(
+  title: appTitle,
+  home: LayoutBuilder(
+    builder: (BuildContext context, BoxConstraints constraints) {
+      return MyHomePage(
+        title: appTitle,
+        onSetting: onSettingCallback,
+      );
+    },
+  ),
+  builder: (BuildContext context, Widget? child) {
+    // Get the current platform brightness
+    final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
+  
+    return StyledToast(
+      textStyle: TextStyle(
+        fontSize: 16.0,
+        color: isDarkMode ? Colors.black : Colors.white
+      ),
+      backgroundColor: isDarkMode
+        ? const Color(0xCCFFFFFF)
+        : const Color(0x99000000),
+      borderRadius: BorderRadius.circular(5.0),
+      textPadding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+      toastAnimation: StyledToastAnimation.size,
+      reverseAnimation: StyledToastAnimation.size,
+      startOffset: const Offset(0.0, -1.0),
+      reverseEndOffset: const Offset(0.0, -1.0),
+      duration: const Duration(seconds: 4),
+      animDuration: const Duration(seconds: 1),
+      alignment: Alignment.center,
+      toastPositions: StyledToastPosition.center,
+      curve: Curves.fastOutSlowIn,
+      reverseCurve: Curves.fastOutSlowIn,
+      dismissOtherOnShow: true,
+      fullWidth: false,
+      isHideKeyboard: false,
+      isIgnoring: true,
+      child: child ?? const SizedBox.shrink(),
+    );
+  },
+);
+```
+
+### Simple global configuration, wrap you app with StyledToast.
+
+```dart
+MaterialApp(
+    title: appTitle,
+    home: LayoutBuilder(
+      builder: (BuildContext context, BoxConstraints constraints) {
+        return MyHomePage(
+          title: appTitle,
+          onSetting: onSettingCallback,
+        );
+      },
+    ),
+    builder: (BuildContext context, Widget? child) {
+      return StyledToast(
+        child: child ?? const SizedBox.shrink(),
+      )
+    }
+  ),
+);
+```
+
+
+```dart
+//After global configuration, use in a single line.
+showToast("hello styled toast");
+
+//After global configuration, Customize toast content widget
+showToastWidget(Text('hello styled toast'));
+```
+
+## No Global Configuration usage
 
 ```dart
 //Simple to use, no global configuration
@@ -95,9 +169,125 @@ showToast('This is normal toast with animation',
    curve: Curves.elasticOut,
    reverseCurve: Curves.linear,
 );
+```
+
+
+## Custom animation
+
+### Custom animation,
 
 ```dart
+MaterialApp(
+  title: appTitle,
+  showPerformanceOverlay: showPerformance,
+  home: LayoutBuilder(
+    builder: (BuildContext context, BoxConstraints constraints) {
+      return MyHomePage(
+        title: appTitle,
+        onSetting: onSettingCallback,
+      );
+    },
+  ),
+  builder: (BuildContext context, Widget? child) {
+    final isDarkMode =
+        MediaQuery.of(context).platformBrightness == Brightness.dark;
 
+    return StyledToast(
+      textStyle: TextStyle(
+          fontSize: 16.0, color: isDarkMode ? Colors.black : Colors.white),
+      backgroundColor:
+          isDarkMode ? const Color(0xCCFFFFFF) : const Color(0x99000000),
+      borderRadius: BorderRadius.circular(5.0),
+      textPadding:
+          const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
+      duration: const Duration(seconds: 4),
+      animDuration: const Duration(milliseconds: 400),
+      alignment: Alignment.center,
+      toastPositions: StyledToastPosition.center,
+      curve: Curves.fastOutSlowIn,
+      reverseCurve: Curves.fastOutSlowIn,
+      animationBuilder: (context, controller, duration, child) {
+        final scale = Tween<double>(begin: 1.3, end: 1.0).animate(
+          CurvedAnimation(
+              parent: controller,
+              curve: Curves.easeInSine,
+              reverseCurve: Curves.easeOutSine),
+        );
+        final sigma = Tween<double>(begin: 0.0, end: 8.0).animate(
+          CurvedAnimation(
+              parent: controller,
+              curve: Curves.easeInSine,
+              reverseCurve: Curves.easeOutSine),
+        );
+        final opacity = Tween<double>(begin: 0.0, end: 1.0).animate(
+          CurvedAnimation(
+              parent: controller,
+              curve: Curves.easeInSine,
+              reverseCurve: Curves.easeOutSine),
+        );
+        return ScaleTransition(
+            scale: scale,
+            child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: BlurTransition(
+                  sigma: sigma,
+                  child: FadeTransition(
+                    opacity: opacity,
+                    child: child,
+                  ),
+                )));
+      },
+      dismissOtherOnShow: true,
+      fullWidth: false,
+      isHideKeyboard: false,
+      isIgnoring: true,
+      enableGestureDismiss: true,
+      child: child ?? const SizedBox.shrink(),
+    );
+  },
+);
+```
+
+```dart
+///Custom animation and custom reverse animation,
+///combination different animation and reverse animation to achieve amazing effect.
+
+showToast('This is normal toast with custom animation',
+   context: context,
+   position: StyledToastPosition.bottom,
+   animDuration: Duration(seconds: 1),
+   duration: Duration(seconds: 4),
+   animationBuilder: (
+       BuildContext context,
+       AnimationController controller,
+       Duration duration,
+       Widget child,
+   ) {
+      return SlideTransition(
+          position: getAnimation<Offset>(
+          Offset(0.0, 3.0), Offset(0, 0), controller,
+          curve: Curves.bounceInOut),
+          child: child,
+      );
+   },
+   reverseAnimBuilder: (
+      BuildContext context,
+      AnimationController controller,
+      Duration duration,
+      Widget child,
+   ) {
+      return SlideTransition(
+          position: getAnimation<Offset>(
+          Offset(0.0, 0.0), Offset(-3.0, 0), controller,
+          curve: Curves.bounceInOut),
+          child: child,
+      );
+   },
+);
+
+```
+
+### Custom animation and custom reverse animation
 
 ```dart
 ///Custom animation and custom reverse animation,
@@ -148,8 +338,9 @@ showToast('This is normal toast with custom animation',
    },
 );
 
-```dart
+```
 
+### Custom reverse animation and custom animation controller
 
 ```dart
 ///Custom animation, custom reverse animation and custom animation controller
@@ -197,82 +388,6 @@ showToast('This is normal toast with custom animation and controller',
 );
 
 ```dart
-
-
-
-Simple global configuration, wrap you app with StyledToast.
-```dart
-StyledToast(
-  locale: const Locale('en', 'US'),
-  child: MaterialApp(
-            title: appTitle,
-            showPerformanceOverlay: showPerformance,
-            home: LayoutBuilder(
-              builder: (BuildContext context, BoxConstraints constraints) {
-                return MyHomePage(
-                  title: appTitle,
-                  onSetting: onSettingCallback,
-                );
-              },
-            ),
-          ),
-);
-```
-
-Highly Customizable global configuration
-```dart
-MaterialApp(
-  title: appTitle,
-  showPerformanceOverlay: showPerformance,
-    home: LayoutBuilder(
-      builder: (BuildContext context, BoxConstraints constraints) {
-        return MyHomePage(
-          title: appTitle,
-          onSetting: onSettingCallback,
-        );
-      },
-    ),
-    builder: (BuildContext context, Widget? child) {
-      // Get the current platform brightness
-      final isDarkMode = MediaQuery.of(context).platformBrightness == Brightness.dark;
-    
-      return StyledToast(
-        textStyle: TextStyle(
-          fontSize: 16.0,
-          color: isDarkMode ? Colors.black : Colors.white
-        ),
-        backgroundColor: isDarkMode
-          ? const Color(0xCCFFFFFF)
-          : const Color(0x99000000),
-        borderRadius: BorderRadius.circular(5.0),
-        textPadding: const EdgeInsets.symmetric(horizontal: 17.0, vertical: 10.0),
-        toastAnimation: StyledToastAnimation.size,
-        reverseAnimation: StyledToastAnimation.size,
-        startOffset: const Offset(0.0, -1.0),
-        reverseEndOffset: const Offset(0.0, -1.0),
-        duration: const Duration(seconds: 4),
-        animDuration: const Duration(seconds: 1),
-        alignment: Alignment.center,
-        toastPositions: StyledToastPosition.center,
-        curve: Curves.fastOutSlowIn,
-        reverseCurve: Curves.fastOutSlowIn,
-        dismissOtherOnShow: true,
-        fullWidth: false,
-        isHideKeyboard: false,
-        isIgnoring: true,
-        child: child ?? const SizedBox.shrink(),
-      );
-    },
-);
-```
-
-```dart
-//After global configuration, use in a single line.
-showToast("hello styled toast");
-
-//After global configuration, Customize toast content widget
-showToastWidget(Text('hello styled toast'));
-```
 
 ## 🚀 Roadmap
 
@@ -415,6 +530,7 @@ animationBuilder     | CustomAnimationBuilder (Builder method for custom animati
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
 isIgnoring           | bool (default true)
 onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
+enableGestureDismiss | bool (default false) (Dismiss toast with gesture tap or swipe to top or down gesture, have to set isIgnoring to false) 
 
 
 
@@ -452,6 +568,7 @@ animationBuilder     | CustomAnimationBuilder (Builder method for custom animati
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
 isIgnoring           | bool (default true)(Is the input ignored for the toast)
 onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
+enableGestureDismiss | bool (default false) (Dismiss toast with gesture tap or swipe to top or down gesture, have to set isIgnoring to false)
 
 
 
@@ -482,6 +599,7 @@ animationBuilder     | CustomAnimationBuilder (Builder method for custom animati
 reverseAnimBuilder   | CustomAnimationBuilder (Builder method for custom reverse animation)
 isIgnoring           | bool (default true )(Is the input ignored for the toast)
 onInitState          | OnInitStateCallback (When toast widget [initState], this callback will be called)
+enableGestureDismiss | bool (default false) (Dismiss toast with gesture tap or swipe to top or down gesture, have to set isIgnoring to false)
 
 
 ## Example

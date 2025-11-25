@@ -1,3 +1,9 @@
+## [2.3.1 null-safety]
+Add swip/tap to dismiss toast.
+Custom animation with dependent animation builder or reverse animation builder.
+Performance improvement.
+Update example and readme.
+
 ## [2.3.0 null-safety]
 Remove localization.
 Support StyledToast configuration in MaterialApp component.

@@ -91,6 +91,9 @@ class StyledToastTheme extends InheritedWidget {
   /// When toast widget [initState], this callback will be called.
   final OnInitStateCallback? onInitState;
 
+  // Dismiss it with a gesture
+  final bool? enableGestureDismiss;
+
   const StyledToastTheme({
     super.key,
     required super.child,
@@ -122,6 +125,7 @@ class StyledToastTheme extends InheritedWidget {
     this.reverseAnimBuilder,
     this.isIgnoring,
     this.onInitState,
+    this.enableGestureDismiss,
   });
 
   @override
